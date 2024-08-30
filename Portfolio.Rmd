@@ -1,0 +1,34 @@
+---
+title: "Multivariate Verfahren - Portfolio"
+author: "Name der Studierenden"
+institute: "Charlotte Fresenius Hochschule"
+output: html_notebook
+---
+
+# Aufgabe 1: Studienplanung - Poweranalyse
+
+xxxx
+
+```{r}
+# datensatz über github
+```
+
+## Aufgabe 1.1...
+
+# Aufgabe 2: Wirksamkeitsforschung: Auswertung Therapiewirksamkeit
+
+xxxx
+
+# Aufgabe 3: Wirksamkeitsforschung: Identifikation von Subgruppen 
+
+xxxx
+
+# Aufgabe 4: Therapieprozessforschung: Mediation
+
+xxxx
+
+# Aufgabe 5: Therapieprozessforschung: EMA-Studie (Zeitreihenanalyse)
+
+xxx
+
+
