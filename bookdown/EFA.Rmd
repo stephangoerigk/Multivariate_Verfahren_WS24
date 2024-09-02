@@ -1,0 +1,40 @@
+#### Explorative Faktorenanalyse
+
+Die explorative Faktorenanalyse (EFA) ist eine statistische Methode, die dazu dient, **Strukturen in einem Datensatz zu entdecken** und Gruppen von Variablen zu identifizieren, die gemeinsam variieren. Die EFA reduziert eine große Anzahl von Variablen auf eine kleinere Anzahl zugrunde liegender Dimensionen (**Faktoren**), was die Komplexität der Daten verringert und wesentliche Muster offenlegt. Dadurch können theoretische Modelle entwickelt oder überprüft werden (**Abgrenzung zur konfirmatorischen Faktorenanalyse**). Ein weiteres Ziel der EFA ist es, die Dimensionalität und Konstruktvalidität von Messinstrumenten zu überprüfen, um sicherzustellen, dass diese die postulierten Dimensionen valide erfassen.
+
+##### Zwei "Unterfamilien" faktorenanalytischer Methoden
+- **Konfirmatorische Faktorenanalyse (CFA):** Eine **hypothesenprüfende** Methode, bei der ein vorab festgelegtes Modell getestet wird, das die Zuordnung von Indikatoren zu latenten Variablen definiert. Ziel der CFA ist es, die Passung des Modells zu den beobachteten Daten zu überprüfen.
+- **Explorative Faktorenanalyse (EFA):** Eine **hypothesengenerierende** Methode, die verwendet wird, wenn die Zuordnung der Indikatoren zu den latenten Variablen noch unbekannt ist. Ziel der EFA ist es, verborgene Faktorenstrukturen in den Daten zu entdecken.
+
+Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifizieren, die die Zusammenhänge zwischen den Variablen erklären.
+
+##### Grundlegendes
+- **Korrelation manifester Variablen:** Die EFA basiert auf der Beobachtung, dass Korrelationen zwischen manifesten (direkt gemessenen) Variablen auf zugrunde liegende Strukturen hinweisen.
+- **Erklärung der Zusammenhänge:** Die zentrale Idee der EFA ist, dass die beobachteten Zusammenhänge durch latente Variablen erklärt werden, die die Variationen in den manifesten Variablen verursachen.
+
+##### Implikationen der Faktorenanalyse
+- **Manifeste Variablen als Indikatoren:** Manifeste Variablen dienen als Indikatoren für latente Variablen, wodurch Variationen in den gemessenen Variablen durch diese zugrunde liegenden Faktoren erklärt werden.
+- **Unkorrelierte Messwerte nach Kontrolle der latenten Variablen:** Nach Berücksichtigung der latenten Variablen sollten die verbleibenden Messwerte der manifesten Variablen unkorreliert sein, da die latenten Variablen die wesentlichen Zusammenhänge erklären.
+
+---
+
+***
+
+___
+
+##### Beispiel zur Anwendung der Explorativen Faktorenanalyse (EFA)
+Um die Anwendung der EFA zu verdeutlichen, werden wir im Folgenden ein Beispiel mit simulierten Daten des NEO-Fünf-Faktoren-Inventars (NEO-FFI) betrachten. Das NEO-FFI ist ein weit verbreitetes psychometrisches Instrument zur Messung der fünf grundlegenden Dimensionen der Persönlichkeit: Neurotizismus, Extraversion, Offenheit für Erfahrungen, Verträglichkeit und Gewissenhaftigkeit.
+
+In diesem Beispiel sollen die simulierten Daten explorativ untersucht werden, um zu überprüfen, ob die Daten die erwartete Fünf-Faktoren-Struktur widerspiegeln. Das Ziel der EFA in diesem Kontext ist es, festzustellen, ob die Dimensionen des NEO-FFI durch die zugrunde liegenden Faktoren in den simulierten Daten korrekt repräsentiert werden.
+
+
+```{r Data, echo=F, message=FALSE, warning=FALSE}
+
+# NEO = read.csv("https://raw.githubusercontent.com/janikasaretzki/CFH_Dat_MVV/main/NEO_FFI.csv?token=GHSAT0AAAAAACWBTIGTQCDH6KWJRHMHAQTWZWVOY2A")
+
+# Rep aktuell noch privat, daher na
+```
+
+```{r Setup, echo=F, message=FALSE, warning=FALSE}
+
+```
