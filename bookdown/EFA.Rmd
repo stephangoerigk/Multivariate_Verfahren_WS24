@@ -97,6 +97,7 @@ In diesem Beispiel sollen die simulierten, bereits korrekt gepolten Daten explor
 
 library(readr)
 NEO = read_csv("~/Desktop/NEO_FFI.csv")
+nrow(NEO)
 
 NEO[] = lapply(NEO, function(x) {
   if (is.factor(x)) as.numeric(as.character(x)) else x
@@ -107,6 +108,8 @@ NEO[] = lapply(NEO, function(x) {
 })
 
 options(scipen=999)
+
+# rnorm(n = 100, 0, 0.1)
 
 ```
 
@@ -122,7 +125,7 @@ library(psych)
 # install.packages("haven")
 library(haven)
 
-# names(NEO)
+names(NEO)
 NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl, gewissen)) # Exlude Variables to use whole dataset for analysis
 # names(NEO)
 
