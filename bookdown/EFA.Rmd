@@ -42,7 +42,26 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+pre, code {
+  font-size: 11px; 
+}
+
+img {
+  max-width: 60%; 
+  height: auto; 
+}
+
+img[src*="fig-"], 
+img[class*="figure"] {
+  max-width: 60% !important;
+  max-height: 60% !important;
+  height: auto !important;
+}
+
 </style>
+
+
 
 Die explorative Faktorenanalyse (EFA) ist eine statistische Methode, die dazu dient, **Strukturen in einem Datensatz zu entdecken** und Gruppen von Variablen zu identifizieren, die gemeinsam variieren. Die EFA reduziert eine große Anzahl von Variablen auf eine kleinere Anzahl zugrunde liegender Dimensionen (**Faktoren**), was die Komplexität der Daten verringert und wesentliche Muster offenlegt. Dadurch können theoretische Modelle entwickelt oder überprüft werden (Abgrenzung zur **konfirmatorischen Faktorenanalyse**). Ein weiteres Ziel der EFA ist es, die Dimensionalität und Konstruktvalidität von Messinstrumenten zu überprüfen, um sicherzustellen, dass diese die postulierten Dimensionen valide erfassen.
 
@@ -87,6 +106,8 @@ NEO[] = lapply(NEO, function(x) {
   if (is.character(x)) as.numeric(x) else x
 })
 
+options(scipen=999)
+
 ```
 
 
@@ -101,21 +122,23 @@ library(psych)
 # install.packages("haven")
 library(haven)
 
-View(NEO)
-NEO = subset(NEO, select = -c(sex, age)) # Exlude Variables "sex" and "age" to use whole dataset for analysis
+
+names(NEO)
+NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl, gewissen)) # Exlude Variables to use whole dataset for analysis
 
 ```
 
-### Faktorenanzahl bestimmen
-#### Parallelanalyse mit Maximum-Likelihood (ML)-Methode
+---
 
+### Faktorenanzahl bestimmen
+#### Parallelanalyse 
 Die Bestimmung der optimalen Faktorenanzahl ist ein entscheidender Schritt in der explorativen Faktorenanalyse. Eine Möglichkeit, dies zu tun, ist die **Parallelanalyse**. Diese Methode vergleicht die Eigenwerte der empirischen Daten mit denen zufällig generierter Daten, um die Faktorenanzahl zu bestimmen, bei der die Eigenwerte der tatsächlichen Daten signifikant größer als die der zufälligen sind.
 
 In diesem Beispiel verwenden wir die Parallelanalyse in Kombination mit der **Maximum-Likelihood (ML)-Methode** zur Faktorextraktion. Die ML-Methode wählt Faktoren so, dass sie die beobachteten Korrelationen am besten durch latente Variablen erklären. Ein Vorteil der ML-Methode ist, dass sie statistische Tests zur Modellanpassung bietet, was die Bestimmung der Faktorenanzahl objektiver macht.
 
 ```{r Parallelanalyse mit ML, message=FALSE, warning=FALSE}
 
-fa.parallel(NEO, fm = "ml", fa = "fa", cor = "cor", SMC = TRUE, 
+fa.parallel(NEO, fa = "fa", fm = "ml", cor = "cor", SMC = TRUE, 
             n.iter = 1000, sim = FALSE, quant = 0.95, plot = TRUE)
 
 ```
@@ -126,18 +149,162 @@ Der Parameter `SMC = TRUE` stellt sicher, dass **quadratische multiple Korrelati
 
 Mit `sim = FALSE` geben wir an, dass die tatsächlichen Daten analysiert werden und keine simulierten Daten verwendet werden. Der Schwellenwert für die Parallelanalyse wird auf das **95. Perzentil** der zufällig generierten Eigenwerte festgelegt (`quant = 0.95`). Die Eigenwerte der Faktoren aus den tatsächlichen Daten müssen diesen Schwellenwert übertreffen, um als signifikant betrachtet zu werden. Schließlich wird mit `plot = TRUE` ein **Scree-Plot** erzeugt, der die Eigenwerte der tatsächlichen Daten im Vergleich zu den zufällig generierten Eigenwerten grafisch darstellt. Dies erleichtert die visuelle Bestimmung der optimalen Anzahl von Faktoren.
 
+---
 
-#### Minimal Average Partial (MAP)-Test und Bayesian Information Criterion (BIC) mit ML-Methode
-
+#### Minimal Average Partial (MAP)-Test und Bayesian Information Criterion (BIC) mit Maximum Likelihood (ML) Methode
 Der **Minimal Average Partial (MAP)-Test** ist eine Methode zur Bestimmung der optimalen Faktorenanzahl in der EFA. Im Gegensatz zur Parallelanalyse, die auf den Eigenwerten basiert, fokussiert sich der MAP-Test auf die Minimierung der durchschnittlichen partiellen Korrelationen zwischen den Variablen nach der Extraktion von Faktoren. Ziel des Tests ist es, die Anzahl der Faktoren zu bestimmen, bei der die verbleibenden Korrelationen am geringsten sind. Dies deutet darauf hin, dass diese Anzahl von Faktoren die zugrunde liegende Struktur der Daten am besten beschreibt.
 
 Das **Bayesian Information Criterion (BIC)** ist ein Modellvergleichsmaß, das zur Auswahl der optimalen Anzahl von Faktoren verwendet wird. Das BIC berücksichtigt die Modellanpassung und die Anzahl der Parameter (d.h. Faktoren), um das beste Modell zu bestimmen. Ein niedrigerer BIC-Wert deutet auf eine bessere Modellanpassung hin. Da BIC die Modellkomplexität berücksichtigt, bestraft es Modelle mit zu vielen Faktoren stärker, um Überanpassung zu vermeiden.
 
-In der Faktorenanalyse mit der **ML-Methode** wird das BIC verwendet, um Modelle zu vergleichen und das Modell mit der besten Balance zwischen Anpassung und Einfachheit zu identifizieren.
+Im Code wird die **Maximum-Likelihood (ML)-Methode** zur Faktorextraktion verwendet (`fm = "ml"`). Die **ML-Methode** schätzt die Faktoren so, dass die Korrelationen zwischen den Variablen am besten durch die latenten Faktoren erklärt werden. Dies ermöglicht präzisere Schätzungen und eine bessere Bewertung der Modellanpassung durch statistische Tests.
 
-```{r MAP und BIC mit ML, message=FALSE, warning=FALSE}
+```{r MAP und BIC, message=FALSE, warning=FALSE}
 
 VSS(NEO, rotate = "oblimin", fm = "ml", cor = "cor")
 
 ```
 
+In diesem Code wird die **Vielschichtigkeits-Analyse (VSS)** durchgeführt, um die Anzahl der zu extrahierenden Faktoren in einer Faktorenanalyse zu bestimmen. Die **VSS-Analyse** hilft dabei, die beste Anzahl von Faktoren zu ermitteln, die die Varianz in den Daten erklären. Die Berechnungen basieren auf der **Korrelationsmatrix** der Daten (`cor = "cor"`), was in der psychologischen Forschung üblich ist, da viele Tests auf den Interkorrelationen der Items beruhen.
+
+Im Code wird die **Maximum-Likelihood (ML)-Methode** zur Faktorextraktion verwendet (`fm = "ml"`). Die **ML-Methode** schätzt die Faktoren so, dass die Korrelationen zwischen den Variablen am besten durch die latenten Faktoren erklärt werden. Diese Methode ermöglicht präzisere Schätzungen und eine bessere Bewertung der Modellanpassung durch statistische Tests. Die Entscheidung, die ML-Methode zu verwenden, kann notwendig sein, um die Qualität der Schätzung zu verbessern und Modellanpassungen zu bewerten.
+
+Die Parameter im Code sind wie folgt:
+
+- **`rotate = "oblimin"`**: Dies gibt an, dass eine **oblique Rotation** (nicht orthogonal) durchgeführt wird. Die **Oblimin-Rotation** erlaubt es den Faktoren, miteinander korreliert zu sein, was häufig zu realistischeren und interpretierbaren Ergebnissen führt.
+
+**Zusammenfassung:** Die VSS-Analyse hilft bei der Entscheidung, wie viele Faktoren extrahiert werden sollten, um die Daten angemessen zu beschreiben. Die Verwendung der ML-Methode zur Faktorextraktion ermöglicht eine genauere Modellanpassung und -bewertung. Die oblique Rotation sorgt für interpretierbare Ergebnisse, indem sie die Korrelationen zwischen den Faktoren berücksichtigt.
+
+---
+
+#### Empirical Kaiser Criterion (EKC)
+
+Das **Empirical Kaiser Criterion (EKC)** basiert auf dem **Kaiser-Guttman-Kriterium**, das eine häufig verwendete Methode zur Bestimmung der Anzahl von Faktoren in einer explorativen Faktorenanalyse ist. Es filtert Faktoren mit **Eigenwerten größer als 1** heraus. Ein Eigenwert gibt an, wie viel Varianz in den Daten durch einen bestimmten Faktor erklärt wird; ein Wert über 1 deutet darauf hin, dass der Faktor mehr Varianz erklärt als ein einzelnes Item.
+
+```{r Faktorenanalyse Empirical Kaiser Criterion (EKC), warning=FALSE, message=FALSE, error=FALSE}
+
+n = nrow(NEO) # Anzahl der Beobachtungen (Zeilen) im Datensatz
+p = ncol(NEO) # Anzahl der Variablen (Spalten) im Datensatz
+
+dat_cor = cor(NEO) # Korrelationsmatrix des Datensatzes wird berechnet
+
+eigval = eigen(dat_cor)$values # Eigenwerte der Korrelationsmatrix werden berechnet und in "eigval" gespeichert
+
+comp = rep(0, p)# Vektor "comp" wird erstellt, um die Vergleichswerte für die Eigenwerte zu speichern
+
+for (j in 1:p) {
+  comp[j] = max(((1 + sqrt(p/n))^2) * (p - sum(comp[1:j-1])) / (p-j+1), 1)
+}
+
+```
+
+In diesem Code wird das **Empirical Kaiser Criterion (EKC)** zur Bestimmung der optimalen Anzahl von Faktoren berechnet.
+
+Die **Anzahl der Beobachtungen (`n`)** wird durch die Anzahl der Zeilen im Datensatz `NEO` ermittelt. Dies repräsentiert die Anzahl der Beobachtungen.
+Die **Anzahl der Variablen (`p`)** wird durch die Anzahl der Spalten im Datensatz berechnet. Dies gibt die Anzahl der Variablen an.
+Die **Korrelationsmatrix (`dat_cor`)** der Daten wird berechnet, um die Zusammenhänge zwischen den Variablen zu erfassen.
+Die **Eigenwerte (`eigval`)** der Korrelationsmatrix werden berechnet, die den Varianzanteil erklären, der durch die Faktoren beschrieben wird.
+Ein **Vektor für Vergleichswerte (`comp`)** wird erstellt. Die Vergleichswerte werden anhand einer Formel berechnet, die die Anzahl der Variablen, Beobachtungen und bereits berechneten Werte berücksichtigt.
+
+Dieser Prozess ermöglicht es, die Eigenwerte der empirischen Daten mit den Vergleichswerten zu vergleichen, um zu bestimmen, welche Anzahl von Faktoren signifikant ist und somit die zugrunde liegende Struktur der Daten beschreibt.
+
+---
+
+#### Oblimin Rotation ohne Kaiser-Normalisierung
+Die **Oblimin-Rotation** ist eine Methode zur Rotation von Faktoren in der Faktorenanalyse, die eine oblique (schiefe) Rotation ermöglicht. Dies bedeutet, dass die Faktoren korreliert sein können, was oft eine realistischere Darstellung der Daten liefert. Die Rotation hilft dabei, eine klarere und interpretierbare Struktur der Faktoren zu erhalten.
+
+In diesem Beispiel wird die **Oblimin-Rotation** ohne Kaiser-Normalisierung angewendet. Die Kaiser-Normalisierung, die üblicherweise verwendet wird, um die Skalen der Variablen zu standardisieren, wird hier nicht berücksichtigt.
+
+```{r Oblimin Rotation ohne Kaiser-Normalisierung, message=FALSE, warning=FALSE}
+
+fit1 = fa(NEO, nfactors = 5, rotate = "oblimin", residuals = TRUE, SMC = TRUE, cor = "cor", n.iter = 1000, p = 0.05)
+
+# fa()-Funktion aus dem "psych"-Paket führt eine Faktorenanalyse durch und rotiert die Faktoren mit der Oblimin-Methode. 
+
+fa.sort(fit1)
+
+```
+
+In diesem Code wird die **Faktorenanalyse** (`fa()`) mit der **Oblimin-Rotation** durchgeführt, wobei die Kaiser-Normalisierung nicht berücksichtigt wird.
+
+Die **Anzahl der zu extrahierenden Faktoren (`nfactors = 5`)** gibt an, dass fünf Faktoren extrahiert werden sollen.
+Die **Oblimin-Rotation (`rotate = "oblimin"`)** wird verwendet, eine Methode der obliquen Rotation, die es den Faktoren ermöglicht, miteinander korreliert zu sein.
+Mit **`residuals = TRUE`** werden die Residuen der Modellanpassung berechnet, um die Unterschiede zwischen den beobachteten und geschätzten Korrelationsmatrizen zu überprüfen.
+Die **quadratischen multiplen Korrelationen (`SMC = TRUE`)** werden zur Schätzung der Kommunalitäten verwendet, um die Menge der Varianz, die durch die Faktoren erklärt wird, besser abzuschätzen.
+Die **Korrelationsmatrix (`cor = "cor"`)** der Daten wird genutzt.
+# Die **Maximum-Likelihood-Methode (`fm = "ml"`)** wird zur Faktorextraktion verwendet, um die beobachteten Korrelationen durch die extrahierten Faktoren bestmöglich zu erklären.
+Mit **`n.iter = 2000`** wird die Anzahl der Iterationen auf 2000 gesetzt, um sicherzustellen, dass das Modell ausreichend konvergiert.
+Das **Signifikanzniveau (`p = 0.05`)** für die Tests wird festgelegt.
+
+Nach der Durchführung der Faktoranalyse wird `fa.sort(fit1)` verwendet, um die Ergebnisse der Rotation zu sortieren und die Interpretation der Faktoren und ihrer Ladungen zu erleichtern.
+
+---
+
+#### Oblimin-Rotation mit Kaiser-Normalisierung
+
+In diesem Code wird die **Faktorenanalyse** (`fa()`) ohne Rotation initial durchgeführt und anschließend mit der **Kaiser-Normalisierung** und **Oblimin-Rotation** angepasst.
+
+```{r Oblimin-Rotation mit Kaiser-Normalisierung, message=FALSE, warning=FALSE}
+
+fit2 = fa(NEO, nfactors = 5, rotate = "none", residuals = TRUE, SMC = TRUE)
+fit3 = kaiser(fit2, rotate = "oblimin")
+fa.sort(fit3)
+
+```
+
+In diesem Code wird eine **Faktorenanalyse** (`fa()`) durchgeführt, bei der zunächst keine Rotation angewendet wird, da **`rotate = "none"`** angegeben ist. # Die **Maximum-Likelihood-Methode (ML)** zur Faktorextraktion wird verwendet, wie durch **`fm = "ml"`** spezifiziert. #
+Die Anzahl der zu extrahierenden Faktoren wird durch **`nfactors = 5`** festgelegt, was bedeutet, dass fünf Faktoren extrahiert werden sollen.
+**`residuals = TRUE`** berechnet die Residuen der Modellanpassung, um die Unterschiede zwischen den beobachteten und geschätzten Korrelationsmatrizen zu überprüfen. **`SMC = TRUE`** verwendet die quadratischen multiplen Korrelationen (Squared Multiple Correlations) zur Schätzung der Kommunalitäten.
+Nachdem die Faktorenanalyse ohne Rotation durchgeführt wurde, wird die **Kaiser-Normalisierung** mit der **Oblimin-Rotation** angewendet. Die **`kaiser()`**-Funktion rotiert die extrahierten Faktoren mit der **Oblimin-Rotation**.
+
+Die Methode zur Anwendung der Oblimin-Rotation wird durch **`rotate = "oblimin"`** festgelegt. Schließlich wird **`fa.sort(fit3)`** verwendet, um die Ergebnisse der Rotation zu sortieren und die Interpretation der Faktoren und ihrer Ladungen zu erleichtern.
+
+---
+
+## Voraussetzungenprüfung für die Durchführung der EFA
+### Bartlett-Test
+Der **Bartlett-Test** überprüft, ob die Korrelationsmatrix der Daten signifikant von einer Einheitsmatrix abweicht. In der EFA ist dies wichtig, da eine signifikante Abweichung darauf hinweist, dass die Variablen korreliert sind und somit die Daten für eine Faktorenanalyse geeignet sind. Ein p-Wert unter 0,05 deutet auf signifikante Korrelationen hin, die die Durchführung der EFA unterstützen.
+
+```{r Bartlett-Test, message=FALSE, warning=FALSE}
+
+cor_matrix_NEO = cor(NEO)
+cortest.bartlett(cor_matrix_NEO, n = nrow(NEO), diag = TRUE)
+
+```
+
+Dieser Code berechnet zunächst die Korrelationsmatrix der Daten (`cor_matrix`) und führt dann den Bartlett-Test auf dieser Matrix durch. Die Anzahl der Beobachtungen wird mit `nrow(NEO)` bestimmt, und `diag = TRUE` sorgt dafür, dass die Diagonale der Korrelationsmatrix in den Test einbezogen wird.
+
+Der Bartlett-Test überprüft die Nullhypothese, dass die Korrelationsmatrix der Daten eine Identitätsmatrix ist. Eine Identitätsmatrix bedeutet, dass es keine signifikanten Korrelationen zwischen den Variablen gibt, was darauf hindeutet, dass keine Faktorenanalyse sinnvoll wäre.
+
+**Interpretation der Ergebnisse: p-Wert:** Der wichtigste Wert, den Sie aus dem Bartlett-Test erhalten, ist der p-Wert. Ein niedriger p-Wert (typischerweise unter 0,05) deutet darauf hin, dass die Nullhypothese abgelehnt werden kann, was bedeutet, dass die Korrelationsmatrix signifikant von einer Identitätsmatrix abweicht. Dies deutet darauf hin, dass die Daten für eine Faktorenanalyse geeignet sind. **Chi-Quadrat-Wert:** Der Chi-Quadrat-Wert gibt an, wie stark die beobachtete Korrelationsmatrix von der erwarteten Identitätsmatrix abweicht. Ein hoher Chi-Quadrat-Wert bei einem niedrigen p-Wert unterstützt die Annahme, dass eine Faktorenanalyse sinnvoll ist.
+
+Insgesamt sollten Sie bei einem signifikanten p-Wert den Bartlett-Test als Bestätigung dafür betrachten, dass die Korrelationsmatrix der Daten für eine Faktorenanalyse geeignet ist.
+
+---
+
+### Kaiser-Meyer-Olkin (KMO)-Test und Measure of Sampling Adequacy (MSA)
+Der **KMO-Test** bewertet die Angemessenheit der Stichprobe für die Faktorenanalyse. Der KMO-Wert liegt zwischen 0 und 1, wobei Werte nahe 1 auf eine hohe Eignung hinweisen. Werte unter 0,5 deuten auf eine geringe Eignung hin und können darauf hindeuten, dass die Daten nicht gut für die EFA geeignet sind.
+
+**MSA** wird für jede Variable individuell berechnet, um zu prüfen, ob jede Variable ausreichend für die EFA ist. MSA-Werte nahe 1 sind wünschenswert und zeigen an, dass die Variable gut für die EFA geeignet ist.
+
+```{r KMO und MSA, message=FALSE, warning=FALSE}
+
+KMO(NEO)
+
+```
+
+Der KMO-Test (Kaiser-Meyer-Olkin-Test) bewertet die Eignung der Daten für eine Faktorenanalyse, indem er die Verhältnisse der beobachteten Korrelationen zu den Partialkorrelationen misst. Er liefert einen Gesamt-KMO-Wert sowie MSA-Werte für jede einzelne Variable.
+
+**Interpretation der Ergebnisse:**
+
+- **Gesamt-KMO-Wert:** Der Gesamt-KMO-Wert liegt zwischen 0 und 1 und gibt an, wie gut die Daten für eine Faktorenanalyse geeignet sind.
+  - KMO-Wert < 0.5: Die Daten sind möglicherweise nicht für eine Faktorenanalyse geeignet.
+  - KMO-Wert zwischen 0.5 und 0.7: Es gibt einige Hinweise darauf, dass eine Faktorenanalyse sinnvoll sein könnte, aber die Daten sind nicht ideal.
+  - KMO-Wert zwischen 0.7 und 0.8: Gute Eignung für eine Faktorenanalyse.
+  - KMO-Wert > 0.8: Sehr gute Eignung für eine Faktorenanalyse.
+
+- **MSA-Werte für einzelne Variablen:** Diese Werte geben an, wie gut jede einzelne Variable für die Faktorenanalyse geeignet ist. Ein MSA-Wert von 0,6 oder höher wird allgemein als akzeptabel angesehen.
+  - MSA-Wert < 0.5: Die Variable ist möglicherweise nicht gut für die Faktorenanalyse geeignet.
+  - MSA-Wert zwischen 0.5 und 0.7: Die Variable könnte für eine Faktorenanalyse geeignet sein, aber es gibt Raum für Verbesserung.
+  - MSA-Wert > 0.7: Die Variable ist gut für die Faktorenanalyse geeignet.
+
+Zusammenfassend gibt der KMO-Test eine allgemeine Bewertung darüber, wie gut die Daten für eine Faktorenanalyse geeignet sind, sowohl insgesamt als auch für jede einzelne Variable.
