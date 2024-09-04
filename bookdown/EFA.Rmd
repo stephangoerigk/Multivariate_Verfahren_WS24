@@ -139,7 +139,5 @@ In der Faktorenanalyse mit der **ML-Methode** wird das BIC verwendet, um Modelle
 
 VSS(NEO, rotate = "oblimin", fm = "ml", cor = "cor")
 
-
-
 ```
 
