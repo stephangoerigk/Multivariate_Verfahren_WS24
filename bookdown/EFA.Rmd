@@ -122,9 +122,9 @@ library(psych)
 # install.packages("haven")
 library(haven)
 
-
-names(NEO)
+# names(NEO)
 NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl, gewissen)) # Exlude Variables to use whole dataset for analysis
+# names(NEO)
 
 ```
 
