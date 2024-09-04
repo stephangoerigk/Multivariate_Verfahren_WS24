@@ -10,7 +10,7 @@ output:
 <style>
 body {
   font-family: Arial, sans-serif;
-  font-size: 11px;  
+  font-size: 12px;  
   line-height: 1.6;
   margin: 20px;
   color: #333;
@@ -44,18 +44,18 @@ a:hover {
 }
 
 pre, code {
-  font-size: 11px; 
+  font-size: 12px; 
 }
 
 img {
-  max-width: 60%; 
+  max-width: 70%; 
   height: auto; 
 }
 
 img[src*="fig-"], 
 img[class*="figure"] {
-  max-width: 60% !important;
-  max-height: 60% !important;
+  max-width: 70% !important;
+  max-height: 70% !important;
   height: auto !important;
 }
 
