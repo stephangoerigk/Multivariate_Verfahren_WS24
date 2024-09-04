@@ -1,40 +1,146 @@
-#### Explorative Faktorenanalyse
+---
+title: "Explorative Faktorenanalyse"
+output: 
+  html_document:
+    number_sections: false
+    toc: true
+    toc_depth: 6
+---
 
-Die explorative Faktorenanalyse (EFA) ist eine statistische Methode, die dazu dient, **Strukturen in einem Datensatz zu entdecken** und Gruppen von Variablen zu identifizieren, die gemeinsam variieren. Die EFA reduziert eine große Anzahl von Variablen auf eine kleinere Anzahl zugrunde liegender Dimensionen (**Faktoren**), was die Komplexität der Daten verringert und wesentliche Muster offenlegt. Dadurch können theoretische Modelle entwickelt oder überprüft werden (**Abgrenzung zur konfirmatorischen Faktorenanalyse**). Ein weiteres Ziel der EFA ist es, die Dimensionalität und Konstruktvalidität von Messinstrumenten zu überprüfen, um sicherzustellen, dass diese die postulierten Dimensionen valide erfassen.
+<style>
+body {
+  font-family: Arial, sans-serif;
+  font-size: 11px;  
+  line-height: 1.6;
+  margin: 20px;
+  color: #333;
+}
 
-##### Zwei "Unterfamilien" faktorenanalytischer Methoden
+h1.title {
+  font-size: 20px;  
+  color: #444;
+  font-weight: bold;
+}
+
+h1, h2, h3 {
+  font-size: 14px;  
+  color: #444;
+  font-weight: bold;
+}
+
+h4, h5, h6, h7, h8 {
+  font-size: 14px;  
+  color: #444;
+  font-weight: bold;
+}
+
+a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>
+
+Die explorative Faktorenanalyse (EFA) ist eine statistische Methode, die dazu dient, **Strukturen in einem Datensatz zu entdecken** und Gruppen von Variablen zu identifizieren, die gemeinsam variieren. Die EFA reduziert eine große Anzahl von Variablen auf eine kleinere Anzahl zugrunde liegender Dimensionen (**Faktoren**), was die Komplexität der Daten verringert und wesentliche Muster offenlegt. Dadurch können theoretische Modelle entwickelt oder überprüft werden (Abgrenzung zur **konfirmatorischen Faktorenanalyse**). Ein weiteres Ziel der EFA ist es, die Dimensionalität und Konstruktvalidität von Messinstrumenten zu überprüfen, um sicherzustellen, dass diese die postulierten Dimensionen valide erfassen.
+
+## Zwei "Unterfamilien" faktorenanalytischer Methoden
+
 - **Konfirmatorische Faktorenanalyse (CFA):** Eine **hypothesenprüfende** Methode, bei der ein vorab festgelegtes Modell getestet wird, das die Zuordnung von Indikatoren zu latenten Variablen definiert. Ziel der CFA ist es, die Passung des Modells zu den beobachteten Daten zu überprüfen.
+
 - **Explorative Faktorenanalyse (EFA):** Eine **hypothesengenerierende** Methode, die verwendet wird, wenn die Zuordnung der Indikatoren zu den latenten Variablen noch unbekannt ist. Ziel der EFA ist es, verborgene Faktorenstrukturen in den Daten zu entdecken.
 
 Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifizieren, die die Zusammenhänge zwischen den Variablen erklären.
 
-##### Grundlegendes
+## Grundlegendes
+
 - **Korrelation manifester Variablen:** Die EFA basiert auf der Beobachtung, dass Korrelationen zwischen manifesten (direkt gemessenen) Variablen auf zugrunde liegende Strukturen hinweisen.
+
 - **Erklärung der Zusammenhänge:** Die zentrale Idee der EFA ist, dass die beobachteten Zusammenhänge durch latente Variablen erklärt werden, die die Variationen in den manifesten Variablen verursachen.
 
-##### Implikationen der Faktorenanalyse
+## Implikationen der Faktorenanalyse
+
 - **Manifeste Variablen als Indikatoren:** Manifeste Variablen dienen als Indikatoren für latente Variablen, wodurch Variationen in den gemessenen Variablen durch diese zugrunde liegenden Faktoren erklärt werden.
+
 - **Unkorrelierte Messwerte nach Kontrolle der latenten Variablen:** Nach Berücksichtigung der latenten Variablen sollten die verbleibenden Messwerte der manifesten Variablen unkorreliert sein, da die latenten Variablen die wesentlichen Zusammenhänge erklären.
 
 ---
 
-***
+## Beispiel zur Anwendung der Explorativen Faktorenanalyse (EFA)
 
-___
+Um die Anwendung der EFA zu verdeutlichen, betrachten wir ein Beispiel mit simulierten Daten des NEO-Fünf-Faktoren-Inventars (NEO-FFI). Das NEO-FFI ist ein weit verbreitetes psychometrisches Instrument zur Messung der fünf grundlegenden Dimensionen der Persönlichkeit: **Neurotizismus, Extraversion, Offenheit für Erfahrungen, Verträglichkeit** und **Gewissenhaftigkeit**.
 
-##### Beispiel zur Anwendung der Explorativen Faktorenanalyse (EFA)
-Um die Anwendung der EFA zu verdeutlichen, werden wir im Folgenden ein Beispiel mit simulierten Daten des NEO-Fünf-Faktoren-Inventars (NEO-FFI) betrachten. Das NEO-FFI ist ein weit verbreitetes psychometrisches Instrument zur Messung der fünf grundlegenden Dimensionen der Persönlichkeit: Neurotizismus, Extraversion, Offenheit für Erfahrungen, Verträglichkeit und Gewissenhaftigkeit.
+In diesem Beispiel sollen die simulierten, bereits korrekt gepolten Daten explorativ untersucht werden, um zu überprüfen, ob die Daten die erwartete Fünf-Faktoren-Struktur wiederspiegeln. Das Ziel der EFA in diesem Kontext ist es, festzustellen, ob die Dimensionen des NEO-FFI durch die zugrunde liegenden Faktoren in den simulierten Daten korrekt repräsentiert werden.
 
-In diesem Beispiel sollen die simulierten Daten explorativ untersucht werden, um zu überprüfen, ob die Daten die erwartete Fünf-Faktoren-Struktur widerspiegeln. Das Ziel der EFA in diesem Kontext ist es, festzustellen, ob die Dimensionen des NEO-FFI durch die zugrunde liegenden Faktoren in den simulierten Daten korrekt repräsentiert werden.
+```{r DataSet, include = FALSE}
 
+library(readr)
+NEO = read_csv("~/Desktop/NEO_FFI.csv")
 
-```{r Data, echo=F, message=FALSE, warning=FALSE}
+NEO[] = lapply(NEO, function(x) {
+  if (is.factor(x)) as.numeric(as.character(x)) else x
+})
 
-# NEO = read.csv("https://raw.githubusercontent.com/janikasaretzki/CFH_Dat_MVV/main/NEO_FFI.csv?token=GHSAT0AAAAAACWBTIGTQCDH6KWJRHMHAQTWZWVOY2A")
+NEO[] = lapply(NEO, function(x) {
+  if (is.character(x)) as.numeric(x) else x
+})
 
-# Rep aktuell noch privat, daher na
 ```
+
 
 ```{r Setup, echo=F, message=FALSE, warning=FALSE}
 
+# install.packages("foreign")
+library(foreign)
+
+# install.packages("psych") 
+library(psych)
+
+# install.packages("haven")
+library(haven)
+
+View(NEO)
+NEO = subset(NEO, select = -c(sex, age)) # Exlude Variables "sex" and "age" to use whole dataset for analysis
+
 ```
+
+### Faktorenanzahl bestimmen
+#### Parallelanalyse mit Maximum-Likelihood (ML)-Methode
+
+Die Bestimmung der optimalen Faktorenanzahl ist ein entscheidender Schritt in der explorativen Faktorenanalyse. Eine Möglichkeit, dies zu tun, ist die **Parallelanalyse**. Diese Methode vergleicht die Eigenwerte der empirischen Daten mit denen zufällig generierter Daten, um die Faktorenanzahl zu bestimmen, bei der die Eigenwerte der tatsächlichen Daten signifikant größer als die der zufälligen sind.
+
+In diesem Beispiel verwenden wir die Parallelanalyse in Kombination mit der **Maximum-Likelihood (ML)-Methode** zur Faktorextraktion. Die ML-Methode wählt Faktoren so, dass sie die beobachteten Korrelationen am besten durch latente Variablen erklären. Ein Vorteil der ML-Methode ist, dass sie statistische Tests zur Modellanpassung bietet, was die Bestimmung der Faktorenanzahl objektiver macht.
+
+```{r Parallelanalyse mit ML, message=FALSE, warning=FALSE}
+
+fa.parallel(NEO, fm = "ml", fa = "fa", cor = "cor", SMC = TRUE, 
+            n.iter = 1000, sim = FALSE, quant = 0.95, plot = TRUE)
+
+```
+
+In diesem Code wird die **Parallelanalyse** mit der **Maximum-Likelihood (ML)-Methode** durchgeführt. Die **ML-Methode** (`fm = "ml"`) zielt darauf ab, die Korrelationen zwischen den beobachteten Variablen durch latente Faktoren zu erklären. Wir spezifizieren, dass eine **Faktorenanalyse** durchgeführt wird (`fa = "fa"`), um die zugrunde liegenden Faktorenstrukturen zu identifizieren. Die Berechnungen basieren auf der **Korrelationsmatrix** der Daten (`cor = "cor"`), was bei psychologischen Tests üblich ist, da diese oft auf Interkorrelationen zwischen den Items basieren.
+
+Der Parameter `SMC = TRUE` stellt sicher, dass **quadratische multiple Korrelationen (Squared Multiple Correlations, SMC)** für die Hauptdiagonale der Korrelationsmatrix verwendet werden, um die Kommunalitäten besser zu schätzen, d.h. den Anteil der Varianz, der durch die Faktoren erklärt wird. Zudem wird die Anzahl der Iterationen auf **1.000** festgelegt (`n.iter = 1000`), um stabile Ergebnisse sicherzustellen.
+
+Mit `sim = FALSE` geben wir an, dass die tatsächlichen Daten analysiert werden und keine simulierten Daten verwendet werden. Der Schwellenwert für die Parallelanalyse wird auf das **95. Perzentil** der zufällig generierten Eigenwerte festgelegt (`quant = 0.95`). Die Eigenwerte der Faktoren aus den tatsächlichen Daten müssen diesen Schwellenwert übertreffen, um als signifikant betrachtet zu werden. Schließlich wird mit `plot = TRUE` ein **Scree-Plot** erzeugt, der die Eigenwerte der tatsächlichen Daten im Vergleich zu den zufällig generierten Eigenwerten grafisch darstellt. Dies erleichtert die visuelle Bestimmung der optimalen Anzahl von Faktoren.
+
+
+#### Minimal Average Partial (MAP)-Test und Bayesian Information Criterion (BIC) mit ML-Methode
+
+Der **Minimal Average Partial (MAP)-Test** ist eine Methode zur Bestimmung der optimalen Faktorenanzahl in der EFA. Im Gegensatz zur Parallelanalyse, die auf den Eigenwerten basiert, fokussiert sich der MAP-Test auf die Minimierung der durchschnittlichen partiellen Korrelationen zwischen den Variablen nach der Extraktion von Faktoren. Ziel des Tests ist es, die Anzahl der Faktoren zu bestimmen, bei der die verbleibenden Korrelationen am geringsten sind. Dies deutet darauf hin, dass diese Anzahl von Faktoren die zugrunde liegende Struktur der Daten am besten beschreibt.
+
+Das **Bayesian Information Criterion (BIC)** ist ein Modellvergleichsmaß, das zur Auswahl der optimalen Anzahl von Faktoren verwendet wird. Das BIC berücksichtigt die Modellanpassung und die Anzahl der Parameter (d.h. Faktoren), um das beste Modell zu bestimmen. Ein niedrigerer BIC-Wert deutet auf eine bessere Modellanpassung hin. Da BIC die Modellkomplexität berücksichtigt, bestraft es Modelle mit zu vielen Faktoren stärker, um Überanpassung zu vermeiden.
+
+In der Faktorenanalyse mit der **ML-Methode** wird das BIC verwendet, um Modelle zu vergleichen und das Modell mit der besten Balance zwischen Anpassung und Einfachheit zu identifizieren.
+
+```{r MAP und BIC mit ML, message=FALSE, warning=FALSE}
+
+VSS(NEO, rotate = "oblimin", fm = "ml", cor = "cor")
+
+
+
+
+```
+
