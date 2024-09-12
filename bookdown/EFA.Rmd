@@ -44,7 +44,12 @@ a:hover {
 }
 
 pre, code {
-  font-size: 12px; 
+  font-size: 11px;  
+  background-color: #f7f7f7;  
+  padding: 8px;  
+  border: 1px solid #ddd;  
+  border-radius: 4px;  
+  overflow-x: auto;  
 }
 
 img {
@@ -93,10 +98,14 @@ Um die Anwendung der EFA zu verdeutlichen, betrachten wir ein Beispiel mit simul
 
 In diesem Beispiel sollen die simulierten, bereits korrekt gepolten Daten explorativ untersucht werden, um zu überprüfen, ob die Daten die erwartete Fünf-Faktoren-Struktur wiederspiegeln. Das Ziel der EFA in diesem Kontext ist es, festzustellen, ob die Dimensionen des NEO-FFI durch die zugrunde liegenden Faktoren in den simulierten Daten korrekt repräsentiert werden.
 
+<font color='darkred'>Hinweis: In unserem Beispiel könnte man argumentieren, dass die CFA eine geeignetere Methode wäre, da die Fünf-Faktoren-Struktur gut etabliert erscheint. Die CFA würde dabei helfen, die Hypothese zu überprüfen, dass genau diese fünf Faktoren den Daten zugrunde liegen.
+
+Wir wollen in diesem Fall jedoch davon ausgehen, dass die Struktur der Daten noch nicht vollständig bekannt ist. **Stellen Sie sich vor, wir stehen noch vor der Entdeckung dieser Struktur:** Wir haben eine Sammlung von Variablen, die möglicherweise durch zugrunde liegende Faktoren erklärt werden können, kennen jedoch weder die Anzahl noch die Natur dieser Faktoren. In einer solchen Situation ist die EFA die Methode der Wahl.</font>
+
 ```{r DataSet, include = FALSE}
 
 library(readr)
-NEO = read_csv("~/Desktop/NEO_FFI.csv")
+NEO = read_csv("~/Desktop/NEO_FFI_original.csv")
 nrow(NEO)
 
 NEO[] = lapply(NEO, function(x) {
@@ -109,48 +118,109 @@ NEO[] = lapply(NEO, function(x) {
 
 options(scipen=999)
 
-# rnorm(n = 100, 0, 0.1)
+NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl, gewissen)) 
 
-```
-
-
-```{r Setup, echo=F, message=FALSE, warning=FALSE}
-
-# install.packages("foreign")
-library(foreign)
-
-# install.packages("psych") 
-library(psych)
-
-# install.packages("haven")
-library(haven)
-
-names(NEO)
-NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl, gewissen)) # Exlude Variables to use whole dataset for analysis
-# names(NEO)
+# set.seed(123)  
+# 
+# NEO = as.data.frame(lapply(NEO, function(x) {
+#   if (is.numeric(x)) {
+#     rnorm(n = length(x), mean = 0, sd = 0.1)
+#   } else {
+#     x
+#   }
+# }))
+# 
+# if (!require("openxlsx")) {
+#   install.packages("openxlsx")
+# }
+# library(openxlsx)
+# 
+# write.xlsx(NEO, "NEO.xlsx")
 
 ```
 
 ---
 
-### Faktorenanzahl bestimmen
-#### Parallelanalyse 
-Die Bestimmung der optimalen Faktorenanzahl ist ein entscheidender Schritt in der explorativen Faktorenanalyse. Eine Möglichkeit, dies zu tun, ist die **Parallelanalyse**. Diese Methode vergleicht die Eigenwerte der empirischen Daten mit denen zufällig generierter Daten, um die Faktorenanzahl zu bestimmen, bei der die Eigenwerte der tatsächlichen Daten signifikant größer als die der zufälligen sind.
+### Setup
+```{r Setup, message=FALSE, warning=FALSE}
 
-In diesem Beispiel verwenden wir die Parallelanalyse in Kombination mit der **Maximum-Likelihood (ML)-Methode** zur Faktorextraktion. Die ML-Methode wählt Faktoren so, dass sie die beobachteten Korrelationen am besten durch latente Variablen erklären. Ein Vorteil der ML-Methode ist, dass sie statistische Tests zur Modellanpassung bietet, was die Bestimmung der Faktorenanzahl objektiver macht.
-
-```{r Parallelanalyse mit ML, message=FALSE, warning=FALSE}
-
-fa.parallel(NEO, fa = "fa", fm = "ml", cor = "cor", SMC = TRUE, 
-            n.iter = 1000, sim = FALSE, quant = 0.95, plot = TRUE)
+# install.packages("psych")
+library(psych)
 
 ```
 
-In diesem Code wird die **Parallelanalyse** mit der **Maximum-Likelihood (ML)-Methode** durchgeführt. Die **ML-Methode** (`fm = "ml"`) zielt darauf ab, die Korrelationen zwischen den beobachteten Variablen durch latente Faktoren zu erklären. Wir spezifizieren, dass eine **Faktorenanalyse** durchgeführt wird (`fa = "fa"`), um die zugrunde liegenden Faktorenstrukturen zu identifizieren. Die Berechnungen basieren auf der **Korrelationsmatrix** der Daten (`cor = "cor"`), was bei psychologischen Tests üblich ist, da diese oft auf Interkorrelationen zwischen den Items basieren.
+---
 
-Der Parameter `SMC = TRUE` stellt sicher, dass **quadratische multiple Korrelationen (Squared Multiple Correlations, SMC)** für die Hauptdiagonale der Korrelationsmatrix verwendet werden, um die Kommunalitäten besser zu schätzen, d.h. den Anteil der Varianz, der durch die Faktoren erklärt wird. Zudem wird die Anzahl der Iterationen auf **1.000** festgelegt (`n.iter = 1000`), um stabile Ergebnisse sicherzustellen.
+### Prüfung der Anwendungsvoraussetzungen für eine Explorative Faktorenanalyse
+Bevor die EFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:
 
-Mit `sim = FALSE` geben wir an, dass die tatsächlichen Daten analysiert werden und keine simulierten Daten verwendet werden. Der Schwellenwert für die Parallelanalyse wird auf das **95. Perzentil** der zufällig generierten Eigenwerte festgelegt (`quant = 0.95`). Die Eigenwerte der Faktoren aus den tatsächlichen Daten müssen diesen Schwellenwert übertreffen, um als signifikant betrachtet zu werden. Schließlich wird mit `plot = TRUE` ein **Scree-Plot** erzeugt, der die Eigenwerte der tatsächlichen Daten im Vergleich zu den zufällig generierten Eigenwerten grafisch darstellt. Dies erleichtert die visuelle Bestimmung der optimalen Anzahl von Faktoren.
+- **Korrelation zwischen den Variablen:** Die im Fokus stehenden Variablen müssen ausreichend miteinander korrelieren, damit latente Faktoren identifiziert werden können. Dies wird durch den Bartlett-Test überprüft.
+- **Kaiser-Meyer-Olkin (KMO) Test:** Der KMO-Test bewertet die Eignung der Daten für die EFA. Werte über 0,5 gelten als akzeptabel, über 0,8 als gut.
+
+Darüber hinaus sollten folgende Punkte berücksichtigt werden:
+- **Stichprobengröße:** Eine allgemeine Faustregel besagt, dass pro Variable mindestens 5 bis 10 Beobachtungen vorliegen sollten, um stabile Ergebnisse zu gewährleisten. Bei komplexen Modellen oder schwachen Korrelationen kann eine größere Stichprobe erforderlich sein (mindestens 300 Beobachtungen).
+- **Multikollinearität:** Zu starke Korrelationen zwischen den Variablen (Multikollinearität) können die Analyse verzerren. Eine Möglichkeit zur Überprüfung ist die Determinante der Korrelationsmatrix. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin und sollte vermieden werden.
+
+```{r Voraussetzungen EFA, message=FALSE, warning=FALSE}
+
+# Bartlett-Test
+cor_matrix_NEO = cor(NEO)
+cortest.bartlett(cor_matrix_NEO, n = nrow(NEO), diag = TRUE)
+
+# KMO Test
+KMO(NEO)
+
+# Determinante der Korrelationsmatrix
+det(cor_matrix_NEO)
+
+```
+
+Die Ergebnisse zeigen, dass die Daten für die EFA geeignet sind. Der Bartlett-Test ist signifikant, was darauf hinweist, dass zwischen den Variablen ausreichende Korrelationen bestehen. Der KMO Wert liegt über der kritischen Schwelle von 0.50. Einige Variablen weisen MSA-Werte unter 0,5 auf, was auf eine geringere Eignung dieser Items hinweist. Insgesamt ist die Durchführung einer EFA jedoch gerechtfertigt, auch wenn schwächere Variablen möglicherweise überdacht oder entfernt werden sollten.
+
+---
+
+### 1. Auswahl und Begründung der Methode der Faktorenextraktion
+Nachdem wir die Voraussetzungen für die EFA überprüft haben und festgestellt wurde, dass die Daten grundsätzlich geeignet sind, geht es nun um die Auswahl der richtigen Methode zur Faktorenextraktion. Diese Wahl hängt von der Zielsetzung der Analyse ab. In der EFA werden häufig die Hauptkomponentenanalyse (engl. Principal Component Analysis, PCA) und die Hauptachsenanalyse (engl. Principal Factor Analysis, PFA) verwendet.
+
+- Die PFA fokussiert sich auf die gemeinsame Varianz zwischen den Variablen und wird häufig verwendet, wenn das Ziel darin besteht, latente Faktoren zu identifizieren, die den beobachteten Variablen zugrunde liegen. Da sie die spezifische Varianz und Fehleranteile nicht berücksichtigt, ist sie besonders nützlich, wenn man an den zugrunde liegenden Strukturen interessiert ist, die die Variablen erklären. Dies ist in unserem Fall besonders relevant, da wir die latenten Persönlichkeitsfaktoren der NEO-Daten identifizieren wollen.
+- Im Gegensatz dazu berücksichtigt die PCA sowohl die gemeinsame als auch die spezifische Varianz und wird häufig verwendet, wenn man die gesamte Varianz der Daten erklären möchte. Sie eignet sich gut zur Datenreduktion, wenn die Zielsetzung eher explorativ ist.
+
+In dieser Analyse liegt der Fokus darauf, die zugrunde liegenden latenten Strukturen zu entdecken, die die Variablen des NEO-Tests beeinflussen. Daher ist die PFA die geeignetere Methode, da sie spezifisch darauf abzielt, nur die gemeinsame Varianz zu erklären und latente Faktoren zu extrahieren.
+
+Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code anzugeben, da die Faktorenextraktion in den späteren Schritten der Analyse definiert wird. Die Implementierung der PFA erfolgt im entsprechenden Codeabschnitt, sobald die praktische Analyse beginnt.
+
+---
+
+### 2. Faktorenanzahl bestimmen
+Ein entscheidender Schritt in der EFA ist die Bestimmung der optimalen Anzahl der zu extrahierenden Faktoren. Diese Entscheidung hängt von mehreren Kriterien ab, die sicherstellen sollen, dass nur die wesentlichen latenten Strukturen erfasst werden, ohne unnötig viele Faktoren zu extrahieren.
+
+Zu den gängigsten Methoden zur Bestimmung der Faktorenanzahl gehören:
+
+- **Kaiser-Kriterium**: Nach dem Kaiser-Kriterium werden nur die Faktoren beibehalten, deren Eigenwerte größer als 1 sind. Ein Eigenwert über 1 bedeutet, dass der Faktor mehr Varianz erklärt, als eine einzelne Variable erklären würde. Diese Methode ist einfach anzuwenden, aber sie kann dazu neigen, zu viele Faktoren zu identifizieren.
+
+- **Scree-Test**: Der Scree-Test visualisiert die Eigenwerte in einer absteigenden Reihenfolge in einem sogenannten "Scree-Plot". Man sucht nach einem "Knick" in der Kurve, ab dem die Eigenwerte nur noch geringfügig sinken. Die Anzahl der Faktoren wird dann bis zu diesem Knick festgelegt. Diese Methode wird häufig verwendet, da sie die Anzahl der relevanten Faktoren grafisch verdeutlicht.
+
+- **Parallelanalyse**: Diese Methode vergleicht die Eigenwerte der realen Daten mit zufällig generierten Daten. Nur die Faktoren, deren Eigenwerte die der Zufallsdaten übersteigen, werden als signifikant betrachtet. Die Parallelanalyse gilt als eine der zuverlässigsten Methoden zur Bestimmung der Faktorenanzahl.
+
+- **Interpretierbarkeit**: Letztlich sollte die Anzahl der Faktoren auch anhand ihrer inhaltlichen und theoretischen Interpretierbarkeit festgelegt werden. Selbst wenn ein statistisches Kriterium eine bestimmte Anzahl von Faktoren vorschlägt, sollte geprüft werden, ob diese Faktoren sinnvoll interpretiert werden können.
+
+In dieser Analyse verwenden wir eine Kombination aus dem Scree-Test und der Parallelanalyse, um die optimale Anzahl an Faktoren zu bestimmen. Dies stellt sicher, dass sowohl statistische Kriterien als auch die Interpretierbarkeit berücksichtigt werden.
+
+```{r Faktorenanzahl bestimmen, message=FALSE, warning=FALSE}
+
+# Kaiser-Kriterium: Eigenwerte über 1 extrahieren
+eigenvalues = eigen(cor(NEO))$values
+sum(eigenvalues > 1)
+
+# Scree-Test: Scree-Plot 
+scree(NEO)
+
+# Parallelanalyse: Vergleich der Eigenwerte mit Zufallsdaten
+fa.parallel(NEO, fa = "fa", fm = "ml", n.iter = 1000, quant = 0.95, plot = TRUE)
+
+```
+
+Die Ergebnisse der Scree-Plot- und Parallelanalyse zeigen, dass 5 Faktoren die zugrunde liegenden Strukturen der Daten am besten erklären. Der Scree-Plot weist auf einen deutlichen Knick nach dem fünften Faktor hin, was darauf hindeutet, dass zusätzliche Faktoren keinen signifikanten Beitrag zur Erklärung der Varianz leisten. Die Parallelanalyse bestätigt diese Interpretation, da die Eigenwerte der tatsächlichen Daten bis zum fünften Faktor über den zufällig generierten Eigenwerten liegen. Dies bedeutet, dass die fünf extrahierten Faktoren die wesentlichen latenten Strukturen der Daten repräsentieren.
 
 ---
 
@@ -262,52 +332,3 @@ Nachdem die Faktorenanalyse ohne Rotation durchgeführt wurde, wird die **Kaiser
 Die Methode zur Anwendung der Oblimin-Rotation wird durch **`rotate = "oblimin"`** festgelegt. Schließlich wird **`fa.sort(fit3)`** verwendet, um die Ergebnisse der Rotation zu sortieren und die Interpretation der Faktoren und ihrer Ladungen zu erleichtern.
 
 ---
-
-## Voraussetzungenprüfung für die Durchführung der EFA
-### Bartlett-Test
-Der **Bartlett-Test** überprüft, ob die Korrelationsmatrix der Daten signifikant von einer Einheitsmatrix abweicht. In der EFA ist dies wichtig, da eine signifikante Abweichung darauf hinweist, dass die Variablen korreliert sind und somit die Daten für eine Faktorenanalyse geeignet sind. Ein p-Wert unter 0,05 deutet auf signifikante Korrelationen hin, die die Durchführung der EFA unterstützen.
-
-```{r Bartlett-Test, message=FALSE, warning=FALSE}
-
-cor_matrix_NEO = cor(NEO)
-cortest.bartlett(cor_matrix_NEO, n = nrow(NEO), diag = TRUE)
-
-```
-
-Dieser Code berechnet zunächst die Korrelationsmatrix der Daten (`cor_matrix`) und führt dann den Bartlett-Test auf dieser Matrix durch. Die Anzahl der Beobachtungen wird mit `nrow(NEO)` bestimmt, und `diag = TRUE` sorgt dafür, dass die Diagonale der Korrelationsmatrix in den Test einbezogen wird.
-
-Der Bartlett-Test überprüft die Nullhypothese, dass die Korrelationsmatrix der Daten eine Identitätsmatrix ist. Eine Identitätsmatrix bedeutet, dass es keine signifikanten Korrelationen zwischen den Variablen gibt, was darauf hindeutet, dass keine Faktorenanalyse sinnvoll wäre.
-
-**Interpretation der Ergebnisse: p-Wert:** Der wichtigste Wert, den Sie aus dem Bartlett-Test erhalten, ist der p-Wert. Ein niedriger p-Wert (typischerweise unter 0,05) deutet darauf hin, dass die Nullhypothese abgelehnt werden kann, was bedeutet, dass die Korrelationsmatrix signifikant von einer Identitätsmatrix abweicht. Dies deutet darauf hin, dass die Daten für eine Faktorenanalyse geeignet sind. **Chi-Quadrat-Wert:** Der Chi-Quadrat-Wert gibt an, wie stark die beobachtete Korrelationsmatrix von der erwarteten Identitätsmatrix abweicht. Ein hoher Chi-Quadrat-Wert bei einem niedrigen p-Wert unterstützt die Annahme, dass eine Faktorenanalyse sinnvoll ist.
-
-Insgesamt sollten Sie bei einem signifikanten p-Wert den Bartlett-Test als Bestätigung dafür betrachten, dass die Korrelationsmatrix der Daten für eine Faktorenanalyse geeignet ist.
-
----
-
-### Kaiser-Meyer-Olkin (KMO)-Test und Measure of Sampling Adequacy (MSA)
-Der **KMO-Test** bewertet die Angemessenheit der Stichprobe für die Faktorenanalyse. Der KMO-Wert liegt zwischen 0 und 1, wobei Werte nahe 1 auf eine hohe Eignung hinweisen. Werte unter 0,5 deuten auf eine geringe Eignung hin und können darauf hindeuten, dass die Daten nicht gut für die EFA geeignet sind.
-
-**MSA** wird für jede Variable individuell berechnet, um zu prüfen, ob jede Variable ausreichend für die EFA ist. MSA-Werte nahe 1 sind wünschenswert und zeigen an, dass die Variable gut für die EFA geeignet ist.
-
-```{r KMO und MSA, message=FALSE, warning=FALSE}
-
-KMO(NEO)
-
-```
-
-Der KMO-Test (Kaiser-Meyer-Olkin-Test) bewertet die Eignung der Daten für eine Faktorenanalyse, indem er die Verhältnisse der beobachteten Korrelationen zu den Partialkorrelationen misst. Er liefert einen Gesamt-KMO-Wert sowie MSA-Werte für jede einzelne Variable.
-
-**Interpretation der Ergebnisse:**
-
-- **Gesamt-KMO-Wert:** Der Gesamt-KMO-Wert liegt zwischen 0 und 1 und gibt an, wie gut die Daten für eine Faktorenanalyse geeignet sind.
-  - KMO-Wert < 0.5: Die Daten sind möglicherweise nicht für eine Faktorenanalyse geeignet.
-  - KMO-Wert zwischen 0.5 und 0.7: Es gibt einige Hinweise darauf, dass eine Faktorenanalyse sinnvoll sein könnte, aber die Daten sind nicht ideal.
-  - KMO-Wert zwischen 0.7 und 0.8: Gute Eignung für eine Faktorenanalyse.
-  - KMO-Wert > 0.8: Sehr gute Eignung für eine Faktorenanalyse.
-
-- **MSA-Werte für einzelne Variablen:** Diese Werte geben an, wie gut jede einzelne Variable für die Faktorenanalyse geeignet ist. Ein MSA-Wert von 0,6 oder höher wird allgemein als akzeptabel angesehen.
-  - MSA-Wert < 0.5: Die Variable ist möglicherweise nicht gut für die Faktorenanalyse geeignet.
-  - MSA-Wert zwischen 0.5 und 0.7: Die Variable könnte für eine Faktorenanalyse geeignet sein, aber es gibt Raum für Verbesserung.
-  - MSA-Wert > 0.7: Die Variable ist gut für die Faktorenanalyse geeignet.
-
-Zusammenfassend gibt der KMO-Test eine allgemeine Bewertung darüber, wie gut die Daten für eine Faktorenanalyse geeignet sind, sowohl insgesamt als auch für jede einzelne Variable.
