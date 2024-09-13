@@ -44,7 +44,7 @@ a:hover {
 }
 
 pre, code {
-  font-size: 12px;  
+  font-size: 11px;  
   background-color: #f7f7f7;  
   padding: 8px;  
   border: 1px solid #ddd;  
@@ -103,7 +103,7 @@ Wir wollen in diesem Fall jedoch davon ausgehen, dass die Struktur der Daten noc
 ```{r DataSet, include = FALSE}
 
 library(readr)
-NEO = read_csv("~/Desktop/NEO.csv")
+NEO = read_csv("/Users/jani/Desktop/CFH/Multivariate_Verfahren_WS24/bookdown/NEO.csv")
 nrow(NEO)
 
 NEO[] = lapply(NEO, function(x) {
