@@ -44,7 +44,7 @@ a:hover {
 }
 
 pre, code {
-  font-size: 11px;  
+  font-size: 12px;  
   background-color: #f7f7f7;  
   padding: 8px;  
   border: 1px solid #ddd;  
@@ -53,20 +53,18 @@ pre, code {
 }
 
 img {
-  max-width: 70%; 
+  max-width: 60%; 
   height: auto; 
 }
 
 img[src*="fig-"], 
 img[class*="figure"] {
-  max-width: 70% !important;
-  max-height: 70% !important;
+  max-width: 60% !important;
+  max-height: 60% !important;
   height: auto !important;
 }
 
 </style>
-
-
 
 Die explorative Faktorenanalyse (EFA) ist eine statistische Methode, die dazu dient, **Strukturen in einem Datensatz zu entdecken** und Gruppen von Variablen zu identifizieren, die gemeinsam variieren. Die EFA reduziert eine große Anzahl von Variablen auf eine kleinere Anzahl zugrunde liegender Dimensionen (**Faktoren**), was die Komplexität der Daten verringert und wesentliche Muster offenlegt. Dadurch können theoretische Modelle entwickelt oder überprüft werden (Abgrenzung zur **konfirmatorischen Faktorenanalyse**). Ein weiteres Ziel der EFA ist es, die Dimensionalität und Konstruktvalidität von Messinstrumenten zu überprüfen, um sicherzustellen, dass diese die postulierten Dimensionen valide erfassen.
 
@@ -92,7 +90,7 @@ Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifi
 
 ---
 
-## Beispiel zur Anwendung der Explorativen Faktorenanalyse (EFA)
+# Beispiel zur Anwendung der Explorativen Faktorenanalyse (EFA)
 
 Um die Anwendung der EFA zu verdeutlichen, betrachten wir ein Beispiel mit simulierten Daten des NEO-Fünf-Faktoren-Inventars (NEO-FFI). Das NEO-FFI ist ein weit verbreitetes psychometrisches Instrument zur Messung der fünf grundlegenden Dimensionen der Persönlichkeit: **Neurotizismus, Extraversion, Offenheit für Erfahrungen, Verträglichkeit** und **Gewissenhaftigkeit**.
 
@@ -105,7 +103,7 @@ Wir wollen in diesem Fall jedoch davon ausgehen, dass die Struktur der Daten noc
 ```{r DataSet, include = FALSE}
 
 library(readr)
-NEO = read_csv("~/Desktop/NEO_FFI_original.csv")
+NEO = read_csv("~/Desktop/NEO.csv")
 nrow(NEO)
 
 NEO[] = lapply(NEO, function(x) {
@@ -141,7 +139,7 @@ NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl,
 
 ---
 
-### Setup
+## 1. Setup
 ```{r Setup, message=FALSE, warning=FALSE}
 
 # install.packages("psych")
@@ -151,7 +149,7 @@ library(psych)
 
 ---
 
-### Prüfung der Anwendungsvoraussetzungen für eine Explorative Faktorenanalyse
+## 2. Prüfung der Anwendungsvoraussetzungen für eine Explorative Faktorenanalyse
 Bevor die EFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:
 
 - **Korrelation zwischen den Variablen:** Die im Fokus stehenden Variablen müssen ausreichend miteinander korrelieren, damit latente Faktoren identifiziert werden können. Dies wird durch den Bartlett-Test überprüft.
@@ -179,19 +177,21 @@ Die Ergebnisse zeigen, dass die Daten für die EFA geeignet sind. Der Bartlett-T
 
 ---
 
-### 1. Auswahl und Begründung der Methode der Faktorenextraktion
-Nachdem wir die Voraussetzungen für die EFA überprüft haben und festgestellt wurde, dass die Daten grundsätzlich geeignet sind, geht es nun um die Auswahl der richtigen Methode zur Faktorenextraktion. Diese Wahl hängt von der Zielsetzung der Analyse ab. In der EFA werden häufig die Hauptkomponentenanalyse (engl. Principal Component Analysis, PCA) und die Hauptachsenanalyse (engl. Principal Factor Analysis, PFA) verwendet.
+## 3. Auswahl und Begründung der Methode der Faktorenextraktion
+Nachdem wir die Voraussetzungen für die EFA überprüft haben und festgestellt wurde, dass die Daten grundsätzlich geeignet sind, geht es nun um die Auswahl der richtigen Methode zur Faktorenextraktion. Diese Wahl hängt von der Zielsetzung der Analyse ab. In der EFA werden häufig die **Hauptkomponentenanalyse (engl. Principal Component Analysis, PCA)** und die **Hauptachsenanalyse (engl. Principal Factor Analysis, PFA)** verwendet.
 
 - Die PFA fokussiert sich auf die gemeinsame Varianz zwischen den Variablen und wird häufig verwendet, wenn das Ziel darin besteht, latente Faktoren zu identifizieren, die den beobachteten Variablen zugrunde liegen. Da sie die spezifische Varianz und Fehleranteile nicht berücksichtigt, ist sie besonders nützlich, wenn man an den zugrunde liegenden Strukturen interessiert ist, die die Variablen erklären. Dies ist in unserem Fall besonders relevant, da wir die latenten Persönlichkeitsfaktoren der NEO-Daten identifizieren wollen.
+Zur Schätzung der Faktoren verwenden wir die **Maximum-Likelihood-Methode (ML)**, die es uns ermöglicht, robuste Schätzungen zu berechnen und zusätzlich inferenzstatistische Tests und Konfidenzintervalle für die Faktorenparameter zu erhalten.
+
 - Im Gegensatz dazu berücksichtigt die PCA sowohl die gemeinsame als auch die spezifische Varianz und wird häufig verwendet, wenn man die gesamte Varianz der Daten erklären möchte. Sie eignet sich gut zur Datenreduktion, wenn die Zielsetzung eher explorativ ist.
 
-In dieser Analyse liegt der Fokus darauf, die zugrunde liegenden latenten Strukturen zu entdecken, die die Variablen des NEO-Tests beeinflussen. Daher ist die PFA die geeignetere Methode, da sie spezifisch darauf abzielt, nur die gemeinsame Varianz zu erklären und latente Faktoren zu extrahieren.
+In dieser Analyse liegt der Fokus darauf, die zugrunde liegenden latenten Strukturen zu entdecken, die die Variablen des NEO-Tests beeinflussen. Daher ist die **PFA** die geeignetere Methode, da sie spezifisch darauf abzielt, nur die gemeinsame Varianz zu erklären und latente Faktoren zu extrahieren. Die Schätzung der Faktoren erfolgt hierbei mit der **ML**, um die bestmögliche Passung der Daten zu gewährleisten.
 
-Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code anzugeben, da die Faktorenextraktion in den späteren Schritten der Analyse definiert wird. Die Implementierung der PFA erfolgt im entsprechenden Codeabschnitt, sobald die praktische Analyse beginnt.
+**Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code anzugeben, da die Faktorenextraktion in den späteren Schritten der Analyse definiert wird. Die Implementierung der PFA erfolgt im entsprechenden Codeabschnitt, sobald die praktische Analyse beginnt.**
 
 ---
 
-### 2. Faktorenanzahl bestimmen
+## 4. Faktorenanzahl bestimmen
 Ein entscheidender Schritt in der EFA ist die Bestimmung der optimalen Anzahl der zu extrahierenden Faktoren. Diese Entscheidung hängt von mehreren Kriterien ab, die sicherstellen sollen, dass nur die wesentlichen latenten Strukturen erfasst werden, ohne unnötig viele Faktoren zu extrahieren.
 
 Zu den gängigsten Methoden zur Bestimmung der Faktorenanzahl gehören:
@@ -224,111 +224,70 @@ Die Ergebnisse der Scree-Plot- und Parallelanalyse zeigen, dass 5 Faktoren die z
 
 ---
 
-#### Minimal Average Partial (MAP)-Test und Bayesian Information Criterion (BIC) mit Maximum Likelihood (ML) Methode
-Der **Minimal Average Partial (MAP)-Test** ist eine Methode zur Bestimmung der optimalen Faktorenanzahl in der EFA. Im Gegensatz zur Parallelanalyse, die auf den Eigenwerten basiert, fokussiert sich der MAP-Test auf die Minimierung der durchschnittlichen partiellen Korrelationen zwischen den Variablen nach der Extraktion von Faktoren. Ziel des Tests ist es, die Anzahl der Faktoren zu bestimmen, bei der die verbleibenden Korrelationen am geringsten sind. Dies deutet darauf hin, dass diese Anzahl von Faktoren die zugrunde liegende Struktur der Daten am besten beschreibt.
+## 5. Auswahl und Begründung der Methode der Faktorenrotation
 
-Das **Bayesian Information Criterion (BIC)** ist ein Modellvergleichsmaß, das zur Auswahl der optimalen Anzahl von Faktoren verwendet wird. Das BIC berücksichtigt die Modellanpassung und die Anzahl der Parameter (d.h. Faktoren), um das beste Modell zu bestimmen. Ein niedrigerer BIC-Wert deutet auf eine bessere Modellanpassung hin. Da BIC die Modellkomplexität berücksichtigt, bestraft es Modelle mit zu vielen Faktoren stärker, um Überanpassung zu vermeiden.
+Nachdem die Faktorenanzahl festgelegt wurde, ist der nächste Schritt in der EFA die Rotation der extrahierten Faktoren. Die Faktorenrotation wird durchgeführt, um die interpretierbare Struktur der Faktoren zu verbessern. Dabei gibt es zwei Hauptarten der Rotation: **Orthogonale und oblique Rotation.**
 
-Im Code wird die **Maximum-Likelihood (ML)-Methode** zur Faktorextraktion verwendet (`fm = "ml"`). Die **ML-Methode** schätzt die Faktoren so, dass die Korrelationen zwischen den Variablen am besten durch die latenten Faktoren erklärt werden. Dies ermöglicht präzisere Schätzungen und eine bessere Bewertung der Modellanpassung durch statistische Tests.
+- **Orthogonale Rotation:** Diese Methode wird verwendet, wenn davon ausgegangen wird, dass die Faktoren unabhängig voneinander sind, also nicht miteinander korrelieren. Ein gängiges Beispiel für orthogonale Rotation ist die Varimax-Rotation. Sie maximiert die Varianz der Ladungen innerhalb der Faktoren, was dazu führt, dass die Faktorladungen extremer (also näher an 0 oder 1) werden, und die Interpretierbarkeit der Faktoren verbessert wird. Diese Methode ist geeignet, wenn man davon ausgeht, dass die extrahierten Faktoren inhaltlich getrennt und unabhängig sind.
 
-```{r MAP und BIC, message=FALSE, warning=FALSE}
+- **Oblique Rotation:** Diese Methode wird verwendet, wenn erwartet wird, dass die Faktoren miteinander korrelieren können. Ein Beispiel hierfür ist die Promax-Rotation. Im Gegensatz zur orthogonalen Rotation erlaubt die oblique Rotation Korrelationen zwischen den Faktoren und führt zu einer flexibleren Lösung, die in vielen psychologischen Datensätzen realistischer ist. Diese Methode ist sinnvoll, wenn man annimmt, dass die extrahierten Faktoren gemeinsame Varianz aufweisen.
 
-VSS(NEO, rotate = "oblimin", fm = "ml", cor = "cor")
+In unserer Analyse ist die oblique Rotation (z. B. Oblimin) die geeignete Wahl, da es in psychologischen Daten oft realistisch ist, dass die extrahierten Faktoren (z. B. Persönlichkeitsmerkmale) miteinander korrelieren. Diese Methode bietet eine differenziertere und flexiblere Lösung, die die tatsächlichen Zusammenhänge zwischen den Faktoren besser widerspiegelt.
 
-```
-
-In diesem Code wird die **Vielschichtigkeits-Analyse (VSS)** durchgeführt, um die Anzahl der zu extrahierenden Faktoren in einer Faktorenanalyse zu bestimmen. Die **VSS-Analyse** hilft dabei, die beste Anzahl von Faktoren zu ermitteln, die die Varianz in den Daten erklären. Die Berechnungen basieren auf der **Korrelationsmatrix** der Daten (`cor = "cor"`), was in der psychologischen Forschung üblich ist, da viele Tests auf den Interkorrelationen der Items beruhen.
-
-Im Code wird die **Maximum-Likelihood (ML)-Methode** zur Faktorextraktion verwendet (`fm = "ml"`). Die **ML-Methode** schätzt die Faktoren so, dass die Korrelationen zwischen den Variablen am besten durch die latenten Faktoren erklärt werden. Diese Methode ermöglicht präzisere Schätzungen und eine bessere Bewertung der Modellanpassung durch statistische Tests. Die Entscheidung, die ML-Methode zu verwenden, kann notwendig sein, um die Qualität der Schätzung zu verbessern und Modellanpassungen zu bewerten.
-
-Die Parameter im Code sind wie folgt:
-
-- **`rotate = "oblimin"`**: Dies gibt an, dass eine **oblique Rotation** (nicht orthogonal) durchgeführt wird. Die **Oblimin-Rotation** erlaubt es den Faktoren, miteinander korreliert zu sein, was häufig zu realistischeren und interpretierbaren Ergebnissen führt.
-
-**Zusammenfassung:** Die VSS-Analyse hilft bei der Entscheidung, wie viele Faktoren extrahiert werden sollten, um die Daten angemessen zu beschreiben. Die Verwendung der ML-Methode zur Faktorextraktion ermöglicht eine genauere Modellanpassung und -bewertung. Die oblique Rotation sorgt für interpretierbare Ergebnisse, indem sie die Korrelationen zwischen den Faktoren berücksichtigt.
+**Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code zur Faktorenrotation anzugeben, da diese im späteren Schritt der Analyse erfolgt. Die Rotation wird nach der Extraktion der Faktoren durchgeführt und kann im entsprechenden Codeabschnitt implementiert werden, sobald die praktische Analyse beginnt.**
 
 ---
 
-#### Empirical Kaiser Criterion (EKC)
+## 6. Interpretation der Faktorenstruktur und der Faktorladungen
 
-Das **Empirical Kaiser Criterion (EKC)** basiert auf dem **Kaiser-Guttman-Kriterium**, das eine häufig verwendete Methode zur Bestimmung der Anzahl von Faktoren in einer explorativen Faktorenanalyse ist. Es filtert Faktoren mit **Eigenwerten größer als 1** heraus. Ein Eigenwert gibt an, wie viel Varianz in den Daten durch einen bestimmten Faktor erklärt wird; ein Wert über 1 deutet darauf hin, dass der Faktor mehr Varianz erklärt als ein einzelnes Item.
+Nach der Rotation der Faktoren ist es wichtig, die Faktorenstruktur und die Faktorladungen zu interpretieren. Die Faktorenstruktur zeigt auf, welche Variablen stark mit den extrahierten Faktoren korrelieren und somit durch sie erklärt werden. Die Faktorladungen geben an, wie stark jede Variable auf einen bestimmten Faktor lädt. Höhere Ladungen (in der Regel über 0.4) zeigen an, dass eine Variable stark mit einem Faktor assoziiert ist und zu dessen Interpretation beiträgt.
 
-```{r Faktorenanalyse Empirical Kaiser Criterion (EKC), warning=FALSE, message=FALSE, error=FALSE}
+- **Faktorladungen:** Die Ladungen einer Variable auf einen bestimmten Faktor werden als Korrelationskoeffizienten interpretiert, die anzeigen, wie stark diese Variable von dem Faktor beeinflusst wird. Eine hohe positive Ladung bedeutet, dass die Variable eng mit dem Faktor zusammenhängt, während eine hohe negative Ladung darauf hinweist, dass die Variable in umgekehrter Richtung zum Faktor steht.
 
-n = nrow(NEO) # Anzahl der Beobachtungen (Zeilen) im Datensatz
-p = ncol(NEO) # Anzahl der Variablen (Spalten) im Datensatz
+- **Faktorstruktur:** Die Faktorstruktur hilft dabei, jedem Faktor eine inhaltliche Bedeutung zuzuweisen. Faktoren, auf denen bestimmte Variablen hohe Ladungen aufweisen, werden oft inhaltlich so interpretiert, dass sie ein zugrundeliegendes Konzept oder eine Dimension repräsentieren (z. B. *Extraversion* oder *Neurotizismus* in einem Persönlichkeitsinventar).
 
-dat_cor = cor(NEO) # Korrelationsmatrix des Datensatzes wird berechnet
+In der Praxis wird für jede Variable untersucht, auf welchen Faktor sie am stärksten lädt, um die Variablen in sinnvolle Gruppen zu unterteilen. Diese Gruppen von Variablen werden dann verwendet, um den Faktor zu benennen und zu interpretieren. Wichtig ist es auch zu beachten, ob eine Variable auf mehrere Faktoren gleichzeitig lädt (sogenannte *cross-loadings*), was die Interpretation erschweren kann.
 
-eigval = eigen(dat_cor)$values # Eigenwerte der Korrelationsmatrix werden berechnet und in "eigval" gespeichert
+**Nachdem wir die wichtigen Entscheidungen bezüglich der Faktorenanzahl, der Rotationsmethode und der Interpretation der Faktorladungen getroffen haben, folgt nun die praktische Umsetzung dieser Schritte in der eigentlichen Faktorenanalyse. Der folgende Code integriert die zuvor beschriebenen Methoden und Ansätze – darunter die Bestimmung der Faktorenanzahl, die Wahl der Promax-Rotation und die Extraktion der Faktoren mittels Maximum-Likelihood. Die im Code implementierte Analyse ermöglicht es uns, die Faktorenstruktur zu interpretieren und die zugrunde liegenden latenten Faktoren in den Daten zu identifizieren.**
 
-comp = rep(0, p)# Vektor "comp" wird erstellt, um die Vergleichswerte für die Eigenwerte zu speichern
+```{r Faktorenanalyse, message=FALSE, warning=FALSE}
 
-for (j in 1:p) {
-  comp[j] = max(((1 + sqrt(p/n))^2) * (p - sum(comp[1:j-1])) / (p-j+1), 1)
-}
+fa(NEO, nfactors = 5, rotate = "oblimin", fm = "ml")
 
-```
+fa_NEO = fa(NEO, nfactors = 5, rotate = "oblimin", fm = "ml")
 
-In diesem Code wird das **Empirical Kaiser Criterion (EKC)** zur Bestimmung der optimalen Anzahl von Faktoren berechnet.
+print(fa_NEO$loadings, cut = 0.4) # Faktorladungen
+fa.diagram(fa_NEO) # Faktorstruktur
 
-Die **Anzahl der Beobachtungen (`n`)** wird durch die Anzahl der Zeilen im Datensatz `NEO` ermittelt. Dies repräsentiert die Anzahl der Beobachtungen.
-Die **Anzahl der Variablen (`p`)** wird durch die Anzahl der Spalten im Datensatz berechnet. Dies gibt die Anzahl der Variablen an.
-Die **Korrelationsmatrix (`dat_cor`)** der Daten wird berechnet, um die Zusammenhänge zwischen den Variablen zu erfassen.
-Die **Eigenwerte (`eigval`)** der Korrelationsmatrix werden berechnet, die den Varianzanteil erklären, der durch die Faktoren beschrieben wird.
-Ein **Vektor für Vergleichswerte (`comp`)** wird erstellt. Die Vergleichswerte werden anhand einer Formel berechnet, die die Anzahl der Variablen, Beobachtungen und bereits berechneten Werte berücksichtigt.
-
-Dieser Prozess ermöglicht es, die Eigenwerte der empirischen Daten mit den Vergleichswerten zu vergleichen, um zu bestimmen, welche Anzahl von Faktoren signifikant ist und somit die zugrunde liegende Struktur der Daten beschreibt.
-
----
-
-#### Oblimin Rotation ohne Kaiser-Normalisierung
-Die **Oblimin-Rotation** ist eine Methode zur Rotation von Faktoren in der Faktorenanalyse, die eine oblique (schiefe) Rotation ermöglicht. Dies bedeutet, dass die Faktoren korreliert sein können, was oft eine realistischere Darstellung der Daten liefert. Die Rotation hilft dabei, eine klarere und interpretierbare Struktur der Faktoren zu erhalten.
-
-In diesem Beispiel wird die **Oblimin-Rotation** ohne Kaiser-Normalisierung angewendet. Die Kaiser-Normalisierung, die üblicherweise verwendet wird, um die Skalen der Variablen zu standardisieren, wird hier nicht berücksichtigt.
-
-```{r Oblimin Rotation ohne Kaiser-Normalisierung, message=FALSE, warning=FALSE}
-
-fit1 = fa(NEO, nfactors = 5, rotate = "oblimin", residuals = TRUE, SMC = TRUE, cor = "cor", n.iter = 1000, p = 0.05)
-
-# fa()-Funktion aus dem "psych"-Paket führt eine Faktorenanalyse durch und rotiert die Faktoren mit der Oblimin-Methode. 
-
-fa.sort(fit1)
+summary(fa_NEO)
 
 ```
 
-In diesem Code wird die **Faktorenanalyse** (`fa()`) mit der **Oblimin-Rotation** durchgeführt, wobei die Kaiser-Normalisierung nicht berücksichtigt wird.
+### 6.1. Faktorenstruktur und Varianz
+Die Analyse extrahiert 5 Faktoren, die zusammen 32,7 % der Varianz in den Daten erklären. Die Varianz, die jeder Faktor erklärt, ist relativ gering (zwischen 3,8 % und 8,6 %). Dies deutet darauf hin, dass die latenten Faktoren einen moderaten Teil der Varianz der beobachteten Variablen erfassen, aber auch ein beträchtlicher Anteil der Varianz unerklärt bleibt (siehe Zeile *Proportion Var* sowie *Cumulative Proportion*).
+Die kumulative Varianz der fünf Faktoren beträgt 32,7 %. Das ist für psychologische Daten relativ typisch, da Persönlichkeitsmerkmale oft komplex und schwer vollständig durch Faktoren zu erklären sind.
 
-Die **Anzahl der zu extrahierenden Faktoren (`nfactors = 5`)** gibt an, dass fünf Faktoren extrahiert werden sollen.
-Die **Oblimin-Rotation (`rotate = "oblimin"`)** wird verwendet, eine Methode der obliquen Rotation, die es den Faktoren ermöglicht, miteinander korreliert zu sein.
-Mit **`residuals = TRUE`** werden die Residuen der Modellanpassung berechnet, um die Unterschiede zwischen den beobachteten und geschätzten Korrelationsmatrizen zu überprüfen.
-Die **quadratischen multiplen Korrelationen (`SMC = TRUE`)** werden zur Schätzung der Kommunalitäten verwendet, um die Menge der Varianz, die durch die Faktoren erklärt wird, besser abzuschätzen.
-Die **Korrelationsmatrix (`cor = "cor"`)** der Daten wird genutzt.
-# Die **Maximum-Likelihood-Methode (`fm = "ml"`)** wird zur Faktorextraktion verwendet, um die beobachteten Korrelationen durch die extrahierten Faktoren bestmöglich zu erklären.
-Mit **`n.iter = 2000`** wird die Anzahl der Iterationen auf 2000 gesetzt, um sicherzustellen, dass das Modell ausreichend konvergiert.
-Das **Signifikanzniveau (`p = 0.05`)** für die Tests wird festgelegt.
+### 6.2. Faktorladungen
+Die Faktorladungen zeigen an, welche Variablen stark auf die Faktoren laden (in der Regel Ladungen > 0.4). 
 
-Nach der Durchführung der Faktoranalyse wird `fa.sort(fit1)` verwendet, um die Ergebnisse der Rotation zu sortieren und die Interpretation der Faktoren und ihrer Ladungen zu erleichtern.
+- **ML1**: Variablen wie n6, n11, und n16 laden hoch auf diesen Faktor (z. B. n16 mit einer Ladung von 0.736).
 
----
+- **ML2**: Variablen wie n5, n10, n15, und n20 laden stark auf diesen Faktor (z. B. n10 mit einer Ladung von 0.639). Diese Variablen hängen also stark mit diesem Faktor zusammen.
 
-#### Oblimin-Rotation mit Kaiser-Normalisierung
+- **ML3**: Variablen wie n13, n14, und n39 laden auf diesen Faktor.
 
-In diesem Code wird die **Faktorenanalyse** (`fa()`) ohne Rotation initial durchgeführt und anschließend mit der **Kaiser-Normalisierung** und **Oblimin-Rotation** angepasst.
+- **ML4** und **ML5** haben ebenfalls signifikante Ladungen, zum Beispiel lädt n48 mit einer Ladung von 0.754 auf ML4, was eine starke Korrelation mit diesem Faktor anzeigt.
 
-```{r Oblimin-Rotation mit Kaiser-Normalisierung, message=FALSE, warning=FALSE}
+Die Variablen mit den höchsten Ladungen pro Faktor sollten genauer betrachtet werden, um den inhaltlichen Zusammenhang und die Bedeutung der Faktoren zu bestimmen.
 
-fit2 = fa(NEO, nfactors = 5, rotate = "none", residuals = TRUE, SMC = TRUE)
-fit3 = kaiser(fit2, rotate = "oblimin")
-fa.sort(fit3)
+### 6.3. Modellgüte
+RMSEA (Root Mean Square Error of Approximation) liegt bei 0.047, was als guter Wert gilt. Ein RMSEA-Wert unter 0.05 deutet darauf hin, dass das Modell eine gute Anpassung an die Daten aufweist.
+RMSR (Root Mean Square Residual) ist 0.07, was ebenfalls im akzeptablen Bereich liegt.
 
-```
+### 6.4. Faktorenkorrelation
+Die Korrelationen zwischen den Faktoren sind relativ gering, was zeigt, dass die Faktoren weitgehend unabhängig voneinander sind. Die höchsten Korrelationen liegen bei etwa 0.10, was darauf hindeutet, dass die oblique Rotation (Oblimin) keine stark korrelierten Faktoren identifizieren konnte.
 
-In diesem Code wird eine **Faktorenanalyse** (`fa()`) durchgeführt, bei der zunächst keine Rotation angewendet wird, da **`rotate = "none"`** angegeben ist. # Die **Maximum-Likelihood-Methode (ML)** zur Faktorextraktion wird verwendet, wie durch **`fm = "ml"`** spezifiziert. #
-Die Anzahl der zu extrahierenden Faktoren wird durch **`nfactors = 5`** festgelegt, was bedeutet, dass fünf Faktoren extrahiert werden sollen.
-**`residuals = TRUE`** berechnet die Residuen der Modellanpassung, um die Unterschiede zwischen den beobachteten und geschätzten Korrelationsmatrizen zu überprüfen. **`SMC = TRUE`** verwendet die quadratischen multiplen Korrelationen (Squared Multiple Correlations) zur Schätzung der Kommunalitäten.
-Nachdem die Faktorenanalyse ohne Rotation durchgeführt wurde, wird die **Kaiser-Normalisierung** mit der **Oblimin-Rotation** angewendet. Die **`kaiser()`**-Funktion rotiert die extrahierten Faktoren mit der **Oblimin-Rotation**.
+### 6.5. Fazit
+Die Faktorenanalyse extrahiert 5 latente Faktoren, die zusammen 32,7 % der Varianz der NEO-Daten erklären. Die Faktorladungen zeigen eine klare Zuordnung der Variablen zu den Faktoren, wobei bestimmte Variablen stark auf einen Faktor laden und somit die Bedeutung dieser Faktoren bestimmen.Das Modell zeigt eine gute Anpassung an die Daten, was durch die niedrigen RMSEA- und RMSR-Werte unterstützt wird. 
 
-Die Methode zur Anwendung der Oblimin-Rotation wird durch **`rotate = "oblimin"`** festgelegt. Schließlich wird **`fa.sort(fit3)`** verwendet, um die Ergebnisse der Rotation zu sortieren und die Interpretation der Faktoren und ihrer Ladungen zu erleichtern.
-
----
+Die nächsten Schritte wären, die inhaltliche Bedeutung der Faktoren anhand der hochladenden Variablen zu interpretieren und zu überprüfen, wie gut diese Faktoren das theoretische Konstrukt der NEO-Daten widerspiegeln.
