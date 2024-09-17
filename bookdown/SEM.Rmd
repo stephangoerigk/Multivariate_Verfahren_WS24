@@ -1,0 +1,142 @@
+---
+title: "Strukturgleichungsmodelle (engl. Structural Equation Models, SEM)"
+output: 
+  html_document:
+    number_sections: false
+    toc: true
+    toc_depth: 6
+---
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  font-size: 12px;  
+  line-height: 1.6;
+  margin: 20px;
+  color: #333;
+}
+
+h1.title {
+  font-size: 20px;  
+  color: #444;
+  font-weight: bold;
+}
+
+h1, h2, h3 {
+  font-size: 14px;  
+  color: #444;
+  font-weight: bold;
+}
+
+h4, h5, h6, h7, h8 {
+  font-size: 14px;  
+  color: #444;
+  font-weight: bold;
+}
+
+a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+pre, code {
+  font-size: 11px;  
+  background-color: #f7f7f7;  
+  padding: 8px;  
+  border: 1px solid #ddd;  
+  border-radius: 4px;  
+  overflow-x: auto;  
+}
+
+img {
+  max-width: 60%; 
+  height: auto; 
+}
+
+img[src*="fig-"], 
+img[class*="figure"] {
+  max-width: 50% !important;
+  max-height: 50% !important;
+  height: auto !important;
+}
+
+</style>
+
+Strukturgleichungsmodelle (SEM) diene dazu, **komplexe Beziehungen zwischen Variablen** zu modellieren und zu überprüfen. Dabei werden sowohl **direkte als auch indirekte Zusammenhänge zwischen manifesten (beobachtbaren) und latenten Variablen** untersucht. 
+SEM **kombinieren die konfirmatorischer Faktorenanalyse mit der Pfadanalyse, um pfadanalytische Strukturen auf der Ebene latenter, von Messfehlern bereinigter Variablen zu untersuchen.**
+
+Ein Hauptziel von SEM besteht darin, **theoretische Modelle zu überprüfen** und zu testen, wie gut diese mit den (direkt) beobachteten Daten übereinstimmen. Diese Methode ermöglicht es, Hypothesen über die Beziehungen zwischen Variablen explizit zu formulieren und sie anhand der Daten zu validieren. 
+
+In einem linearen Strukturgleichungsmodell unterscheidet man zwei Teilmodelle: 
+
+- **Das Messmodell**, das die Beziehungen zwischen den beobachteten Variablen (Indikatoren) und den latenten Variablen spezifiziert. Es beschreibt, wie die latenten Variablen durch ihre Indikatoren gemessen werden. Um den Messfehler von wahren interindividuellen Unterschieden zu trennen, sind mindestens zwei Indikatoren pro Konstrukt (latenter Variable) erforderlich.
+
+- **Das Strukturmodell**, das die Beziehungen zwischen latenten Variablen in Form eines Pfadmodells darstellt.
+
+![](/Users/jani/Desktop/CFH/Multivariate_Verfahren_WS24/bookdown/SEM.jpeg)
+
+
+## Grundlegendes
+
+- **Latente und manifeste Variablen**: Latente Variablen sind nicht direkt messbare Konstrukte, die durch manifeste Variablen (Indikatoren) erfasst werden. SEM ermöglichten die Untersuchung kausaler Zusammenhänge zwischen diesen Variablen.
+
+- **Modellpassung**: Ein wesentliches Ziel von SEM ist es, zu prüfen, wie gut das vorgeschlagene Modell mit den beobachteten Daten übereinstimmt. Dies erfolgt anhand verschiedener Fit-Indizes, die anzeigen, wie stark die Hypothesen durch die Daten gestützt werden.
+
+---
+
+# Beispiel zur Anwendung von SEM
+
+##
+
+```{r DataSet SEM, include = FALSE}
+
+
+
+```
+
+---
+
+## 1. Setup
+```{r Setup SEM, message=FALSE, warning=FALSE}
+
+# install.packages("psych")
+library(psych)
+
+```
+
+---
+
+## 2. Prüfung der Anwendungsvoraussetzungen 
+
+##
+
+```{r Voraussetzungen SEM, message=FALSE, warning=FALSE}
+
+```
+
+##
+
+---
+
+## 3. ##
+
+##
+
+---
+
+## 4. ##
+
+##
+
+
+---
+
+## 5. ##
+
+##
+
+---

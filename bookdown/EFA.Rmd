@@ -1,5 +1,5 @@
 ---
-title: "Explorative Faktorenanalyse"
+title: "Explorative Faktorenanalyse (engl. Exploratory Factor Analysis, EFA)"
 output: 
   html_document:
     number_sections: false
@@ -90,7 +90,7 @@ Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifi
 
 ---
 
-# Beispiel zur Anwendung der Explorativen Faktorenanalyse (EFA)
+# Beispiel zur Anwendung der EFA
 
 Um die Anwendung der EFA zu verdeutlichen, betrachten wir ein Beispiel mit simulierten Daten des NEO-Fünf-Faktoren-Inventars (NEO-FFI). Das NEO-FFI ist ein weit verbreitetes psychometrisches Instrument zur Messung der fünf grundlegenden Dimensionen der Persönlichkeit: **Neurotizismus, Extraversion, Offenheit für Erfahrungen, Verträglichkeit** und **Gewissenhaftigkeit**.
 
@@ -100,7 +100,7 @@ In diesem Beispiel sollen die simulierten, bereits korrekt gepolten Daten explor
 
 Wir wollen in diesem Fall jedoch davon ausgehen, dass die Struktur der Daten noch nicht vollständig bekannt ist. **Stellen Sie sich vor, wir stehen noch vor der Entdeckung dieser Struktur:** Wir haben eine Sammlung von Variablen, die möglicherweise durch zugrunde liegende Faktoren erklärt werden können, kennen jedoch weder die Anzahl noch die Natur dieser Faktoren. In einer solchen Situation ist die EFA die Methode der Wahl.</font>
 
-```{r DataSet, include = FALSE}
+```{r DataSet EFA, include = FALSE}
 
 library(readr)
 NEO = read_csv("/Users/jani/Desktop/CFH/Multivariate_Verfahren_WS24/bookdown/NEO.csv")
@@ -140,7 +140,7 @@ NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl,
 ---
 
 ## 1. Setup
-```{r Setup, message=FALSE, warning=FALSE}
+```{r Setup EFA, message=FALSE, warning=FALSE}
 
 # install.packages("psych")
 library(psych)
@@ -149,7 +149,7 @@ library(psych)
 
 ---
 
-## 2. Prüfung der Anwendungsvoraussetzungen für eine Explorative Faktorenanalyse
+## 2. Prüfung der Anwendungsvoraussetzungen 
 Bevor die EFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:
 
 - **Korrelation zwischen den Variablen:** Die im Fokus stehenden Variablen müssen ausreichend miteinander korrelieren, damit latente Faktoren identifiziert werden können. Dies wird durch den Bartlett-Test überprüft.
