@@ -156,7 +156,9 @@ Bevor die EFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft we
 - **Kaiser-Meyer-Olkin (KMO) Test:** Der KMO-Test bewertet die Eignung der Daten für die EFA. Werte über 0,5 gelten als akzeptabel, über 0,8 als gut.
 
 Darüber hinaus sollten folgende Punkte berücksichtigt werden:
-- **Stichprobengröße:** Eine allgemeine Faustregel besagt, dass pro Variable mindestens 5 bis 10 Beobachtungen vorliegen sollten, um stabile Ergebnisse zu gewährleisten. Bei komplexen Modellen oder schwachen Korrelationen kann eine größere Stichprobe erforderlich sein (mindestens 300 Beobachtungen).
+
+- **Stichprobengröße:** Laut Schönbrodt und Perugini (2013) stabilisieren sich Korrelationen ab einer Stichprobengröße von etwa 250 Personen, was eine solide Grundlage für die Interpretation der Ergebnisse der EFA bietet. Eine kleinere Stichprobe könnte zu instabilen Korrelationen führen, was die Verlässlichkeit der Analyse beeinträchtigen würde. (Literatur: Schönbrodt, F. D., & Perugini, M. (2013). At what sample size do correlations stabilize?. *Journal of Research in Personality, 47*(5), 609-612. https://doi.org/10.1016/j.jrp.2013.05.009) 
+
 - **Multikollinearität:** Zu starke Korrelationen zwischen den Variablen (Multikollinearität) können die Analyse verzerren. Eine Möglichkeit zur Überprüfung ist die Determinante der Korrelationsmatrix. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin und sollte vermieden werden.
 
 ```{r Voraussetzungen EFA, message=FALSE, warning=FALSE}
