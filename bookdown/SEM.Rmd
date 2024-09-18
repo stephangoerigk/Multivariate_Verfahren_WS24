@@ -79,7 +79,6 @@ In einem linearen Strukturgleichungsmodell unterscheidet man zwei Teilmodelle:
 
 ![](/Users/jani/Desktop/CFH/Multivariate_Verfahren_WS24/bookdown/SEM.jpeg)
 
-
 ## Grundlegendes
 
 - **Latente und manifeste Variablen**: Latente Variablen sind nicht direkt messbare Konstrukte, die durch manifeste Variablen (Indikatoren) erfasst werden. SEM ermöglichten die Untersuchung kausaler Zusammenhänge zwischen diesen Variablen.
@@ -88,23 +87,27 @@ In einem linearen Strukturgleichungsmodell unterscheidet man zwei Teilmodelle:
 
 ---
 
-# Beispiel zur Anwendung von SEM
+# Beispiel zur Anwendung eines SEM
 
-##
+Um die Anwendung eines SEMs zu verdeutlichen, betrachten wir den *PoliticalDemocracy*-Datensatz aus dem **lavaan**-Paket (Bollen, 1989). Der Datensatz enthält Informationen zu politischen und wirtschaftlichen Indikatoren in verschiedenen Ländern. Die zentralen Variablen beziehen sich auf die Demokratie und die industrielle Entwicklung im Zeitraum von 1969 bis 1965.
 
-```{r DataSet SEM, include = FALSE}
+In diesem Beispiel untersuchen wir die Beziehungen zwischen der industriellen Entwicklung und der Demokratie. Die latenten Variablen, die in diesem Modell spezifiziert werden sollen, sind **Demokratie im Jahr 1969 (dem60), Demokratie im Jahr 1965 (dem65)** und **Industrielle Entwicklung im Jahr 1969 (ind60).** Diese werden durch manifeste Indikatoren gemessen:
 
+- **dem60** wird durch die Indikatoren *y1, y2, y3* und *y4* repräsentiert.
+- **dem65** wird durch die Indikatoren *y5, y6, y7* und *y8* repräsentiert.
+- **ind60** wird durch die Indikatoren *x1, x2* und *x3* repräsentiert.
 
-
-```
+Ziel der Strukturgleichungsmodellierung in diesem Beispiel ist es, theoretisch fundierte Hypothesen zu testen. Dabei gehen wir davon aus, dass die **industrielle Entwicklung im Jahr 1960 (ind60) sowohl die Demokratie im Jahr 1960 (dem60) als auch die Demokratie im Jahr 1965 (dem65) beinflusst.** Zudem wird angenommen, dass **die Demokratie im Jahr 1960 (dem60) wiederum einen Einfluss auf die Demokratie im Jahr 1965 (dem65) hat.**
 
 ---
 
 ## 1. Setup
 ```{r Setup SEM, message=FALSE, warning=FALSE}
 
-# install.packages("psych")
-library(psych)
+# install.packages("lavaan")
+library(lavaan)
+
+View(PoliticalDemocracy)
 
 ```
 
