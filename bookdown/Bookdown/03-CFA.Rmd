@@ -1,0 +1,183 @@
+# Konfirmatorische Faktorenanalyse {#cross}
+
+Die konfirmatorische Faktorenanalyse (engl. Confirmatory Factor Analysis, CFA) ist eine **hypothesenprüfende** statistische Methode, die verwendet wird, um zu überprüfen, ob die Daten zu einem vorab definierten Modell passen. Im Gegensatz zur explorativen Faktorenanalyse, bei der die Faktorenstruktur aus den Daten extrahiert wird, testet die CFA spezifische **theoretische Modelle**, die die Zuordnung von Variablen (Indikatoren) zu **latenten Konstrukten** vorschreiben. Die CFA ermöglicht es, die **Konstruktvalidität** von Messinstrumenten zu bewerten, indem sie überprüft, ob die beobachteten Daten mit der postulierten Struktur übereinstimmen.
+
+**Zwei "Unterfamilien" faktorenanalytischer Methoden**
+
+- **Konfirmatorische Faktorenanalyse (CFA):** Eine **hypothesenprüfende** Methode, bei der ein vorab festgelegtes Modell getestet wird, das die Zuordnung von Indikatoren zu latenten Variablen definiert. Ziel der CFA ist es, die Passung des Modells zu den beobachteten Daten zu überprüfen.
+
+- **Explorative Faktorenanalyse (EFA):** Eine **hypothesengenerierende** Methode, die verwendet wird, wenn die Zuordnung der Indikatoren zu den latenten Variablen noch unbekannt ist. Ziel der EFA ist es, verborgene Faktorenstrukturen in den Daten zu entdecken.
+
+Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifizieren, die die Zusammenhänge zwischen den Variablen erklären.
+
+## Grundlegendes
+
+- **Theoretisch fundierte Modellbildung:** Bei der CFA wird das Modell basierend auf **theoretischen Überlegungen** und vorheriger Forschung spezifiziert. Die Zuordnung der Indikatoren zu den latenten Faktoren wird also vorab festgelegt.
+
+- **Fit-Indizes zur Modellbewertung:** Die Passung des Modells zu den beobachteten Daten wird anhand von Fit-Indizes bewertet, z.B. dem **Root Mean Square Error of Approximation (RMSEA)**, dem **Standardized Root Mean Square Residual (SRMR)** oder dem **Comparative Fit Index (CFI)**. Diese Indizes geben an, wie gut das Modell zu den Daten passt.
+
+**Implikationen der Faktorenanalyse**
+
+- **Latente Variablen als Ursache für beobachtete Zusammenhänge:** Die CFA geht davon aus, dass die Korrelationen zwischen den manifesten Variablen auf die zugrunde liegenden latenten Faktoren zurückzuführen sind, die durch die CFA modelliert werden.
+
+- **Modellanpassung:** Ein gut passendes CFA-Modell sollte eine hohe Übereinstimmung zwischen den vorhergesagten und den beobachteten Kovarianzen der manifesten Variablen zeigen. Ist dies nicht der Fall, müssen entweder das Modell oder die Messinstrumente überarbeitet werden.
+
+
+## Beispiel zur Anwendung der CFA
+
+Um die Anwendung der CFA zu verdeutlichen, folgt ein Beispiel mit Daten zu **kognitiven Fähigkeiten**. In diesem Beispiel soll überprüft werden, ob die Zusammenhänge zwischen vier kognitiven Tests durch einen zugrunde liegenden **g-Faktor** (allgemeine Intelligenz) erklärt werden können.
+
+Die vier kognitiven Tests sind:
+- **Arithmetische Kompetenz** (Variablenname: MathComp)
+- **Figural-induktives Denken** (Variablenname: FigReas)
+- **Wortbedeutung** (Variablenname: WordMean)
+- **Langzeitgedächtnis** (Variablenname: LongMem)
+
+Die Stichprobe umfasst *N*=196 Personen (48% Frauen; 52% Männer) im Alter von 16 bis 63 Jahren (*M*=37.79; *SD*=11.89).
+
+### Fragestellung
+Lassen sich die Zusammenhänge zwischen den vorliegenden vier kognitiven Tests durch einen **g-Faktor** erklären?
+
+### Begründung der Auswertemethode
+Da bereits eine **gerichtete Hypothese** über die Faktorenstruktur vorliegt, die zudem durch die Literatur gut begründet ist, wird die konfirmatorische Faktorenanalyse (CFA) zur Überprüfung der Fragestellung herangezogen. Die CFA testet, ob die vier kognitiven Tests durch einen gemeinsamen g-Faktor erklärt werden können.
+
+**Der Datensatz wurde unter der Bezeichnung "GScreen" eingelesen.**
+
+```{r DataSet CFA, include = FALSE}
+
+options(scipen=999)
+
+library(readxl)
+library(openxlsx)
+
+GScreen = read.xlsx("/Users/jani/Desktop/Open Studies/CFA.xlsx", sheet = 1)
+names(GScreen)
+
+prop.table(table(GScreen$sex))
+
+nrow(GScreen)
+
+mean(GScreen$age)
+sd(GScreen$age)
+
+min(GScreen$age)
+max(GScreen$age)
+
+GScreen = subset(GScreen, select = -c(sex, age)) 
+
+```
+
+### Setup
+```{r Setup CFA, message=FALSE, warning=FALSE}
+
+# install.packages("lavaan")
+library(lavaan)
+
+# install.packages("semPlot")
+library(semPlot)
+
+```
+
+### Prüfung der Anwendungsvoraussetzungen 
+Bevor die CFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:
+
+- **Korrelation zwischen den Variablen:** Die Indikatoren sollten ausreichend miteinander korrelieren, damit sie durch einen gemeinsamen latenten Faktor erklärt werden können. Allerdings sollten die Korrelationen nicht so stark sein, dass Multikollinearität vorliegt.
+
+- **Stichprobengröße:** Für die CFA ist die Stichprobengröße entscheidend. Schönbrodt und Perugini (2013) argumentieren, dass Korrelationen bei einer Stichprobengröße von etwa 250 Personen stabil sind, was eine solide Grundlage für die Interpretation der CFA-Ergebnisse bietet.
+
+- **Univariate Normalverteilung:** Die CFA setzt voraus, dass die beobachteten Variablen normalverteilt sind, zumindest bei größeren Stichproben, um valide Ergebnisse zu gewährleisten.
+
+Darüber hinaus sollten folgende Punkte berücksichtigt werden:
+
+- **Multikollinearität:** Zu starke Korrelationen zwischen den Indikatoren (Multikollinearität) können zu Problemen führen. Die Determinante der Korrelationsmatrix bietet eine Möglichkeit, dies zu überprüfen. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin.
+
+- **Modellidentifizierbarkeit:** Ein Modell muss hinreichend identifiziert sein, d.h., es müssen genügend Datenpunkte vorhanden sein, um die Modellparameter schätzen zu können.
+
+```{r Voraussetzungen CFA, message=FALSE, warning=FALSE}
+
+# Korrelation der Variablen prüfen 
+cor_matrix_CFA = cor(GScreen)
+det(cor_matrix_CFA) # Determinante der Korrelationsmatrix
+
+# Prüfen der Normalverteilung (z.B. mit Shapiro-Wilk-Test für jede Variable)
+apply(GScreen, 2, shapiro.test)
+
+```
+
+Die Ergebnisse zeigen, dass die Daten für die CFA geeignet sind. Die Korrelationen zwischen den Variablen sind ausreichend hoch, um eine gemeinsame Faktorenstruktur zu modellieren, was durch die Determinante der Korrelationsmatrix (0.70) bestätigt wird. Diese liegt weit über dem kritischen Wert nahe 0, was darauf hinweist, dass keine problematische Multikollinearität vorliegt.
+
+Die Ergebnisse des **Shapiro-Wilk-Tests** zur Überprüfung der Normalverteilung zeigen, dass die meisten Variablen (**MathComp**, **FigReas** und **LongMem**) keine signifikanten Abweichungen von der Normalverteilung aufweisen (*p*-Werte > .05). Allerdings zeigt die Variable **WordMean** eine signifikante Abweichung von der Normalverteilung (*p* < .05). Da die Stichprobengröße jedoch groß genug ist (*N*=200), kann diese Abweichung als tolerierbar angesehen werden.
+
+Insgesamt sind die Voraussetzungen für die Durchführung der CFA erfüllt.
+
+#### Fit-Indizes
+
+Zu den wichtigsten Fit-Indizes gehören:
+
+- **Chi-Quadrat-Test**: Testet die Abweichung zwischen dem Modell und den Daten. Ein nicht-signifikanter p-Wert deutet darauf hin, dass das Modell gut passt.
+
+- **RMSEA (Root Mean Square Error of Approximation)**: Ein RMSEA-Wert < 0.06 gilt als guter Fit.
+- **CFI (Comparative Fit Index)**: Werte > 0.95 gelten als Hinweis auf eine gute Modellpassung.
+- **SRMR (Standardized Root Mean Square Residual)**: Ein Wert < 0.08 wird als akzeptabel angesehen.
+
+#### Modellschätzung
+
+Das Modell wird in R mit der `lavaan`-Funktion `cfa()` geschätzt.
+
+```{r CFA Faktorenanalyse, message=FALSE, warning=FALSE}
+
+model <- 'GFactor =~ MathComp + FigReas + WordMean + LongMem'
+
+fit <- cfa(model, data = GScreen)
+
+summary(fit, fit.measures = TRUE, standardized = TRUE, rsquare = TRUE)
+
+```
+
+### Interpretation der SEM-Ergebnisse
+
+#### Modell-Fit
+Der Chi-Quadrat-Wert ist nicht signifikant (*χ*²(2) = 3.254, *p* = .196), was darauf hinweist, dass das Modell die Daten gut repräsentiert. Ein nicht-signifikanter p-Wert bedeutet, dass das Modell die beobachteten Daten nicht signifikant von der theoretischen Struktur abweicht (Nullhypothese des Tests: Es gibt keinen Unterschied zwischen dem theoretischen Modell und den beobachteten Daten, daher ist ein n.s. Ergebnis hier erwünscht).
+
+Die Fit-Indizes bestätigen die Angemessenheit des Modells:
+
+- **Root Mean Square Error of Approximation (RMSEA):** Der RMSEA-Wert beträgt 0.056, was auf eine akzeptable Modellpassung hinweist. Werte unter 0.06 gelten als sehr gut, während Werte zwischen 0.05 und 0.08 als akzeptabel angesehen werden. Das 90%-Konfidenzintervall (0.000 bis 0.162) zeigt, dass der RMSEA im akzeptablen Bereich liegt.
+
+- **Standardized Root Mean Square Residual (SRMR):** Der SRMR-Wert beträgt 0.030, was deutlich unter der kritischen Schwelle von 0.08 liegt und auf eine sehr gute Modellpassung hinweist. Der SRMR misst die Differenz zwischen den beobachteten und modellbasierten Korrelationen und zeigt, dass das Modell die beobachteten Korrelationen gut abbildet.
+
+- **Comparative Fit Index (CFI):** Der CFI-Wert beträgt 0.981, was auf eine sehr gute Modellpassung hinweist (Werte über 0.95 gelten als exzellent).
+
+#### Parameter-Interpretation
+Die Parameter des Modells sind durchweg signifikant, was darauf hindeutet, dass die Beziehungen zwischen den latenten Variablen und ihren Indikatoren gut modelliert sind:
+
+- **Latente Variablen und ihre Indikatoren:** Die latente Variable **GFactor** wird signifikant durch alle Indikatoren gemessen:
+  - **MathComp:** Die standardisierte Ladung beträgt 0.399, was bedeutet, dass etwa 40% der Varianz von **MathComp** durch den g-Faktor erklärt werden.
+  - **FigReas:** Mit einer Ladung von 0.642 zeigt **FigReas** die höchste Korrelation mit dem g-Faktor.
+  - **WordMean:** Die Ladung von 0.504 zeigt eine moderate Korrelation mit dem g-Faktor.
+  - **LongMem:** **LongMem** hat ebenfalls eine signifikante Ladung von 0.494.
+
+#### Regressionsbeziehungen
+Alle Pfade zwischen der latenten Variable (**GFactor**) und den Indikatoren sind signifikant (*p* < .001), was darauf hinweist, dass die kognitiven Tests gut durch den g-Faktor erklärt werden.
+
+- Die stärkste Beziehung besteht zwischen dem g-Faktor und **FigReas** ($\beta$ = 0.642), was bedeutet, dass **FigReas** am stärksten durch den g-Faktor beeinflusst wird.
+- **MathComp** hat die niedrigste Faktorladung ($\beta$ = 0.399), aber auch hier wird die Beziehung durch den g-Faktor signifikant erklärt.
+
+#### Erklärte Varianz
+Die R-Quadrat-Werte geben Auskunft darüber, wie gut die Indikatoren durch die latente Variable (**GFactor**) erklärt werden:
+- **MathComp**: 15.9% der Varianz von **MathComp** wird durch den g-Faktor erklärt.
+- **FigReas**: 41.2% der Varianz wird durch den g-Faktor erklärt, was eine starke Erklärungsleistung zeigt.
+- **WordMean**: 25.4% der Varianz wird durch den g-Faktor erklärt.
+- **LongMem**: 24.4% der Varianz wird durch den g-Faktor erklärt.
+
+Diese Ergebnisse zeigen, dass der g-Faktor einen substanziellen Anteil der Varianz in den kognitiven Tests erklärt, insbesondere bei **FigReas**, was die Bedeutung dieses Tests für die Messung der allgemeinen Intelligenz unterstreicht.
+
+### Grafische Darstellung des Modells
+
+Die grafische Darstellung eines CFA-Modells ermöglicht es, die Beziehungen zwischen den latenten Variablen und ihren Indikatoren sowie die Regressionspfade visuell zu erfassen. Das **semPlot**-Paket kann verwendet werden, um das Modell übersichtlich darzustellen. Dabei werden die standardisierten Ladungen, die Korrelationen zwischen den Variablen sowie die Residuen abgebildet.
+
+```{r Grafische Darstellung CFA, message=FALSE, warning=FALSE}
+
+semPaths(fit, "std", layout = "tree", residuals = TRUE, whatLabels = "std", intercepts = FALSE)
+
+```
+

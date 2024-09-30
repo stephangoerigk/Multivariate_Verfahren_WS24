@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Multivariate Verfahren</title>
+  <meta name="description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Multivariate Verfahren" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Multivariate Verfahren" />
+  
+  <meta name="twitter:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  
+
+<meta name="author" content="Stephan Goerigk &amp; Janika Saretzki" />
+
+
+<meta name="date" content="2024-09-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="cross.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Über dieses Skript</a></li>
+<li class="chapter" data-level="1" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>1</b> Strukturgleichungsmodelle</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="cross.html"><a href="cross.html#grundlegendes"><i class="fa fa-check"></i><b>1.1</b> Grundlegendes</a></li>
+<li class="chapter" data-level="1.2" data-path="cross.html"><a href="cross.html#beispiel-zur-anwendung-eines-sem"><i class="fa fa-check"></i><b>1.2</b> Beispiel zur Anwendung eines SEM</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="cross.html"><a href="cross.html#setup"><i class="fa fa-check"></i><b>1.2.1</b> Setup</a></li>
+<li class="chapter" data-level="1.2.2" data-path="cross.html"><a href="cross.html#prüfung-der-anwendungsvoraussetzungen"><i class="fa fa-check"></i><b>1.2.2</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="1.2.3" data-path="cross.html"><a href="cross.html#spezifizierung-des-modells"><i class="fa fa-check"></i><b>1.2.3</b> Spezifizierung des Modells</a></li>
+<li class="chapter" data-level="1.2.4" data-path="cross.html"><a href="cross.html#model-fitten"><i class="fa fa-check"></i><b>1.2.4</b> Model-Fitten</a></li>
+<li class="chapter" data-level="1.2.5" data-path="cross.html"><a href="cross.html#interpretation-der-sem-ergebnisse"><i class="fa fa-check"></i><b>1.2.5</b> Interpretation der SEM-Ergebnisse</a></li>
+<li class="chapter" data-level="1.2.6" data-path="cross.html"><a href="cross.html#grafische-darstellung-des-modells"><i class="fa fa-check"></i><b>1.2.6</b> Grafische Darstellung des Modells</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="cross.html"><a href="cross.html#cross"><i class="fa fa-check"></i><b>2</b> Explorative Faktorenanalyse</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="cross.html"><a href="cross.html#grundlegendes-1"><i class="fa fa-check"></i><b>2.1</b> Grundlegendes</a></li>
+<li class="chapter" data-level="2.2" data-path="cross.html"><a href="cross.html#beispiel-zur-anwendung-der-efa"><i class="fa fa-check"></i><b>2.2</b> Beispiel zur Anwendung der EFA</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="cross.html"><a href="cross.html#setup-1"><i class="fa fa-check"></i><b>2.2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2.2" data-path="cross.html"><a href="cross.html#prüfung-der-anwendungsvoraussetzungen-1"><i class="fa fa-check"></i><b>2.2.2</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="2.2.3" data-path="cross.html"><a href="cross.html#auswahl-und-begründung-der-methode-der-faktorenextraktion"><i class="fa fa-check"></i><b>2.2.3</b> Auswahl und Begründung der Methode der Faktorenextraktion</a></li>
+<li class="chapter" data-level="2.2.4" data-path="cross.html"><a href="cross.html#faktorenanzahl-bestimmen"><i class="fa fa-check"></i><b>2.2.4</b> Faktorenanzahl bestimmen</a></li>
+<li class="chapter" data-level="2.2.5" data-path="cross.html"><a href="cross.html#auswahl-und-begründung-der-methode-der-faktorenrotation"><i class="fa fa-check"></i><b>2.2.5</b> Auswahl und Begründung der Methode der Faktorenrotation</a></li>
+<li class="chapter" data-level="2.2.6" data-path="cross.html"><a href="cross.html#interpretation-der-faktorenstruktur-und-der-faktorladungen"><i class="fa fa-check"></i><b>2.2.6</b> Interpretation der Faktorenstruktur und der Faktorladungen</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cross.html"><a href="cross.html#cross"><i class="fa fa-check"></i><b>3</b> Konfirmatorische Faktorenanalyse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="cross.html"><a href="cross.html#grundlegendes-2"><i class="fa fa-check"></i><b>3.1</b> Grundlegendes</a></li>
+<li class="chapter" data-level="3.2" data-path="cross.html"><a href="cross.html#beispiel-zur-anwendung-der-cfa"><i class="fa fa-check"></i><b>3.2</b> Beispiel zur Anwendung der CFA</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="cross.html"><a href="cross.html#fragestellung"><i class="fa fa-check"></i><b>3.2.1</b> Fragestellung</a></li>
+<li class="chapter" data-level="3.2.2" data-path="cross.html"><a href="cross.html#begründung-der-auswertemethode"><i class="fa fa-check"></i><b>3.2.2</b> Begründung der Auswertemethode</a></li>
+<li class="chapter" data-level="3.2.3" data-path="cross.html"><a href="cross.html#setup-2"><i class="fa fa-check"></i><b>3.2.3</b> Setup</a></li>
+<li class="chapter" data-level="3.2.4" data-path="cross.html"><a href="cross.html#prüfung-der-anwendungsvoraussetzungen-2"><i class="fa fa-check"></i><b>3.2.4</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="3.2.5" data-path="cross.html"><a href="cross.html#interpretation-der-sem-ergebnisse-1"><i class="fa fa-check"></i><b>3.2.5</b> Interpretation der SEM-Ergebnisse</a></li>
+<li class="chapter" data-level="3.2.6" data-path="cross.html"><a href="cross.html#grafische-darstellung-des-modells-1"><i class="fa fa-check"></i><b>3.2.6</b> Grafische Darstellung des Modells</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Multivariate Verfahren</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Multivariate Verfahren</h1>
+<p class="author"><em>Stephan Goerigk &amp; Janika Saretzki</em></p>
+<p class="date"><em>2024-09-30</em></p>
+</div>
+<div id="über-dieses-skript" class="section level1 unnumbered hasAnchor">
+<h1>Über dieses Skript<a href="index.html#über-dieses-skript" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Liebe Studierende,</p>
+<p>dieses Skript soll Sie in die Grundlagen der multivariaten Verfahren einführen. Im Gegensatz zu univariaten Ansätzen, die nur eine abhängige Variable betrachten, erlauben multivariate Verfahren die gleichzeitige Analyse mehrerer Variablen. Dadurch können Zusammenhänge und Wechselwirkungen besser erfasst werden, was zu realistischeren Modellen führt.</p>
+<p>Multivariate Verfahren sind besonders nützlich, um die gleichzeitige Wirkung mehrerer Einflussfaktoren auf mehrere Ergebnisvariablen zu untersuchen. Sie bieten Fit-Maße zur Bewertung der Modellgüte auf Gesamt- und Teilmodellebene. Trotz höherer Anforderungen, insbesondere an die Stichprobengröße und Interpretation, sind sie unverzichtbar für realitätsnahe Modellierungen.</p>
+<p>Wir wünschen Ihnen viel Erfolg und Spaß beim Arbeiten mit diesen Methoden!</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="cross.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

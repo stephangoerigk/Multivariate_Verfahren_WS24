@@ -1,0 +1,217 @@
+# Explorative Faktorenanalyse {#cross}
+
+Die explorative Faktorenanalyse (engl. Exploratory Factor Analysis, EFA) ist eine statistische Methode, die dazu dient, **Strukturen in einem Datensatz zu entdecken** und Gruppen von Variablen zu identifizieren, die gemeinsam variieren. Die EFA reduziert eine große Anzahl von Variablen auf eine kleinere Anzahl zugrunde liegender Dimensionen (**Faktoren**), was die Komplexität der Daten verringert und wesentliche Muster offenlegt. Dadurch können theoretische Modelle entwickelt oder überprüft werden (Abgrenzung zur **konfirmatorischen Faktorenanalyse**). Ein weiteres Ziel der EFA ist es, die Dimensionalität und Konstruktvalidität von Messinstrumenten zu überprüfen, um sicherzustellen, dass diese die postulierten Dimensionen valide erfassen.
+
+**Zwei "Unterfamilien" faktorenanalytischer Methoden**
+
+- **Konfirmatorische Faktorenanalyse (CFA):** Eine **hypothesenprüfende** Methode, bei der ein vorab festgelegtes Modell getestet wird, das die Zuordnung von Indikatoren zu latenten Variablen definiert. Ziel der CFA ist es, die Passung des Modells zu den beobachteten Daten zu überprüfen.
+
+- **Explorative Faktorenanalyse (EFA):** Eine **hypothesengenerierende** Methode, die verwendet wird, wenn die Zuordnung der Indikatoren zu den latenten Variablen noch unbekannt ist. Ziel der EFA ist es, verborgene Faktorenstrukturen in den Daten zu entdecken.
+
+Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifizieren, die die Zusammenhänge zwischen den Variablen erklären.
+
+## Grundlegendes
+
+- **Korrelation manifester Variablen:** Die EFA basiert auf der Beobachtung, dass Korrelationen zwischen manifesten (direkt gemessenen) Variablen auf zugrunde liegende Strukturen hinweisen.
+
+- **Erklärung der Zusammenhänge:** Die zentrale Idee der EFA ist, dass die beobachteten Zusammenhänge durch latente Variablen erklärt werden, die die Variationen in den manifesten Variablen verursachen.
+
+**Implikationen der Faktorenanalyse**
+
+- **Manifeste Variablen als Indikatoren:** Manifeste Variablen dienen als Indikatoren für latente Variablen, wodurch Variationen in den gemessenen Variablen durch diese zugrunde liegenden Faktoren erklärt werden.
+
+- **Unkorrelierte Messwerte nach Kontrolle der latenten Variablen:** Nach Berücksichtigung der latenten Variablen sollten die verbleibenden Messwerte der manifesten Variablen unkorreliert sein, da die latenten Variablen die wesentlichen Zusammenhänge erklären.
+
+## Beispiel zur Anwendung der EFA
+
+Um die Anwendung der EFA zu verdeutlichen, betrachten wir ein Beispiel mit simulierten Daten des NEO-Fünf-Faktoren-Inventars (NEO-FFI). Das NEO-FFI ist ein weit verbreitetes psychometrisches Instrument zur Messung der fünf grundlegenden Dimensionen der Persönlichkeit: **Neurotizismus, Extraversion, Offenheit für Erfahrungen, Verträglichkeit** und **Gewissenhaftigkeit**.
+
+In diesem Beispiel sollen die simulierten, bereits korrekt gepolten Daten explorativ untersucht werden, um zu überprüfen, ob die Daten die erwartete Fünf-Faktoren-Struktur wiederspiegeln. Das Ziel der EFA in diesem Kontext ist es, festzustellen, ob die Dimensionen des NEO-FFI durch die zugrunde liegenden Faktoren in den simulierten Daten korrekt repräsentiert werden.
+
+<font color='darkred'>Hinweis: In unserem Beispiel könnte man argumentieren, dass die CFA eine geeignetere Methode wäre, da die Fünf-Faktoren-Struktur gut etabliert erscheint. Die CFA würde dabei helfen, die Hypothese zu überprüfen, dass genau diese fünf Faktoren den Daten zugrunde liegen.
+
+Wir wollen in diesem Fall jedoch davon ausgehen, dass die Struktur der Daten noch nicht vollständig bekannt ist. **Stellen Sie sich vor, wir stehen noch vor der Entdeckung dieser Struktur:** Wir haben eine Sammlung von Variablen, die möglicherweise durch zugrunde liegende Faktoren erklärt werden können, kennen jedoch weder die Anzahl noch die Natur dieser Faktoren. In einer solchen Situation ist die EFA die Methode der Wahl.</font>
+
+**Der Datensatz wurde unter der Bezeichnung "NEO" eingelesen.**
+
+```{r DataSet EFA, include = FALSE}
+
+library(readr)
+NEO = read_csv("/Users/jani/Desktop/CFH/Multivariate_Verfahren_WS24/bookdown/NEO.csv")
+nrow(NEO)
+
+NEO[] = lapply(NEO, function(x) {
+  if (is.factor(x)) as.numeric(as.character(x)) else x
+})
+
+NEO[] = lapply(NEO, function(x) {
+  if (is.character(x)) as.numeric(x) else x
+})
+
+options(scipen=999)
+
+NEO = subset(NEO, select = -c(sex, age, neurotiz, extraver, offenhei, verträgl, gewissen)) 
+
+# set.seed(123)  
+# 
+# NEO = as.data.frame(lapply(NEO, function(x) {
+#   if (is.numeric(x)) {
+#     rnorm(n = length(x), mean = 0, sd = 0.1)
+#   } else {
+#     x
+#   }
+# }))
+# 
+# if (!require("openxlsx")) {
+#   install.packages("openxlsx")
+# }
+# library(openxlsx)
+# 
+# write.xlsx(NEO, "NEO.xlsx")
+
+```
+
+### Setup
+```{r Setup EFA, message=FALSE, warning=FALSE}
+
+# install.packages("psych")
+library(psych)
+
+```
+
+### Prüfung der Anwendungsvoraussetzungen 
+Bevor die EFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:
+
+- **Korrelation zwischen den Variablen:** Die im Fokus stehenden Variablen müssen ausreichend miteinander korrelieren, damit latente Faktoren identifiziert werden können. Dies wird durch den Bartlett-Test überprüft.
+- **Kaiser-Meyer-Olkin (KMO) Test:** Der KMO-Test bewertet die Eignung der Daten für die EFA. Werte über 0,5 gelten als akzeptabel, über 0,8 als gut.
+
+Darüber hinaus sollten folgende Punkte berücksichtigt werden:
+
+- **Stichprobengröße:** Laut Schönbrodt und Perugini (2013) stabilisieren sich Korrelationen ab einer Stichprobengröße von etwa 250 Personen, was eine solide Grundlage für die Interpretation der Ergebnisse der EFA bietet. Eine kleinere Stichprobe könnte zu instabilen Korrelationen führen, was die Verlässlichkeit der Analyse beeinträchtigen würde. (Literatur: Schönbrodt, F. D., & Perugini, M. (2013). At what sample size do correlations stabilize?. *Journal of Research in Personality, 47*(5), 609-612. https://doi.org/10.1016/j.jrp.2013.05.009) 
+
+- **Multikollinearität:** Zu starke Korrelationen zwischen den Variablen (Multikollinearität) können die Analyse verzerren. Eine Möglichkeit zur Überprüfung ist die Determinante der Korrelationsmatrix. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin und sollte vermieden werden.
+
+```{r Voraussetzungen EFA, message=FALSE, warning=FALSE}
+
+# Bartlett-Test
+cor_matrix_NEO = cor(NEO)
+cortest.bartlett(cor_matrix_NEO, n = nrow(NEO), diag = TRUE)
+
+# KMO Test
+KMO(NEO)
+
+# Determinante der Korrelationsmatrix
+det(cor_matrix_NEO)
+
+```
+
+Die Ergebnisse zeigen, dass die Daten für die EFA geeignet sind. Der Bartlett-Test ist signifikant, was darauf hinweist, dass zwischen den Variablen ausreichende Korrelationen bestehen. Der KMO Wert liegt über der kritischen Schwelle von 0.50. Einige Variablen weisen MSA-Werte unter 0,5 auf, was auf eine geringere Eignung dieser Items hinweist. Insgesamt ist die Durchführung einer EFA jedoch gerechtfertigt, auch wenn schwächere Variablen möglicherweise überdacht oder entfernt werden sollten.
+
+### Auswahl und Begründung der Methode der Faktorenextraktion
+Nachdem wir die Voraussetzungen für die EFA überprüft haben und festgestellt wurde, dass die Daten grundsätzlich geeignet sind, geht es nun um die Auswahl der richtigen Methode zur Faktorenextraktion. Diese Wahl hängt von der Zielsetzung der Analyse ab. In der EFA werden häufig die **Hauptkomponentenanalyse (engl. Principal Component Analysis, PCA)** und die **Hauptachsenanalyse (engl. Principal Factor Analysis, PFA)** verwendet.
+
+- Die PFA fokussiert sich auf die gemeinsame Varianz zwischen den Variablen und wird häufig verwendet, wenn das Ziel darin besteht, latente Faktoren zu identifizieren, die den beobachteten Variablen zugrunde liegen. Da sie die spezifische Varianz und Fehleranteile nicht berücksichtigt, ist sie besonders nützlich, wenn man an den zugrunde liegenden Strukturen interessiert ist, die die Variablen erklären. Dies ist in unserem Fall besonders relevant, da wir die latenten Persönlichkeitsfaktoren der NEO-Daten identifizieren wollen.
+Zur Schätzung der Faktoren verwenden wir die **Maximum-Likelihood-Methode (ML)**, die es uns ermöglicht, robuste Schätzungen zu berechnen und zusätzlich inferenzstatistische Tests und Konfidenzintervalle für die Faktorenparameter zu erhalten.
+
+- Im Gegensatz dazu berücksichtigt die PCA sowohl die gemeinsame als auch die spezifische Varianz und wird häufig verwendet, wenn man die gesamte Varianz der Daten erklären möchte. Sie eignet sich gut zur Datenreduktion, wenn die Zielsetzung eher explorativ ist.
+
+In dieser Analyse liegt der Fokus darauf, die zugrunde liegenden latenten Strukturen zu entdecken, die die Variablen des NEO-Tests beeinflussen. Daher ist die **PFA** die geeignetere Methode, da sie spezifisch darauf abzielt, nur die gemeinsame Varianz zu erklären und latente Faktoren zu extrahieren. Die Schätzung der Faktoren erfolgt hierbei mit der **ML**, um die bestmögliche Passung der Daten zu gewährleisten.
+
+**Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code anzugeben, da die Faktorenextraktion in den späteren Schritten der Analyse definiert wird. Die Implementierung der PFA erfolgt im entsprechenden Codeabschnitt, sobald die praktische Analyse beginnt.**
+
+### Faktorenanzahl bestimmen
+Ein entscheidender Schritt in der EFA ist die Bestimmung der optimalen Anzahl der zu extrahierenden Faktoren. Diese Entscheidung hängt von mehreren Kriterien ab, die sicherstellen sollen, dass nur die wesentlichen latenten Strukturen erfasst werden, ohne unnötig viele Faktoren zu extrahieren.
+
+Zu den gängigsten Methoden zur Bestimmung der Faktorenanzahl gehören:
+
+- **Kaiser-Kriterium**: Nach dem Kaiser-Kriterium werden nur die Faktoren beibehalten, deren Eigenwerte größer als 1 sind. Ein Eigenwert über 1 bedeutet, dass der Faktor mehr Varianz erklärt, als eine einzelne Variable erklären würde. Diese Methode ist einfach anzuwenden, aber sie kann dazu neigen, zu viele Faktoren zu identifizieren.
+
+- **Scree-Test**: Der Scree-Test visualisiert die Eigenwerte in einer absteigenden Reihenfolge in einem sogenannten "Scree-Plot". Man sucht nach einem "Knick" in der Kurve, ab dem die Eigenwerte nur noch geringfügig sinken. Die Anzahl der Faktoren wird dann bis zu diesem Knick festgelegt. Diese Methode wird häufig verwendet, da sie die Anzahl der relevanten Faktoren grafisch verdeutlicht.
+
+- **Parallelanalyse**: Diese Methode vergleicht die Eigenwerte der realen Daten mit zufällig generierten Daten. Nur die Faktoren, deren Eigenwerte die der Zufallsdaten übersteigen, werden als signifikant betrachtet. Die Parallelanalyse gilt als eine der zuverlässigsten Methoden zur Bestimmung der Faktorenanzahl.
+
+- **Interpretierbarkeit**: Letztlich sollte die Anzahl der Faktoren auch anhand ihrer inhaltlichen und theoretischen Interpretierbarkeit festgelegt werden. Selbst wenn ein statistisches Kriterium eine bestimmte Anzahl von Faktoren vorschlägt, sollte geprüft werden, ob diese Faktoren sinnvoll interpretiert werden können.
+
+In dieser Analyse verwenden wir eine Kombination aus dem Scree-Test und der Parallelanalyse, um die optimale Anzahl an Faktoren zu bestimmen. Dies stellt sicher, dass sowohl statistische Kriterien als auch die Interpretierbarkeit berücksichtigt werden.
+
+```{r Faktorenanzahl bestimmen, message=FALSE, warning=FALSE}
+
+# Kaiser-Kriterium: Eigenwerte über 1 extrahieren
+eigenvalues = eigen(cor(NEO))$values
+sum(eigenvalues > 1)
+
+# Scree-Test: Scree-Plot 
+scree(NEO)
+
+# Parallelanalyse: Vergleich der Eigenwerte mit Zufallsdaten
+fa.parallel(NEO, fa = "fa", fm = "ml", n.iter = 1000, quant = 0.95, plot = TRUE)
+
+```
+
+Die Ergebnisse der Scree-Plot- und Parallelanalyse zeigen, dass 5 Faktoren die zugrunde liegenden Strukturen der Daten am besten erklären. Der Scree-Plot weist auf einen deutlichen Knick nach dem fünften Faktor hin, was darauf hindeutet, dass zusätzliche Faktoren keinen signifikanten Beitrag zur Erklärung der Varianz leisten. Die Parallelanalyse bestätigt diese Interpretation, da die Eigenwerte der tatsächlichen Daten bis zum fünften Faktor über den zufällig generierten Eigenwerten liegen. Dies bedeutet, dass die fünf extrahierten Faktoren die wesentlichen latenten Strukturen der Daten repräsentieren.
+
+### Auswahl und Begründung der Methode der Faktorenrotation
+
+Nachdem die Faktorenanzahl festgelegt wurde, ist der nächste Schritt in der EFA die Rotation der extrahierten Faktoren. Die Faktorenrotation wird durchgeführt, um die interpretierbare Struktur der Faktoren zu verbessern. Dabei gibt es zwei Hauptarten der Rotation: **Orthogonale und oblique Rotation.**
+
+- **Orthogonale Rotation:** Diese Methode wird verwendet, wenn davon ausgegangen wird, dass die Faktoren unabhängig voneinander sind, also nicht miteinander korrelieren. Ein gängiges Beispiel für orthogonale Rotation ist die Varimax-Rotation. Sie maximiert die Varianz der Ladungen innerhalb der Faktoren, was dazu führt, dass die Faktorladungen extremer (also näher an 0 oder 1) werden, und die Interpretierbarkeit der Faktoren verbessert wird. Diese Methode ist geeignet, wenn man davon ausgeht, dass die extrahierten Faktoren inhaltlich getrennt und unabhängig sind.
+
+- **Oblique Rotation:** Diese Methode wird verwendet, wenn erwartet wird, dass die Faktoren miteinander korrelieren können. Ein Beispiel hierfür ist die Promax-Rotation. Im Gegensatz zur orthogonalen Rotation erlaubt die oblique Rotation Korrelationen zwischen den Faktoren und führt zu einer flexibleren Lösung, die in vielen psychologischen Datensätzen realistischer ist. Diese Methode ist sinnvoll, wenn man annimmt, dass die extrahierten Faktoren gemeinsame Varianz aufweisen.
+
+In unserer Analyse ist die oblique Rotation (z. B. Oblimin) die geeignete Wahl, da es in psychologischen Daten oft realistisch ist, dass die extrahierten Faktoren (z. B. Persönlichkeitsmerkmale) miteinander korrelieren. Diese Methode bietet eine differenziertere und flexiblere Lösung, die die tatsächlichen Zusammenhänge zwischen den Faktoren besser widerspiegelt.
+
+**Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code zur Faktorenrotation anzugeben, da diese im späteren Schritt der Analyse erfolgt. Die Rotation wird nach der Extraktion der Faktoren durchgeführt und kann im entsprechenden Codeabschnitt implementiert werden, sobald die praktische Analyse beginnt.**
+
+### Interpretation der Faktorenstruktur und der Faktorladungen
+
+Nach der Rotation der Faktoren ist es wichtig, die Faktorenstruktur und die Faktorladungen zu interpretieren. Die Faktorenstruktur zeigt auf, welche Variablen stark mit den extrahierten Faktoren korrelieren und somit durch sie erklärt werden. Die Faktorladungen geben an, wie stark jede Variable auf einen bestimmten Faktor lädt. Höhere Ladungen (in der Regel über 0.4) zeigen an, dass eine Variable stark mit einem Faktor assoziiert ist und zu dessen Interpretation beiträgt.
+
+- **Faktorladungen:** Die Ladungen einer Variable auf einen bestimmten Faktor werden als Korrelationskoeffizienten interpretiert, die anzeigen, wie stark diese Variable von dem Faktor beeinflusst wird. Eine hohe positive Ladung bedeutet, dass die Variable eng mit dem Faktor zusammenhängt, während eine hohe negative Ladung darauf hinweist, dass die Variable in umgekehrter Richtung zum Faktor steht.
+
+- **Faktorstruktur:** Die Faktorstruktur hilft dabei, jedem Faktor eine inhaltliche Bedeutung zuzuweisen. Faktoren, auf denen bestimmte Variablen hohe Ladungen aufweisen, werden oft inhaltlich so interpretiert, dass sie ein zugrundeliegendes Konzept oder eine Dimension repräsentieren (z. B. *Extraversion* oder *Neurotizismus* in einem Persönlichkeitsinventar).
+
+In der Praxis wird für jede Variable untersucht, auf welchen Faktor sie am stärksten lädt, um die Variablen in sinnvolle Gruppen zu unterteilen. Diese Gruppen von Variablen werden dann verwendet, um den Faktor zu benennen und zu interpretieren. Wichtig ist es auch zu beachten, ob eine Variable auf mehrere Faktoren gleichzeitig lädt (sogenannte *cross-loadings*), was die Interpretation erschweren kann.
+
+**Nachdem wir die wichtigen Entscheidungen bezüglich der Faktorenanzahl, der Rotationsmethode und der Interpretation der Faktorladungen getroffen haben, folgt nun die praktische Umsetzung dieser Schritte in der eigentlichen Faktorenanalyse. Der folgende Code integriert die zuvor beschriebenen Methoden und Ansätze – darunter die Bestimmung der Faktorenanzahl, die Wahl der Promax-Rotation und die Extraktion der Faktoren mittels Maximum-Likelihood. Die im Code implementierte Analyse ermöglicht es uns, die Faktorenstruktur zu interpretieren und die zugrunde liegenden latenten Faktoren in den Daten zu identifizieren.**
+
+```{r EFA Faktorenanalyse, message=FALSE, warning=FALSE}
+
+fa(NEO, nfactors = 5, rotate = "oblimin", fm = "ml")
+
+fa_NEO = fa(NEO, nfactors = 5, rotate = "oblimin", fm = "ml")
+
+print(fa_NEO$loadings, cut = 0.4) # Faktorladungen
+fa.diagram(fa_NEO) # Faktorstruktur
+
+summary(fa_NEO)
+
+```
+
+#### Faktorenstruktur und Varianz
+Die Analyse extrahiert 5 Faktoren, die zusammen 32,7 % der Varianz in den Daten erklären. Die Varianz, die jeder Faktor erklärt, ist relativ gering (zwischen 3,8 % und 8,6 %). Dies deutet darauf hin, dass die latenten Faktoren einen moderaten Teil der Varianz der beobachteten Variablen erfassen, aber auch ein beträchtlicher Anteil der Varianz unerklärt bleibt (siehe Zeile *Proportion Var* sowie *Cumulative Proportion*).
+Die kumulative Varianz der fünf Faktoren beträgt 32,7 %. Das ist für psychologische Daten relativ typisch, da Persönlichkeitsmerkmale oft komplex und schwer vollständig durch Faktoren zu erklären sind.
+
+#### Faktorladungen
+Die Faktorladungen zeigen an, welche Variablen stark auf die Faktoren laden (in der Regel Ladungen > 0.4). 
+
+- **ML1**: Variablen wie n6, n11, und n16 laden hoch auf diesen Faktor (z. B. n16 mit einer Ladung von 0.736).
+
+- **ML2**: Variablen wie n5, n10, n15, und n20 laden stark auf diesen Faktor (z. B. n10 mit einer Ladung von 0.639). Diese Variablen hängen also stark mit diesem Faktor zusammen.
+
+- **ML3**: Variablen wie n13, n14, und n39 laden auf diesen Faktor.
+
+- **ML4** und **ML5** haben ebenfalls signifikante Ladungen, zum Beispiel lädt n48 mit einer Ladung von 0.754 auf ML4, was eine starke Korrelation mit diesem Faktor anzeigt.
+
+Die Variablen mit den höchsten Ladungen pro Faktor sollten genauer betrachtet werden, um den inhaltlichen Zusammenhang und die Bedeutung der Faktoren zu bestimmen.
+
+#### Modellgüte
+RMSEA (Root Mean Square Error of Approximation) liegt bei 0.047, was als guter Wert gilt. Ein RMSEA-Wert unter 0.05 deutet darauf hin, dass das Modell eine gute Anpassung an die Daten aufweist.
+RMSR (Root Mean Square Residual) ist 0.07, was ebenfalls im akzeptablen Bereich liegt.
+
+#### Faktorenkorrelation
+Die Korrelationen zwischen den Faktoren sind relativ gering, was zeigt, dass die Faktoren weitgehend unabhängig voneinander sind. Die höchsten Korrelationen liegen bei etwa 0.10, was darauf hindeutet, dass die oblique Rotation (Oblimin) keine stark korrelierten Faktoren identifizieren konnte.
+
+#### Fazit
+Die Faktorenanalyse extrahiert 5 latente Faktoren, die zusammen 32,7 % der Varianz der NEO-Daten erklären. Die Faktorladungen zeigen eine klare Zuordnung der Variablen zu den Faktoren, wobei bestimmte Variablen stark auf einen Faktor laden und somit die Bedeutung dieser Faktoren bestimmen.Das Modell zeigt eine gute Anpassung an die Daten, was durch die niedrigen RMSEA- und RMSR-Werte unterstützt wird. 
+
+Die nächsten Schritte wären, die inhaltliche Bedeutung der Faktoren anhand der hochladenden Variablen zu interpretieren und zu überprüfen, wie gut diese Faktoren das theoretische Konstrukt der NEO-Daten widerspiegeln.

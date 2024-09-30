@@ -1,0 +1,10 @@
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Kapitel "  
+rmd_files:
+  - index.Rmd   
+  - 01-SEM.Rmd
+  - 02-EFA.Rmd
+  - 03-CFA.Rmd
+

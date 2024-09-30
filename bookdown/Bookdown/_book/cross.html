@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kapitel 3 Konfirmatorische Faktorenanalyse | Multivariate Verfahren</title>
+  <meta name="description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Kapitel 3 Konfirmatorische Faktorenanalyse | Multivariate Verfahren" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Kapitel 3 Konfirmatorische Faktorenanalyse | Multivariate Verfahren" />
+  
+  <meta name="twitter:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  
+
+<meta name="author" content="Stephan Goerigk &amp; Janika Saretzki" />
+
+
+<meta name="date" content="2024-09-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cross.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Über dieses Skript</a></li>
+<li class="chapter" data-level="1" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>1</b> Strukturgleichungsmodelle</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="cross.html"><a href="cross.html#grundlegendes"><i class="fa fa-check"></i><b>1.1</b> Grundlegendes</a></li>
+<li class="chapter" data-level="1.2" data-path="cross.html"><a href="cross.html#beispiel-zur-anwendung-eines-sem"><i class="fa fa-check"></i><b>1.2</b> Beispiel zur Anwendung eines SEM</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="cross.html"><a href="cross.html#setup"><i class="fa fa-check"></i><b>1.2.1</b> Setup</a></li>
+<li class="chapter" data-level="1.2.2" data-path="cross.html"><a href="cross.html#prüfung-der-anwendungsvoraussetzungen"><i class="fa fa-check"></i><b>1.2.2</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="1.2.3" data-path="cross.html"><a href="cross.html#spezifizierung-des-modells"><i class="fa fa-check"></i><b>1.2.3</b> Spezifizierung des Modells</a></li>
+<li class="chapter" data-level="1.2.4" data-path="cross.html"><a href="cross.html#model-fitten"><i class="fa fa-check"></i><b>1.2.4</b> Model-Fitten</a></li>
+<li class="chapter" data-level="1.2.5" data-path="cross.html"><a href="cross.html#interpretation-der-sem-ergebnisse"><i class="fa fa-check"></i><b>1.2.5</b> Interpretation der SEM-Ergebnisse</a></li>
+<li class="chapter" data-level="1.2.6" data-path="cross.html"><a href="cross.html#grafische-darstellung-des-modells"><i class="fa fa-check"></i><b>1.2.6</b> Grafische Darstellung des Modells</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="cross.html"><a href="cross.html#cross"><i class="fa fa-check"></i><b>2</b> Explorative Faktorenanalyse</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="cross.html"><a href="cross.html#grundlegendes-1"><i class="fa fa-check"></i><b>2.1</b> Grundlegendes</a></li>
+<li class="chapter" data-level="2.2" data-path="cross.html"><a href="cross.html#beispiel-zur-anwendung-der-efa"><i class="fa fa-check"></i><b>2.2</b> Beispiel zur Anwendung der EFA</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="cross.html"><a href="cross.html#setup-1"><i class="fa fa-check"></i><b>2.2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2.2" data-path="cross.html"><a href="cross.html#prüfung-der-anwendungsvoraussetzungen-1"><i class="fa fa-check"></i><b>2.2.2</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="2.2.3" data-path="cross.html"><a href="cross.html#auswahl-und-begründung-der-methode-der-faktorenextraktion"><i class="fa fa-check"></i><b>2.2.3</b> Auswahl und Begründung der Methode der Faktorenextraktion</a></li>
+<li class="chapter" data-level="2.2.4" data-path="cross.html"><a href="cross.html#faktorenanzahl-bestimmen"><i class="fa fa-check"></i><b>2.2.4</b> Faktorenanzahl bestimmen</a></li>
+<li class="chapter" data-level="2.2.5" data-path="cross.html"><a href="cross.html#auswahl-und-begründung-der-methode-der-faktorenrotation"><i class="fa fa-check"></i><b>2.2.5</b> Auswahl und Begründung der Methode der Faktorenrotation</a></li>
+<li class="chapter" data-level="2.2.6" data-path="cross.html"><a href="cross.html#interpretation-der-faktorenstruktur-und-der-faktorladungen"><i class="fa fa-check"></i><b>2.2.6</b> Interpretation der Faktorenstruktur und der Faktorladungen</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cross.html"><a href="cross.html#cross"><i class="fa fa-check"></i><b>3</b> Konfirmatorische Faktorenanalyse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="cross.html"><a href="cross.html#grundlegendes-2"><i class="fa fa-check"></i><b>3.1</b> Grundlegendes</a></li>
+<li class="chapter" data-level="3.2" data-path="cross.html"><a href="cross.html#beispiel-zur-anwendung-der-cfa"><i class="fa fa-check"></i><b>3.2</b> Beispiel zur Anwendung der CFA</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="cross.html"><a href="cross.html#fragestellung"><i class="fa fa-check"></i><b>3.2.1</b> Fragestellung</a></li>
+<li class="chapter" data-level="3.2.2" data-path="cross.html"><a href="cross.html#begründung-der-auswertemethode"><i class="fa fa-check"></i><b>3.2.2</b> Begründung der Auswertemethode</a></li>
+<li class="chapter" data-level="3.2.3" data-path="cross.html"><a href="cross.html#setup-2"><i class="fa fa-check"></i><b>3.2.3</b> Setup</a></li>
+<li class="chapter" data-level="3.2.4" data-path="cross.html"><a href="cross.html#prüfung-der-anwendungsvoraussetzungen-2"><i class="fa fa-check"></i><b>3.2.4</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="3.2.5" data-path="cross.html"><a href="cross.html#interpretation-der-sem-ergebnisse-1"><i class="fa fa-check"></i><b>3.2.5</b> Interpretation der SEM-Ergebnisse</a></li>
+<li class="chapter" data-level="3.2.6" data-path="cross.html"><a href="cross.html#grafische-darstellung-des-modells-1"><i class="fa fa-check"></i><b>3.2.6</b> Grafische Darstellung des Modells</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Multivariate Verfahren</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cross" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Kapitel 3</span> Konfirmatorische Faktorenanalyse<a href="cross.html#cross" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Die konfirmatorische Faktorenanalyse (engl. Confirmatory Factor Analysis, CFA) ist eine <strong>hypothesenprüfende</strong> statistische Methode, die verwendet wird, um zu überprüfen, ob die Daten zu einem vorab definierten Modell passen. Im Gegensatz zur explorativen Faktorenanalyse, bei der die Faktorenstruktur aus den Daten extrahiert wird, testet die CFA spezifische <strong>theoretische Modelle</strong>, die die Zuordnung von Variablen (Indikatoren) zu <strong>latenten Konstrukten</strong> vorschreiben. Die CFA ermöglicht es, die <strong>Konstruktvalidität</strong> von Messinstrumenten zu bewerten, indem sie überprüft, ob die beobachteten Daten mit der postulierten Struktur übereinstimmen.</p>
+<p><strong>Zwei “Unterfamilien” faktorenanalytischer Methoden</strong></p>
+<ul>
+<li><p><strong>Konfirmatorische Faktorenanalyse (CFA):</strong> Eine <strong>hypothesenprüfende</strong> Methode, bei der ein vorab festgelegtes Modell getestet wird, das die Zuordnung von Indikatoren zu latenten Variablen definiert. Ziel der CFA ist es, die Passung des Modells zu den beobachteten Daten zu überprüfen.</p></li>
+<li><p><strong>Explorative Faktorenanalyse (EFA):</strong> Eine <strong>hypothesengenerierende</strong> Methode, die verwendet wird, wenn die Zuordnung der Indikatoren zu den latenten Variablen noch unbekannt ist. Ziel der EFA ist es, verborgene Faktorenstrukturen in den Daten zu entdecken.</p></li>
+</ul>
+<p>Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifizieren, die die Zusammenhänge zwischen den Variablen erklären.</p>
+<div id="grundlegendes-2" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Grundlegendes<a href="cross.html#grundlegendes-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p><strong>Theoretisch fundierte Modellbildung:</strong> Bei der CFA wird das Modell basierend auf <strong>theoretischen Überlegungen</strong> und vorheriger Forschung spezifiziert. Die Zuordnung der Indikatoren zu den latenten Faktoren wird also vorab festgelegt.</p></li>
+<li><p><strong>Fit-Indizes zur Modellbewertung:</strong> Die Passung des Modells zu den beobachteten Daten wird anhand von Fit-Indizes bewertet, z.B. dem <strong>Root Mean Square Error of Approximation (RMSEA)</strong>, dem <strong>Standardized Root Mean Square Residual (SRMR)</strong> oder dem <strong>Comparative Fit Index (CFI)</strong>. Diese Indizes geben an, wie gut das Modell zu den Daten passt.</p></li>
+</ul>
+<p><strong>Implikationen der Faktorenanalyse</strong></p>
+<ul>
+<li><p><strong>Latente Variablen als Ursache für beobachtete Zusammenhänge:</strong> Die CFA geht davon aus, dass die Korrelationen zwischen den manifesten Variablen auf die zugrunde liegenden latenten Faktoren zurückzuführen sind, die durch die CFA modelliert werden.</p></li>
+<li><p><strong>Modellanpassung:</strong> Ein gut passendes CFA-Modell sollte eine hohe Übereinstimmung zwischen den vorhergesagten und den beobachteten Kovarianzen der manifesten Variablen zeigen. Ist dies nicht der Fall, müssen entweder das Modell oder die Messinstrumente überarbeitet werden.</p></li>
+</ul>
+</div>
+<div id="beispiel-zur-anwendung-der-cfa" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Beispiel zur Anwendung der CFA<a href="cross.html#beispiel-zur-anwendung-der-cfa" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um die Anwendung der CFA zu verdeutlichen, folgt ein Beispiel mit Daten zu <strong>kognitiven Fähigkeiten</strong>. In diesem Beispiel soll überprüft werden, ob die Zusammenhänge zwischen vier kognitiven Tests durch einen zugrunde liegenden <strong>g-Faktor</strong> (allgemeine Intelligenz) erklärt werden können.</p>
+<p>Die vier kognitiven Tests sind:
+- <strong>Arithmetische Kompetenz</strong> (Variablenname: MathComp)
+- <strong>Figural-induktives Denken</strong> (Variablenname: FigReas)
+- <strong>Wortbedeutung</strong> (Variablenname: WordMean)
+- <strong>Langzeitgedächtnis</strong> (Variablenname: LongMem)</p>
+<p>Die Stichprobe umfasst <em>N</em>=196 Personen (48% Frauen; 52% Männer) im Alter von 16 bis 63 Jahren (<em>M</em>=37.79; <em>SD</em>=11.89).</p>
+<div id="fragestellung" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Fragestellung<a href="cross.html#fragestellung" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Lassen sich die Zusammenhänge zwischen den vorliegenden vier kognitiven Tests durch einen <strong>g-Faktor</strong> erklären?</p>
+</div>
+<div id="begründung-der-auswertemethode" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Begründung der Auswertemethode<a href="cross.html#begründung-der-auswertemethode" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Da bereits eine <strong>gerichtete Hypothese</strong> über die Faktorenstruktur vorliegt, die zudem durch die Literatur gut begründet ist, wird die konfirmatorische Faktorenanalyse (CFA) zur Überprüfung der Fragestellung herangezogen. Die CFA testet, ob die vier kognitiven Tests durch einen gemeinsamen g-Faktor erklärt werden können.</p>
+<p><strong>Der Datensatz wurde unter der Bezeichnung “GScreen” eingelesen.</strong></p>
+</div>
+<div id="setup-2" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Setup<a href="cross.html#setup-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="cross.html#cb1-1" tabindex="-1"></a><span class="co"># install.packages(&quot;lavaan&quot;)</span></span>
+<span id="cb1-2"><a href="cross.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-3"><a href="cross.html#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="cross.html#cb1-4" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
+<span id="cb1-5"><a href="cross.html#cb1-5" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
+</div>
+<div id="prüfung-der-anwendungsvoraussetzungen-2" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Prüfung der Anwendungsvoraussetzungen<a href="cross.html#prüfung-der-anwendungsvoraussetzungen-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Bevor die CFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:</p>
+<ul>
+<li><p><strong>Korrelation zwischen den Variablen:</strong> Die Indikatoren sollten ausreichend miteinander korrelieren, damit sie durch einen gemeinsamen latenten Faktor erklärt werden können. Allerdings sollten die Korrelationen nicht so stark sein, dass Multikollinearität vorliegt.</p></li>
+<li><p><strong>Stichprobengröße:</strong> Für die CFA ist die Stichprobengröße entscheidend. Schönbrodt und Perugini (2013) argumentieren, dass Korrelationen bei einer Stichprobengröße von etwa 250 Personen stabil sind, was eine solide Grundlage für die Interpretation der CFA-Ergebnisse bietet.</p></li>
+<li><p><strong>Univariate Normalverteilung:</strong> Die CFA setzt voraus, dass die beobachteten Variablen normalverteilt sind, zumindest bei größeren Stichproben, um valide Ergebnisse zu gewährleisten.</p></li>
+</ul>
+<p>Darüber hinaus sollten folgende Punkte berücksichtigt werden:</p>
+<ul>
+<li><p><strong>Multikollinearität:</strong> Zu starke Korrelationen zwischen den Indikatoren (Multikollinearität) können zu Problemen führen. Die Determinante der Korrelationsmatrix bietet eine Möglichkeit, dies zu überprüfen. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin.</p></li>
+<li><p><strong>Modellidentifizierbarkeit:</strong> Ein Modell muss hinreichend identifiziert sein, d.h., es müssen genügend Datenpunkte vorhanden sein, um die Modellparameter schätzen zu können.</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="cross.html#cb2-1" tabindex="-1"></a><span class="co"># Korrelation der Variablen prüfen </span></span>
+<span id="cb2-2"><a href="cross.html#cb2-2" tabindex="-1"></a>cor_matrix_CFA <span class="ot">=</span> <span class="fu">cor</span>(GScreen)</span>
+<span id="cb2-3"><a href="cross.html#cb2-3" tabindex="-1"></a><span class="fu">det</span>(cor_matrix_CFA) <span class="co"># Determinante der Korrelationsmatrix</span></span></code></pre></div>
+<pre><code>## [1] 0.7009416</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="cross.html#cb4-1" tabindex="-1"></a><span class="co"># Prüfen der Normalverteilung (z.B. mit Shapiro-Wilk-Test für jede Variable)</span></span>
+<span id="cb4-2"><a href="cross.html#cb4-2" tabindex="-1"></a><span class="fu">apply</span>(GScreen, <span class="dv">2</span>, shapiro.test)</span></code></pre></div>
+<pre><code>## $MathComp
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  newX[, i]
+## W = 0.99508, p-value = 0.7616
+## 
+## 
+## $FigReas
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  newX[, i]
+## W = 0.99144, p-value = 0.2871
+## 
+## 
+## $WordMean
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  newX[, i]
+## W = 0.95918, p-value = 0.00001613
+## 
+## 
+## $LongMem
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  newX[, i]
+## W = 0.99341, p-value = 0.5154</code></pre>
+<p>Die Ergebnisse zeigen, dass die Daten für die CFA geeignet sind. Die Korrelationen zwischen den Variablen sind ausreichend hoch, um eine gemeinsame Faktorenstruktur zu modellieren, was durch die Determinante der Korrelationsmatrix (0.70) bestätigt wird. Diese liegt weit über dem kritischen Wert nahe 0, was darauf hinweist, dass keine problematische Multikollinearität vorliegt.</p>
+<p>Die Ergebnisse des <strong>Shapiro-Wilk-Tests</strong> zur Überprüfung der Normalverteilung zeigen, dass die meisten Variablen (<strong>MathComp</strong>, <strong>FigReas</strong> und <strong>LongMem</strong>) keine signifikanten Abweichungen von der Normalverteilung aufweisen (<em>p</em>-Werte &gt; .05). Allerdings zeigt die Variable <strong>WordMean</strong> eine signifikante Abweichung von der Normalverteilung (<em>p</em> &lt; .05). Da die Stichprobengröße jedoch groß genug ist (<em>N</em>=200), kann diese Abweichung als tolerierbar angesehen werden.</p>
+<p>Insgesamt sind die Voraussetzungen für die Durchführung der CFA erfüllt.</p>
+<div id="fit-indizes" class="section level4 hasAnchor" number="3.2.4.1">
+<h4><span class="header-section-number">3.2.4.1</span> Fit-Indizes<a href="cross.html#fit-indizes" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Zu den wichtigsten Fit-Indizes gehören:</p>
+<ul>
+<li><p><strong>Chi-Quadrat-Test</strong>: Testet die Abweichung zwischen dem Modell und den Daten. Ein nicht-signifikanter p-Wert deutet darauf hin, dass das Modell gut passt.</p></li>
+<li><p><strong>RMSEA (Root Mean Square Error of Approximation)</strong>: Ein RMSEA-Wert &lt; 0.06 gilt als guter Fit.</p></li>
+<li><p><strong>CFI (Comparative Fit Index)</strong>: Werte &gt; 0.95 gelten als Hinweis auf eine gute Modellpassung.</p></li>
+<li><p><strong>SRMR (Standardized Root Mean Square Residual)</strong>: Ein Wert &lt; 0.08 wird als akzeptabel angesehen.</p></li>
+</ul>
+</div>
+<div id="modellschätzung" class="section level4 hasAnchor" number="3.2.4.2">
+<h4><span class="header-section-number">3.2.4.2</span> Modellschätzung<a href="cross.html#modellschätzung" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Das Modell wird in R mit der <code>lavaan</code>-Funktion <code>cfa()</code> geschätzt.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="cross.html#cb6-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">&#39;GFactor =~ MathComp + FigReas + WordMean + LongMem&#39;</span></span>
+<span id="cb6-2"><a href="cross.html#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="cross.html#cb6-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model, <span class="at">data =</span> GScreen)</span>
+<span id="cb6-4"><a href="cross.html#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="cross.html#cb6-5" tabindex="-1"></a><span class="fu">summary</span>(fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-18 ended normally after 30 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         8
+## 
+##   Number of observations                           200
+## 
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 3.254
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.196
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                71.066
+##   Degrees of freedom                                 6
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.981
+##   Tucker-Lewis Index (TLI)                       0.942
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1165.605
+##   Loglikelihood unrestricted model (H1)      -1163.978
+##                                                       
+##   Akaike (AIC)                                2347.210
+##   Bayesian (BIC)                              2373.596
+##   Sample-size adjusted Bayesian (SABIC)       2348.251
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.056
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.162
+##   P-value H_0: RMSEA &lt;= 0.050                    0.348
+##   P-value H_0: RMSEA &gt;= 0.080                    0.455
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.030
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   GFactor =~                                                            
+##     MathComp          1.000                               0.473    0.399
+##     FigReas           1.381    0.386    3.580    0.000    0.653    0.642
+##     WordMean          1.184    0.336    3.523    0.000    0.560    0.504
+##     LongMem           1.071    0.306    3.500    0.000    0.507    0.494
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .MathComp          1.185    0.136    8.724    0.000    1.185    0.841
+##    .FigReas           0.609    0.117    5.192    0.000    0.609    0.588
+##    .WordMean          0.924    0.122    7.597    0.000    0.924    0.746
+##    .LongMem           0.797    0.103    7.735    0.000    0.797    0.756
+##     GFactor           0.224    0.101    2.214    0.027    1.000    1.000
+## 
+## R-Square:
+##                    Estimate
+##     MathComp          0.159
+##     FigReas           0.412
+##     WordMean          0.254
+##     LongMem           0.244</code></pre>
+</div>
+</div>
+<div id="interpretation-der-sem-ergebnisse-1" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> Interpretation der SEM-Ergebnisse<a href="cross.html#interpretation-der-sem-ergebnisse-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="modell-fit-1" class="section level4 hasAnchor" number="3.2.5.1">
+<h4><span class="header-section-number">3.2.5.1</span> Modell-Fit<a href="cross.html#modell-fit-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Der Chi-Quadrat-Wert ist nicht signifikant (<em>χ</em>²(2) = 3.254, <em>p</em> = .196), was darauf hinweist, dass das Modell die Daten gut repräsentiert. Ein nicht-signifikanter p-Wert bedeutet, dass das Modell die beobachteten Daten nicht signifikant von der theoretischen Struktur abweicht (Nullhypothese des Tests: Es gibt keinen Unterschied zwischen dem theoretischen Modell und den beobachteten Daten, daher ist ein n.s. Ergebnis hier erwünscht).</p>
+<p>Die Fit-Indizes bestätigen die Angemessenheit des Modells:</p>
+<ul>
+<li><p><strong>Root Mean Square Error of Approximation (RMSEA):</strong> Der RMSEA-Wert beträgt 0.056, was auf eine akzeptable Modellpassung hinweist. Werte unter 0.06 gelten als sehr gut, während Werte zwischen 0.05 und 0.08 als akzeptabel angesehen werden. Das 90%-Konfidenzintervall (0.000 bis 0.162) zeigt, dass der RMSEA im akzeptablen Bereich liegt.</p></li>
+<li><p><strong>Standardized Root Mean Square Residual (SRMR):</strong> Der SRMR-Wert beträgt 0.030, was deutlich unter der kritischen Schwelle von 0.08 liegt und auf eine sehr gute Modellpassung hinweist. Der SRMR misst die Differenz zwischen den beobachteten und modellbasierten Korrelationen und zeigt, dass das Modell die beobachteten Korrelationen gut abbildet.</p></li>
+<li><p><strong>Comparative Fit Index (CFI):</strong> Der CFI-Wert beträgt 0.981, was auf eine sehr gute Modellpassung hinweist (Werte über 0.95 gelten als exzellent).</p></li>
+</ul>
+</div>
+<div id="parameter-interpretation-1" class="section level4 hasAnchor" number="3.2.5.2">
+<h4><span class="header-section-number">3.2.5.2</span> Parameter-Interpretation<a href="cross.html#parameter-interpretation-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Die Parameter des Modells sind durchweg signifikant, was darauf hindeutet, dass die Beziehungen zwischen den latenten Variablen und ihren Indikatoren gut modelliert sind:</p>
+<ul>
+<li><strong>Latente Variablen und ihre Indikatoren:</strong> Die latente Variable <strong>GFactor</strong> wird signifikant durch alle Indikatoren gemessen:
+<ul>
+<li><strong>MathComp:</strong> Die standardisierte Ladung beträgt 0.399, was bedeutet, dass etwa 40% der Varianz von <strong>MathComp</strong> durch den g-Faktor erklärt werden.</li>
+<li><strong>FigReas:</strong> Mit einer Ladung von 0.642 zeigt <strong>FigReas</strong> die höchste Korrelation mit dem g-Faktor.</li>
+<li><strong>WordMean:</strong> Die Ladung von 0.504 zeigt eine moderate Korrelation mit dem g-Faktor.</li>
+<li><strong>LongMem:</strong> <strong>LongMem</strong> hat ebenfalls eine signifikante Ladung von 0.494.</li>
+</ul></li>
+</ul>
+</div>
+<div id="regressionsbeziehungen" class="section level4 hasAnchor" number="3.2.5.3">
+<h4><span class="header-section-number">3.2.5.3</span> Regressionsbeziehungen<a href="cross.html#regressionsbeziehungen" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Alle Pfade zwischen der latenten Variable (<strong>GFactor</strong>) und den Indikatoren sind signifikant (<em>p</em> &lt; .001), was darauf hinweist, dass die kognitiven Tests gut durch den g-Faktor erklärt werden.</p>
+<ul>
+<li>Die stärkste Beziehung besteht zwischen dem g-Faktor und <strong>FigReas</strong> (<span class="math inline">\(\beta\)</span> = 0.642), was bedeutet, dass <strong>FigReas</strong> am stärksten durch den g-Faktor beeinflusst wird.</li>
+<li><strong>MathComp</strong> hat die niedrigste Faktorladung (<span class="math inline">\(\beta\)</span> = 0.399), aber auch hier wird die Beziehung durch den g-Faktor signifikant erklärt.</li>
+</ul>
+</div>
+<div id="erklärte-varianz-1" class="section level4 hasAnchor" number="3.2.5.4">
+<h4><span class="header-section-number">3.2.5.4</span> Erklärte Varianz<a href="cross.html#erklärte-varianz-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Die R-Quadrat-Werte geben Auskunft darüber, wie gut die Indikatoren durch die latente Variable (<strong>GFactor</strong>) erklärt werden:
+- <strong>MathComp</strong>: 15.9% der Varianz von <strong>MathComp</strong> wird durch den g-Faktor erklärt.
+- <strong>FigReas</strong>: 41.2% der Varianz wird durch den g-Faktor erklärt, was eine starke Erklärungsleistung zeigt.
+- <strong>WordMean</strong>: 25.4% der Varianz wird durch den g-Faktor erklärt.
+- <strong>LongMem</strong>: 24.4% der Varianz wird durch den g-Faktor erklärt.</p>
+<p>Diese Ergebnisse zeigen, dass der g-Faktor einen substanziellen Anteil der Varianz in den kognitiven Tests erklärt, insbesondere bei <strong>FigReas</strong>, was die Bedeutung dieses Tests für die Messung der allgemeinen Intelligenz unterstreicht.</p>
+</div>
+</div>
+<div id="grafische-darstellung-des-modells-1" class="section level3 hasAnchor" number="3.2.6">
+<h3><span class="header-section-number">3.2.6</span> Grafische Darstellung des Modells<a href="cross.html#grafische-darstellung-des-modells-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Die grafische Darstellung eines CFA-Modells ermöglicht es, die Beziehungen zwischen den latenten Variablen und ihren Indikatoren sowie die Regressionspfade visuell zu erfassen. Das <strong>semPlot</strong>-Paket kann verwendet werden, um das Modell übersichtlich darzustellen. Dabei werden die standardisierten Ladungen, die Korrelationen zwischen den Variablen sowie die Residuen abgebildet.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="cross.html#cb8-1" tabindex="-1"></a><span class="fu">semPaths</span>(fit, <span class="st">&quot;std&quot;</span>, <span class="at">layout =</span> <span class="st">&quot;tree&quot;</span>, <span class="at">residuals =</span> <span class="cn">TRUE</span>, <span class="at">whatLabels =</span> <span class="st">&quot;std&quot;</span>, <span class="at">intercepts =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/Grafische%20Darstellung%20CFA-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cross.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-CFA.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

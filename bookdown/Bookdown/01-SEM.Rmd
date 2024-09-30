@@ -1,0 +1,152 @@
+# Strukturgleichungsmodelle {#cross}
+
+Strukturgleichungsmodelle (engl. Structural Equation Models, SEM) dienen dazu, **komplexe Beziehungen zwischen Variablen** zu modellieren und zu überprüfen. Dabei werden sowohl **direkte als auch indirekte Zusammenhänge zwischen manifesten (beobachtbaren) und latenten Variablen** untersucht. 
+SEM **kombinieren die konfirmatorischer Faktorenanalyse mit der Pfadanalyse, um pfadanalytische Strukturen auf der Ebene latenter, von Messfehlern bereinigter Variablen zu untersuchen.**
+
+Ein Hauptziel von SEM besteht darin, **theoretische Modelle zu überprüfen** und zu testen, wie gut diese mit den (direkt) beobachteten Daten übereinstimmen. Diese Methode ermöglicht es, Hypothesen über die Beziehungen zwischen Variablen explizit zu formulieren und sie anhand der Daten zu validieren. 
+
+In einem linearen Strukturgleichungsmodell unterscheidet man zwei Teilmodelle: 
+
+- **Das Messmodell**, das die Beziehungen zwischen den beobachteten Variablen (Indikatoren) und den latenten Variablen spezifiziert. Es beschreibt, wie die latenten Variablen durch ihre Indikatoren gemessen werden. Um den Messfehler von wahren interindividuellen Unterschieden zu trennen, sind mindestens zwei Indikatoren pro Konstrukt (latenter Variable) erforderlich.
+
+- **Das Strukturmodell**, das die Beziehungen zwischen latenten Variablen in Form eines Pfadmodells darstellt.
+
+
+```{r echo=FALSE, fig.align='center', out.width='80%'}
+
+knitr::include_graphics("/Users/jani/Desktop/CFH/Multivariate_Verfahren_WS24/bookdown/Bookdown/SEM.jpeg")
+
+```
+
+## Grundlegendes
+
+- **Latente und manifeste Variablen**: Latente Variablen sind nicht direkt messbare Konstrukte, die durch manifeste Variablen (Indikatoren) erfasst werden. SEM ermöglichten die Untersuchung kausaler Zusammenhänge zwischen diesen Variablen.
+
+- **Modellpassung**: Ein wesentliches Ziel von SEM ist es, zu prüfen, wie gut das vorgeschlagene Modell mit den beobachteten Daten übereinstimmt. Dies erfolgt anhand verschiedener Fit-Indizes, die anzeigen, wie stark die Hypothesen durch die Daten gestützt werden.
+
+## Beispiel zur Anwendung eines SEM
+
+Um die Anwendung eines SEMs zu verdeutlichen, betrachten wir den *PoliticalDemocracy*-Datensatz aus dem **lavaan**-Paket (Bollen, 1989). Der Datensatz enthält Informationen zu politischen und wirtschaftlichen Indikatoren in verschiedenen Ländern. Die zentralen Variablen beziehen sich auf die Demokratie und die industrielle Entwicklung im Zeitraum von 1969 bis 1965.
+
+In diesem Beispiel untersuchen wir die Beziehungen zwischen der industriellen Entwicklung und der Demokratie. Die latenten Variablen, die in diesem Modell spezifiziert werden sollen, sind **Demokratie im Jahr 1969 (dem60), Demokratie im Jahr 1965 (dem65)** und **Industrielle Entwicklung im Jahr 1969 (ind60).** Diese werden durch manifeste Indikatoren gemessen:
+
+- **dem60** wird durch die Indikatoren *y1, y2, y3* und *y4* repräsentiert.
+- **dem65** wird durch die Indikatoren *y5, y6, y7* und *y8* repräsentiert.
+- **ind60** wird durch die Indikatoren *x1, x2* und *x3* repräsentiert.
+
+Ziel der Strukturgleichungsmodellierung ist es, theoretisch fundierte Hypothesen zu testen. Im vorliegenden Beispiel gehen wir davon aus, dass die **industrielle Entwicklung im Jahr 1960 (ind60) sowohl die Demokratie im Jahr 1960 (dem60) als auch die Demokratie im Jahr 1965 (dem65) beinflusst.** Zudem wird angenommen, dass **die Demokratie im Jahr 1960 (dem60) einen Einfluss auf die Demokratie im Jahr 1965 (dem65) hat.**
+
+### Setup
+```{r Setup SEM, message=FALSE, warning=FALSE}
+
+# install.packages("psych")
+library(psych)
+
+# install.packages("lavaan")
+library(lavaan)
+
+# install.packages("semPlot")
+library(semPlot)
+
+View(PoliticalDemocracy)
+
+```
+
+### Prüfung der Anwendungsvoraussetzungen 
+Bevor ein SEM berechnet bzw. aufgestellt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:
+
+- **Lineare Zusammenhänge:** Eine Grundannahme linearer SEM ist es, dass die Beziehungen zwischen den latenten Variablen und den beobachteten Indikatoren linear sind. Lineare Zusammenhänge bedeuten, dass Veränderungen in einer Variablen mit proportionalen Veränderungen in einer anderen Variablen einhergehen. In einem SEM-Kontext wird davon ausgegangen, dass die latenten Variablen durch die beobachteten Variablen auf lineare Weise erklärt werden.
+
+- **Zahl der Beobachtungen:** Eine ausreichende Stichprobengröße ist eine grundlegende Voraussetzung für die Durchführung von SEM. Laut Schönbrodt und Perugini (2013) stabilisieren sich Korrelationen bei einer Stichprobengröße von etwa 250 Personen. Dies wird als eine Mindestanforderung betrachtet, um stabile und verlässliche Schätzungen der Parameter zu erhalten. Zusätzlich zu stabilen Korrelationen gilt die Faustregel, dass die Anzahl der Beobachtungen die Anzahl der Modellparameter deutlich übersteigen sollte. Eine häufig genutzte Regel ist, dass pro Variable mindestens 5 bis 10 Beobachtungen vorliegen sollten, um stabile Schätzungen zu erhalten.
+
+```{r Voraussetzungen SEM, message=FALSE, warning=FALSE}
+
+# Scatterplots zur Überprüfung der Linearität der Indikatoren eines Konstrukts
+pairs(PoliticalDemocracy[, 1:4]) # dem60
+pairs(PoliticalDemocracy[, 5:8]) # dem65
+pairs(PoliticalDemocracy[, 9:11]) # ind60
+
+# Stichprobengröße
+nrow(PoliticalDemocracy)
+
+```
+
+Die Ergebnisse zeigen, dass die Annahme der Linearität zwischen den manifesten Indikatoren eines jeden Konstrukts erfüllt ist. Es sind keine U- oder umgedreht U-förmigen Zusammenhänge erkennbar, was auf lineare Beziehungen zwischen den Indikatoren hinweist. Zudem erscheint die Stichprobengröße mit 75 Beobachtungen für die Anzahl der Variablen (11 Indikatoren) ausreichend, um stabile Schätzungen im Strukturgleichungsmodell zu erhalten.
+
+### Spezifizierung des Modells
+
+Nachdem die Anwendungsvoraussetzungen geprüft wurden, spezifizieren wir nun das SEM. Wie bereits im Zuge der theoretischen Einführung beschrieben, besteht das Modell aus zwei Hauptkomponenten: dem **Messmodell**, welches die Beziehungen zwischen den latenten Variablen und ihren manifesten Indikatoren beschreibt, und dem **Strukturmodell**, welches die Beziehungen zwischen den latenten Variablen selbst definiert.
+
+<font color='darkred'>Hinweis: In SEM können die Residuen (Fehlerterme) zwischen den Indikatoren miteinander korrelieren. Das bedeutet, dass es neben dem Einfluss der latenten Variablen möglicherweise noch andere gemeinsame Ursachen oder Einflüsse gibt, die zu Ähnlichkeiten in den beobachteten Variablen führen. Solche Korrelationen zwischen den Fehlertermen können spezifiziert werden, um diesen zusätzlichen Zusammenhang im Modell zu berücksichtigen.
+
+In unserem Beispiel wird angenommen, dass bestimmte Indikatoren innerhalb des Konstrukts **Demokratie** (sowohl für 1960 als auch 1965) ähnliche, nicht durch das Modell erklärte Einflüsse teilen, weshalb Residualkorrelationen (d.h. Beziehungen zwischen den Fehlertermen) in das Modell integriert werden sollen.</font>
+
+```{r Spezifizierung SEM, message=FALSE, warning=FALSE}
+
+model <- '
+    # Messmodell
+    
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+    
+    # Regression
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+    
+    # Residualkorrelationen
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+
+```
+
+In diesem Beispiel verwenden wir drei unterschiedliche Formeltypen: **Definition latenter Variablen** (mit dem Operator `=~`), **Regressionsformeln** (mit dem Operator `~`) und **(Ko-)Varianzformeln** (mit dem Operator `~~`). 
+
+### Model-Fitten
+Nachdem das SEM spezifiziert wurde, kann nun das Modell an die Daten angepasst werden. Das Model-Fitten beschreibt den Prozess, bei dem die Modellparameter so geschätzt werden, dass die Unterschiede zwischen den thereotisch erwarteten und den tatsächlich beobachteten Werten minimiert werden. Dabei wird in der Regel die Maximum-Likelihood-Methode (ML) verwendet, um die besten Schätzungen für die Parameter zu erhalten.
+
+Um das Modell umfassend zu analysieren, verwenden wir in der Zusammensetzung zusätzlich zu den standardisierten Koeffizienten auch die Fit-Indizes und die R-Quadrat-Werte, um die Modellpassung und Erklärungsleistung zu beurteilen.
+
+```{r Model-Fit SEM, message=FALSE, warning=FALSE}
+
+fit = sem(model, data = PoliticalDemocracy)
+summary(fit, fit.measures = TRUE, standardized = TRUE, rsquare = TRUE)
+
+```
+
+### Interpretation der SEM-Ergebnisse
+#### Modell-Fit
+Der Chi-Quadrat-Wert ist nicht signifikant (*χ*²(35) = 38.125, *p* = .329), was darauf hinweist, dass das Modell die Datn gut repräsentiert (Nullhypothese des Tests: Es gibt keinen Unterschied zwischen dem theoretischen Modell und den beobachteten Daten, daher ist ein n.s. Ergebnis hier erwünscht). Auch die Fit-Indizes zeigen eine gute Passung.
+
+Die Fit-Indizes bestätigen die Angemessenheit des Modells:
+
+- **Root Mean Suqare Error of Approximation (RMSEA):** Der RMSEA misst unter Berücksichtigung der Modellkomplexität (Anzahl der Freiheitsgrade), wie gut das Modell zu den Daten passt. Er zeigt an, wie stark das Modell pro Freiheitsgrad von einer perfekten Passung abweicht. **Werte unter 0.05 zeigen eine sehr gute Modellpassung an, Werte zwischen 0.05 und 0.10 gelten als akzeptabel bis mäßig.**
+
+Der RMSEA beträgt 0.035, was auf eine sehr gute Modellpassung hinweist. Auch das 90%-Konfidenzintervall zeigt, dass der RMSEA innerhalb des akzeptablen Bereichs liegt. Das Modell bildet die Daten damit unter Berücksichtigung der Freiheitsgrade sehr gut ab. 
+
+- **Standardized Root Mean Square Residual (SRMR):** Der SRMR misst die Differenz zwischen den beobachteten Korrelationen und den durch das Modell vorhergesagten Korrelationen. Er gibt einen standardisierten wert für die Differenz zwischen den Residuen des Modells und den Daten. **Werte unter 0.08 zeigen eine gute Modellpassung an, Werte über 0.10 gelten als schlecht.**
+
+Der SRMR beträgt 0.044, was deutlich unter der kritischen Schwelle von 0.08 liegt und ebenfalls auf eine gute Modellpassung hinweist. Die geringen Residuen zeigen, dass das Modell die beobachteten Korrelationen gut abbildet.
+
+#### Parameter-Interpretation
+Die Parameter des Modells sind durchweg signifikant, was darauf hindeutet, dass die Beziehungen zwischen den Variablen gut modelliert sind:
+
+- **Latente Variablen und ihre Indikatoren:** ind60, dem60 und dem65 werden durchwegs signifikant durch die Indikatoren (x1, x2 und x3 bzw. y1, y2, y3 und y4 bzw. y5, y6, y7 und y8) gemessen. 
+
+- **Regressionsbeziehungen:** dem60 wird signifikant durch ind60 beeinflusst ($\beta$ = 0.45, *p* < .001). dem65 wird sowohl durch ind60 ($\beta$ = 0.18, p = .010) als auch dem60 ($\beta$ = 0.89, p < .001) vorhergesagt. Die industrielle Entwicklung hängt demnach signifikant mit der Demokratie im Jahr 1960 zusammen. Die industrielle Entwicklung ist zudem, gemeinsam mit der Demokratie im Jahre 1960, ein wichtiger Prädiktor der Demokratie im Jahr 1965.
+
+#### Erklärte Varianz
+Die R-Quadrat-Werte zeigen, wie gut die Indikatoren die latenten Variablen erklären: So erklären die Indikatoren x1, x2 und x3 jeweils 84.6%, 94.7% und 76.1% der Varianz von ind60, was auf eine starke Erklärungsleistung hinweist. Für die latenten Variablen dem60 und dem65 sind die R-Quadrat-Werte ebenfalls aufschlussreich: dem60 wird zu 20% durch ind60 erklärt. dem65 wid zu 96.1% durch ind60 und dem60 erklärt, was auf eine sehr starke Erklärungsleistung des Modells hinweist.
+
+### Grafische Darstellung des Modells
+Die grafische Darstellung eines SEMs ermöglicht es, die Beziehungen zwischen den latenten und manifesten Variablen sowie die Regressionspfade und Residualkorrelationen visuell zu erfassen. Hier kann beispielsweise das semPlot-Paket verwendet werden.
+
+```{r Grafische Darstellung SEM, message=FALSE, warning=FALSE}
+
+semPaths(fit, "std", layout = "tree")
+
+```

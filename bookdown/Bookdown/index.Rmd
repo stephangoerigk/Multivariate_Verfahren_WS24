@@ -1,0 +1,25 @@
+---
+title: "Multivariate Verfahren"
+author: "Stephan Goerigk & Janika Saretzki"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: |
+  Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein.
+output:
+  bookdown::gitbook:
+    css: custom.css
+---
+
+# Über dieses Skript {-}
+
+Liebe Studierende,
+
+dieses Skript soll Sie in die Grundlagen der multivariaten Verfahren einführen. Im Gegensatz zu univariaten Ansätzen, die nur eine abhängige Variable betrachten, erlauben multivariate Verfahren die gleichzeitige Analyse mehrerer Variablen. Dadurch können Zusammenhänge und Wechselwirkungen besser erfasst werden, was zu realistischeren Modellen führt.
+
+Multivariate Verfahren sind besonders nützlich, um die gleichzeitige Wirkung mehrerer Einflussfaktoren auf mehrere Ergebnisvariablen zu untersuchen. Sie bieten Fit-Maße zur Bewertung der Modellgüte auf Gesamt- und Teilmodellebene. Trotz höherer Anforderungen, insbesondere an die Stichprobengröße und Interpretation, sind sie unverzichtbar für realitätsnahe Modellierungen.
+
+Wir wünschen Ihnen viel Erfolg und Spaß beim Arbeiten mit diesen Methoden!

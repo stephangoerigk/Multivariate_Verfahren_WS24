@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kapitel 3 Beispiel zur Anwendung der EFA | Multivariate Verfahren</title>
+  <meta name="description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Kapitel 3 Beispiel zur Anwendung der EFA | Multivariate Verfahren" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Kapitel 3 Beispiel zur Anwendung der EFA | Multivariate Verfahren" />
+  
+  <meta name="twitter:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
+  
+
+<meta name="author" content="Stephan Goerigk &amp; Janika Saretzki" />
+
+
+<meta name="date" content="2024-09-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cross.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="custom.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Über dieses Skript</a></li>
+<li class="chapter" data-level="1" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>1</b> Strukturgleichungsmodelle</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="cross.html"><a href="cross.html#grundlegendes"><i class="fa fa-check"></i><b>1.1</b> Grundlegendes</a></li>
+<li class="chapter" data-level="1.2" data-path="cross.html"><a href="cross.html#beispiel-zur-anwendung-eines-sem"><i class="fa fa-check"></i><b>1.2</b> Beispiel zur Anwendung eines SEM</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="cross.html"><a href="cross.html#setup"><i class="fa fa-check"></i><b>1.2.1</b> Setup</a></li>
+<li class="chapter" data-level="1.2.2" data-path="cross.html"><a href="cross.html#prüfung-der-anwendungsvoraussetzungen"><i class="fa fa-check"></i><b>1.2.2</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="1.2.3" data-path="cross.html"><a href="cross.html#spezifizierung-des-modells"><i class="fa fa-check"></i><b>1.2.3</b> Spezifizierung des Modells</a></li>
+<li class="chapter" data-level="1.2.4" data-path="cross.html"><a href="cross.html#model-fitten"><i class="fa fa-check"></i><b>1.2.4</b> Model-Fitten</a></li>
+<li class="chapter" data-level="1.2.5" data-path="cross.html"><a href="cross.html#interpretation-der-sem-ergebnisse"><i class="fa fa-check"></i><b>1.2.5</b> Interpretation der SEM-Ergebnisse</a></li>
+<li class="chapter" data-level="1.2.6" data-path="cross.html"><a href="cross.html#grafische-darstellung-des-modells"><i class="fa fa-check"></i><b>1.2.6</b> Grafische Darstellung des Modells</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="cross.html"><a href="cross.html#cross"><i class="fa fa-check"></i><b>2</b> Explorative Faktorenanalyse</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="cross.html"><a href="cross.html#zwei-unterfamilien-faktorenanalytischer-methoden"><i class="fa fa-check"></i><b>2.1</b> Zwei “Unterfamilien” faktorenanalytischer Methoden</a></li>
+<li class="chapter" data-level="2.2" data-path="cross.html"><a href="cross.html#grundlegendes-1"><i class="fa fa-check"></i><b>2.2</b> Grundlegendes</a></li>
+<li class="chapter" data-level="2.3" data-path="cross.html"><a href="cross.html#implikationen-der-faktorenanalyse"><i class="fa fa-check"></i><b>2.3</b> Implikationen der Faktorenanalyse</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html"><i class="fa fa-check"></i><b>3</b> Beispiel zur Anwendung der EFA</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#setup-1"><i class="fa fa-check"></i><b>3.1</b> Setup</a></li>
+<li class="chapter" data-level="3.2" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#prüfung-der-anwendungsvoraussetzungen-1"><i class="fa fa-check"></i><b>3.2</b> Prüfung der Anwendungsvoraussetzungen</a></li>
+<li class="chapter" data-level="3.3" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#auswahl-und-begründung-der-methode-der-faktorenextraktion"><i class="fa fa-check"></i><b>3.3</b> Auswahl und Begründung der Methode der Faktorenextraktion</a></li>
+<li class="chapter" data-level="3.4" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#faktorenanzahl-bestimmen"><i class="fa fa-check"></i><b>3.4</b> Faktorenanzahl bestimmen</a></li>
+<li class="chapter" data-level="3.5" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#auswahl-und-begründung-der-methode-der-faktorenrotation"><i class="fa fa-check"></i><b>3.5</b> Auswahl und Begründung der Methode der Faktorenrotation</a></li>
+<li class="chapter" data-level="3.6" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#interpretation-der-faktorenstruktur-und-der-faktorladungen"><i class="fa fa-check"></i><b>3.6</b> Interpretation der Faktorenstruktur und der Faktorladungen</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#faktorenstruktur-und-varianz"><i class="fa fa-check"></i><b>3.6.1</b> Faktorenstruktur und Varianz</a></li>
+<li class="chapter" data-level="3.6.2" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#faktorladungen"><i class="fa fa-check"></i><b>3.6.2</b> Faktorladungen</a></li>
+<li class="chapter" data-level="3.6.3" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#modellgüte"><i class="fa fa-check"></i><b>3.6.3</b> Modellgüte</a></li>
+<li class="chapter" data-level="3.6.4" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#faktorenkorrelation"><i class="fa fa-check"></i><b>3.6.4</b> Faktorenkorrelation</a></li>
+<li class="chapter" data-level="3.6.5" data-path="beispiel-zur-anwendung-der-efa.html"><a href="beispiel-zur-anwendung-der-efa.html#fazit"><i class="fa fa-check"></i><b>3.6.5</b> Fazit</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Multivariate Verfahren</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="beispiel-zur-anwendung-der-efa" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Kapitel 3</span> Beispiel zur Anwendung der EFA<a href="beispiel-zur-anwendung-der-efa.html#beispiel-zur-anwendung-der-efa" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Um die Anwendung der EFA zu verdeutlichen, betrachten wir ein Beispiel mit simulierten Daten des NEO-Fünf-Faktoren-Inventars (NEO-FFI). Das NEO-FFI ist ein weit verbreitetes psychometrisches Instrument zur Messung der fünf grundlegenden Dimensionen der Persönlichkeit: <strong>Neurotizismus, Extraversion, Offenheit für Erfahrungen, Verträglichkeit</strong> und <strong>Gewissenhaftigkeit</strong>.</p>
+<p>In diesem Beispiel sollen die simulierten, bereits korrekt gepolten Daten explorativ untersucht werden, um zu überprüfen, ob die Daten die erwartete Fünf-Faktoren-Struktur wiederspiegeln. Das Ziel der EFA in diesem Kontext ist es, festzustellen, ob die Dimensionen des NEO-FFI durch die zugrunde liegenden Faktoren in den simulierten Daten korrekt repräsentiert werden.</p>
+<p><font color='darkred'>Hinweis: In unserem Beispiel könnte man argumentieren, dass die CFA eine geeignetere Methode wäre, da die Fünf-Faktoren-Struktur gut etabliert erscheint. Die CFA würde dabei helfen, die Hypothese zu überprüfen, dass genau diese fünf Faktoren den Daten zugrunde liegen.</p>
+<p>Wir wollen in diesem Fall jedoch davon ausgehen, dass die Struktur der Daten noch nicht vollständig bekannt ist. <strong>Stellen Sie sich vor, wir stehen noch vor der Entdeckung dieser Struktur:</strong> Wir haben eine Sammlung von Variablen, die möglicherweise durch zugrunde liegende Faktoren erklärt werden können, kennen jedoch weder die Anzahl noch die Natur dieser Faktoren. In einer solchen Situation ist die EFA die Methode der Wahl.</font></p>
+<div id="setup-1" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Setup<a href="beispiel-zur-anwendung-der-efa.html#setup-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="beispiel-zur-anwendung-der-efa.html#cb1-1" tabindex="-1"></a><span class="co"># install.packages(&quot;psych&quot;)</span></span>
+<span id="cb1-2"><a href="beispiel-zur-anwendung-der-efa.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div>
+</div>
+<div id="prüfung-der-anwendungsvoraussetzungen-1" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Prüfung der Anwendungsvoraussetzungen<a href="beispiel-zur-anwendung-der-efa.html#prüfung-der-anwendungsvoraussetzungen-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bevor die EFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:</p>
+<ul>
+<li><strong>Korrelation zwischen den Variablen:</strong> Die im Fokus stehenden Variablen müssen ausreichend miteinander korrelieren, damit latente Faktoren identifiziert werden können. Dies wird durch den Bartlett-Test überprüft.</li>
+<li><strong>Kaiser-Meyer-Olkin (KMO) Test:</strong> Der KMO-Test bewertet die Eignung der Daten für die EFA. Werte über 0,5 gelten als akzeptabel, über 0,8 als gut.</li>
+</ul>
+<p>Darüber hinaus sollten folgende Punkte berücksichtigt werden:</p>
+<ul>
+<li><p><strong>Stichprobengröße:</strong> Laut Schönbrodt und Perugini (2013) stabilisieren sich Korrelationen ab einer Stichprobengröße von etwa 250 Personen, was eine solide Grundlage für die Interpretation der Ergebnisse der EFA bietet. Eine kleinere Stichprobe könnte zu instabilen Korrelationen führen, was die Verlässlichkeit der Analyse beeinträchtigen würde. (Literatur: Schönbrodt, F. D., &amp; Perugini, M. (2013). At what sample size do correlations stabilize?. <em>Journal of Research in Personality, 47</em>(5), 609-612. <a href="https://doi.org/10.1016/j.jrp.2013.05.009" class="uri">https://doi.org/10.1016/j.jrp.2013.05.009</a>)</p></li>
+<li><p><strong>Multikollinearität:</strong> Zu starke Korrelationen zwischen den Variablen (Multikollinearität) können die Analyse verzerren. Eine Möglichkeit zur Überprüfung ist die Determinante der Korrelationsmatrix. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin und sollte vermieden werden.</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="beispiel-zur-anwendung-der-efa.html#cb2-1" tabindex="-1"></a><span class="co"># Bartlett-Test</span></span>
+<span id="cb2-2"><a href="beispiel-zur-anwendung-der-efa.html#cb2-2" tabindex="-1"></a>cor_matrix_NEO <span class="ot">=</span> <span class="fu">cor</span>(NEO)</span>
+<span id="cb2-3"><a href="beispiel-zur-anwendung-der-efa.html#cb2-3" tabindex="-1"></a><span class="fu">cortest.bartlett</span>(cor_matrix_NEO, <span class="at">n =</span> <span class="fu">nrow</span>(NEO), <span class="at">diag =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## $chisq
+## [1] 3147.786
+## 
+## $p.value
+## [1] 0.00000000000000000000000000000000000000000000000000000000000000000000000000000002140783
+## 
+## $df
+## [1] 1770</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="beispiel-zur-anwendung-der-efa.html#cb4-1" tabindex="-1"></a><span class="co"># KMO Test</span></span>
+<span id="cb4-2"><a href="beispiel-zur-anwendung-der-efa.html#cb4-2" tabindex="-1"></a><span class="fu">KMO</span>(NEO)</span></code></pre></div>
+<pre><code>## Kaiser-Meyer-Olkin factor adequacy
+## Call: KMO(r = NEO)
+## Overall MSA =  0.53
+## MSA for each item = 
+##   n1   n2   n3   n4   n5   n6   n7   n8   n9  n10  n11  n12  n13  n14  n15  n16 
+## 0.31 0.62 0.56 0.53 0.74 0.59 0.43 0.55 0.29 0.66 0.44 0.59 0.54 0.44 0.71 0.69 
+##  n17  n18  n19  n20  n21  n22  n23  n24  n25  n26  n27  n28  n29  n30  n31  n32 
+## 0.74 0.36 0.45 0.67 0.63 0.38 0.41 0.63 0.64 0.66 0.60 0.40 0.45 0.63 0.51 0.32 
+##  n33  n34  n35  n36  n37  n38  n39  n40  n41  n42  n43  n44  n45  n46  n47  n48 
+## 0.54 0.38 0.56 0.42 0.57 0.37 0.62 0.61 0.58 0.62 0.42 0.49 0.57 0.70 0.34 0.61 
+##  n49  n50  n51  n52  n53  n54  n55  n56  n57  n58  n59  n60 
+## 0.60 0.61 0.55 0.48 0.43 0.29 0.44 0.39 0.48 0.53 0.57 0.46</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="beispiel-zur-anwendung-der-efa.html#cb6-1" tabindex="-1"></a><span class="co"># Determinante der Korrelationsmatrix</span></span>
+<span id="cb6-2"><a href="beispiel-zur-anwendung-der-efa.html#cb6-2" tabindex="-1"></a><span class="fu">det</span>(cor_matrix_NEO)</span></code></pre></div>
+<pre><code>## [1] 0.000000000000000005392569</code></pre>
+<p>Die Ergebnisse zeigen, dass die Daten für die EFA geeignet sind. Der Bartlett-Test ist signifikant, was darauf hinweist, dass zwischen den Variablen ausreichende Korrelationen bestehen. Der KMO Wert liegt über der kritischen Schwelle von 0.50. Einige Variablen weisen MSA-Werte unter 0,5 auf, was auf eine geringere Eignung dieser Items hinweist. Insgesamt ist die Durchführung einer EFA jedoch gerechtfertigt, auch wenn schwächere Variablen möglicherweise überdacht oder entfernt werden sollten.</p>
+</div>
+<div id="auswahl-und-begründung-der-methode-der-faktorenextraktion" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Auswahl und Begründung der Methode der Faktorenextraktion<a href="beispiel-zur-anwendung-der-efa.html#auswahl-und-begründung-der-methode-der-faktorenextraktion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nachdem wir die Voraussetzungen für die EFA überprüft haben und festgestellt wurde, dass die Daten grundsätzlich geeignet sind, geht es nun um die Auswahl der richtigen Methode zur Faktorenextraktion. Diese Wahl hängt von der Zielsetzung der Analyse ab. In der EFA werden häufig die <strong>Hauptkomponentenanalyse (engl. Principal Component Analysis, PCA)</strong> und die <strong>Hauptachsenanalyse (engl. Principal Factor Analysis, PFA)</strong> verwendet.</p>
+<ul>
+<li><p>Die PFA fokussiert sich auf die gemeinsame Varianz zwischen den Variablen und wird häufig verwendet, wenn das Ziel darin besteht, latente Faktoren zu identifizieren, die den beobachteten Variablen zugrunde liegen. Da sie die spezifische Varianz und Fehleranteile nicht berücksichtigt, ist sie besonders nützlich, wenn man an den zugrunde liegenden Strukturen interessiert ist, die die Variablen erklären. Dies ist in unserem Fall besonders relevant, da wir die latenten Persönlichkeitsfaktoren der NEO-Daten identifizieren wollen.
+Zur Schätzung der Faktoren verwenden wir die <strong>Maximum-Likelihood-Methode (ML)</strong>, die es uns ermöglicht, robuste Schätzungen zu berechnen und zusätzlich inferenzstatistische Tests und Konfidenzintervalle für die Faktorenparameter zu erhalten.</p></li>
+<li><p>Im Gegensatz dazu berücksichtigt die PCA sowohl die gemeinsame als auch die spezifische Varianz und wird häufig verwendet, wenn man die gesamte Varianz der Daten erklären möchte. Sie eignet sich gut zur Datenreduktion, wenn die Zielsetzung eher explorativ ist.</p></li>
+</ul>
+<p>In dieser Analyse liegt der Fokus darauf, die zugrunde liegenden latenten Strukturen zu entdecken, die die Variablen des NEO-Tests beeinflussen. Daher ist die <strong>PFA</strong> die geeignetere Methode, da sie spezifisch darauf abzielt, nur die gemeinsame Varianz zu erklären und latente Faktoren zu extrahieren. Die Schätzung der Faktoren erfolgt hierbei mit der <strong>ML</strong>, um die bestmögliche Passung der Daten zu gewährleisten.</p>
+<p><strong>Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code anzugeben, da die Faktorenextraktion in den späteren Schritten der Analyse definiert wird. Die Implementierung der PFA erfolgt im entsprechenden Codeabschnitt, sobald die praktische Analyse beginnt.</strong></p>
+</div>
+<div id="faktorenanzahl-bestimmen" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Faktorenanzahl bestimmen<a href="beispiel-zur-anwendung-der-efa.html#faktorenanzahl-bestimmen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ein entscheidender Schritt in der EFA ist die Bestimmung der optimalen Anzahl der zu extrahierenden Faktoren. Diese Entscheidung hängt von mehreren Kriterien ab, die sicherstellen sollen, dass nur die wesentlichen latenten Strukturen erfasst werden, ohne unnötig viele Faktoren zu extrahieren.</p>
+<p>Zu den gängigsten Methoden zur Bestimmung der Faktorenanzahl gehören:</p>
+<ul>
+<li><p><strong>Kaiser-Kriterium</strong>: Nach dem Kaiser-Kriterium werden nur die Faktoren beibehalten, deren Eigenwerte größer als 1 sind. Ein Eigenwert über 1 bedeutet, dass der Faktor mehr Varianz erklärt, als eine einzelne Variable erklären würde. Diese Methode ist einfach anzuwenden, aber sie kann dazu neigen, zu viele Faktoren zu identifizieren.</p></li>
+<li><p><strong>Scree-Test</strong>: Der Scree-Test visualisiert die Eigenwerte in einer absteigenden Reihenfolge in einem sogenannten “Scree-Plot”. Man sucht nach einem “Knick” in der Kurve, ab dem die Eigenwerte nur noch geringfügig sinken. Die Anzahl der Faktoren wird dann bis zu diesem Knick festgelegt. Diese Methode wird häufig verwendet, da sie die Anzahl der relevanten Faktoren grafisch verdeutlicht.</p></li>
+<li><p><strong>Parallelanalyse</strong>: Diese Methode vergleicht die Eigenwerte der realen Daten mit zufällig generierten Daten. Nur die Faktoren, deren Eigenwerte die der Zufallsdaten übersteigen, werden als signifikant betrachtet. Die Parallelanalyse gilt als eine der zuverlässigsten Methoden zur Bestimmung der Faktorenanzahl.</p></li>
+<li><p><strong>Interpretierbarkeit</strong>: Letztlich sollte die Anzahl der Faktoren auch anhand ihrer inhaltlichen und theoretischen Interpretierbarkeit festgelegt werden. Selbst wenn ein statistisches Kriterium eine bestimmte Anzahl von Faktoren vorschlägt, sollte geprüft werden, ob diese Faktoren sinnvoll interpretiert werden können.</p></li>
+</ul>
+<p>In dieser Analyse verwenden wir eine Kombination aus dem Scree-Test und der Parallelanalyse, um die optimale Anzahl an Faktoren zu bestimmen. Dies stellt sicher, dass sowohl statistische Kriterien als auch die Interpretierbarkeit berücksichtigt werden.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="beispiel-zur-anwendung-der-efa.html#cb8-1" tabindex="-1"></a><span class="co"># Kaiser-Kriterium: Eigenwerte über 1 extrahieren</span></span>
+<span id="cb8-2"><a href="beispiel-zur-anwendung-der-efa.html#cb8-2" tabindex="-1"></a>eigenvalues <span class="ot">=</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(NEO))<span class="sc">$</span>values</span>
+<span id="cb8-3"><a href="beispiel-zur-anwendung-der-efa.html#cb8-3" tabindex="-1"></a><span class="fu">sum</span>(eigenvalues <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 19</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="beispiel-zur-anwendung-der-efa.html#cb10-1" tabindex="-1"></a><span class="co"># Scree-Test: Scree-Plot </span></span>
+<span id="cb10-2"><a href="beispiel-zur-anwendung-der-efa.html#cb10-2" tabindex="-1"></a><span class="fu">scree</span>(NEO)</span></code></pre></div>
+<p><img src="_main_files/figure-html/Faktorenanzahl%20bestimmen-1.png" width="672" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="beispiel-zur-anwendung-der-efa.html#cb11-1" tabindex="-1"></a><span class="co"># Parallelanalyse: Vergleich der Eigenwerte mit Zufallsdaten</span></span>
+<span id="cb11-2"><a href="beispiel-zur-anwendung-der-efa.html#cb11-2" tabindex="-1"></a><span class="fu">fa.parallel</span>(NEO, <span class="at">fa =</span> <span class="st">&quot;fa&quot;</span>, <span class="at">fm =</span> <span class="st">&quot;ml&quot;</span>, <span class="at">n.iter =</span> <span class="dv">1000</span>, <span class="at">quant =</span> <span class="fl">0.95</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/Faktorenanzahl%20bestimmen-2.png" width="672" /></p>
+<pre><code>## Parallel analysis suggests that the number of factors =  5  and the number of components =  NA</code></pre>
+<p>Die Ergebnisse der Scree-Plot- und Parallelanalyse zeigen, dass 5 Faktoren die zugrunde liegenden Strukturen der Daten am besten erklären. Der Scree-Plot weist auf einen deutlichen Knick nach dem fünften Faktor hin, was darauf hindeutet, dass zusätzliche Faktoren keinen signifikanten Beitrag zur Erklärung der Varianz leisten. Die Parallelanalyse bestätigt diese Interpretation, da die Eigenwerte der tatsächlichen Daten bis zum fünften Faktor über den zufällig generierten Eigenwerten liegen. Dies bedeutet, dass die fünf extrahierten Faktoren die wesentlichen latenten Strukturen der Daten repräsentieren.</p>
+</div>
+<div id="auswahl-und-begründung-der-methode-der-faktorenrotation" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Auswahl und Begründung der Methode der Faktorenrotation<a href="beispiel-zur-anwendung-der-efa.html#auswahl-und-begründung-der-methode-der-faktorenrotation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nachdem die Faktorenanzahl festgelegt wurde, ist der nächste Schritt in der EFA die Rotation der extrahierten Faktoren. Die Faktorenrotation wird durchgeführt, um die interpretierbare Struktur der Faktoren zu verbessern. Dabei gibt es zwei Hauptarten der Rotation: <strong>Orthogonale und oblique Rotation.</strong></p>
+<ul>
+<li><p><strong>Orthogonale Rotation:</strong> Diese Methode wird verwendet, wenn davon ausgegangen wird, dass die Faktoren unabhängig voneinander sind, also nicht miteinander korrelieren. Ein gängiges Beispiel für orthogonale Rotation ist die Varimax-Rotation. Sie maximiert die Varianz der Ladungen innerhalb der Faktoren, was dazu führt, dass die Faktorladungen extremer (also näher an 0 oder 1) werden, und die Interpretierbarkeit der Faktoren verbessert wird. Diese Methode ist geeignet, wenn man davon ausgeht, dass die extrahierten Faktoren inhaltlich getrennt und unabhängig sind.</p></li>
+<li><p><strong>Oblique Rotation:</strong> Diese Methode wird verwendet, wenn erwartet wird, dass die Faktoren miteinander korrelieren können. Ein Beispiel hierfür ist die Promax-Rotation. Im Gegensatz zur orthogonalen Rotation erlaubt die oblique Rotation Korrelationen zwischen den Faktoren und führt zu einer flexibleren Lösung, die in vielen psychologischen Datensätzen realistischer ist. Diese Methode ist sinnvoll, wenn man annimmt, dass die extrahierten Faktoren gemeinsame Varianz aufweisen.</p></li>
+</ul>
+<p>In unserer Analyse ist die oblique Rotation (z. B. Oblimin) die geeignete Wahl, da es in psychologischen Daten oft realistisch ist, dass die extrahierten Faktoren (z. B. Persönlichkeitsmerkmale) miteinander korrelieren. Diese Methode bietet eine differenziertere und flexiblere Lösung, die die tatsächlichen Zusammenhänge zwischen den Faktoren besser widerspiegelt.</p>
+<p><strong>Zum aktuellen Zeitpunkt ist es nicht notwendig, einen spezifischen Code zur Faktorenrotation anzugeben, da diese im späteren Schritt der Analyse erfolgt. Die Rotation wird nach der Extraktion der Faktoren durchgeführt und kann im entsprechenden Codeabschnitt implementiert werden, sobald die praktische Analyse beginnt.</strong></p>
+</div>
+<div id="interpretation-der-faktorenstruktur-und-der-faktorladungen" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Interpretation der Faktorenstruktur und der Faktorladungen<a href="beispiel-zur-anwendung-der-efa.html#interpretation-der-faktorenstruktur-und-der-faktorladungen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nach der Rotation der Faktoren ist es wichtig, die Faktorenstruktur und die Faktorladungen zu interpretieren. Die Faktorenstruktur zeigt auf, welche Variablen stark mit den extrahierten Faktoren korrelieren und somit durch sie erklärt werden. Die Faktorladungen geben an, wie stark jede Variable auf einen bestimmten Faktor lädt. Höhere Ladungen (in der Regel über 0.4) zeigen an, dass eine Variable stark mit einem Faktor assoziiert ist und zu dessen Interpretation beiträgt.</p>
+<ul>
+<li><p><strong>Faktorladungen:</strong> Die Ladungen einer Variable auf einen bestimmten Faktor werden als Korrelationskoeffizienten interpretiert, die anzeigen, wie stark diese Variable von dem Faktor beeinflusst wird. Eine hohe positive Ladung bedeutet, dass die Variable eng mit dem Faktor zusammenhängt, während eine hohe negative Ladung darauf hinweist, dass die Variable in umgekehrter Richtung zum Faktor steht.</p></li>
+<li><p><strong>Faktorstruktur:</strong> Die Faktorstruktur hilft dabei, jedem Faktor eine inhaltliche Bedeutung zuzuweisen. Faktoren, auf denen bestimmte Variablen hohe Ladungen aufweisen, werden oft inhaltlich so interpretiert, dass sie ein zugrundeliegendes Konzept oder eine Dimension repräsentieren (z. B. <em>Extraversion</em> oder <em>Neurotizismus</em> in einem Persönlichkeitsinventar).</p></li>
+</ul>
+<p>In der Praxis wird für jede Variable untersucht, auf welchen Faktor sie am stärksten lädt, um die Variablen in sinnvolle Gruppen zu unterteilen. Diese Gruppen von Variablen werden dann verwendet, um den Faktor zu benennen und zu interpretieren. Wichtig ist es auch zu beachten, ob eine Variable auf mehrere Faktoren gleichzeitig lädt (sogenannte <em>cross-loadings</em>), was die Interpretation erschweren kann.</p>
+<p><strong>Nachdem wir die wichtigen Entscheidungen bezüglich der Faktorenanzahl, der Rotationsmethode und der Interpretation der Faktorladungen getroffen haben, folgt nun die praktische Umsetzung dieser Schritte in der eigentlichen Faktorenanalyse. Der folgende Code integriert die zuvor beschriebenen Methoden und Ansätze – darunter die Bestimmung der Faktorenanzahl, die Wahl der Promax-Rotation und die Extraktion der Faktoren mittels Maximum-Likelihood. Die im Code implementierte Analyse ermöglicht es uns, die Faktorenstruktur zu interpretieren und die zugrunde liegenden latenten Faktoren in den Daten zu identifizieren.</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="beispiel-zur-anwendung-der-efa.html#cb13-1" tabindex="-1"></a><span class="fu">fa</span>(NEO, <span class="at">nfactors =</span> <span class="dv">5</span>, <span class="at">rotate =</span> <span class="st">&quot;oblimin&quot;</span>, <span class="at">fm =</span> <span class="st">&quot;ml&quot;</span>)</span></code></pre></div>
+<pre><code>## Factor Analysis using method =  ml
+## Call: fa(r = NEO, nfactors = 5, rotate = &quot;oblimin&quot;, fm = &quot;ml&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##       ML2   ML1   ML3   ML4   ML5    h2   u2 com
+## n1  -0.08  0.22 -0.05  0.01 -0.04 0.065 0.93 1.4
+## n2  -0.08 -0.36  0.25  0.06  0.33 0.359 0.64 3.0
+## n3  -0.39  0.17  0.24  0.06  0.08 0.253 0.75 2.3
+## n4   0.00 -0.13  0.37 -0.28  0.34 0.385 0.61 3.1
+## n5   0.58  0.08  0.14  0.08 -0.27 0.436 0.56 1.6
+## n6  -0.12  0.54  0.06 -0.27  0.11 0.371 0.63 1.7
+## n7   0.01 -0.06  0.28  0.07  0.08 0.101 0.90 1.4
+## n8  -0.19 -0.03 -0.03  0.68 -0.07 0.518 0.48 1.2
+## n9  -0.07 -0.21  0.18 -0.10 -0.03 0.095 0.91 2.8
+## n10  0.64 -0.16  0.00 -0.17 -0.06 0.505 0.49 1.3
+## n11  0.11  0.50  0.15 -0.05  0.20 0.293 0.71 1.6
+## n12 -0.01 -0.33  0.28  0.09  0.11 0.234 0.77 2.3
+## n13 -0.02  0.07  0.47  0.32  0.13 0.349 0.65 2.0
+## n14  0.01 -0.04  0.53 -0.04 -0.19 0.306 0.69 1.3
+## n15  0.52 -0.18 -0.16  0.03 -0.12 0.355 0.65 1.6
+## n16  0.07  0.74  0.11  0.22 -0.16 0.630 0.37 1.3
+## n17  0.03 -0.12  0.36  0.29  0.25 0.332 0.67 3.0
+## n18 -0.12 -0.16  0.14  0.37  0.07 0.206 0.79 2.0
+## n19 -0.04  0.04  0.23  0.04  0.32 0.172 0.83 2.0
+## n20  0.62  0.13  0.09 -0.07  0.01 0.409 0.59 1.2
+## n21  0.00  0.66 -0.03 -0.11  0.11 0.446 0.55 1.1
+## n22  0.03 -0.03 -0.09 -0.02  0.30 0.093 0.91 1.2
+## n23  0.04  0.11  0.50  0.27  0.02 0.320 0.68 1.7
+## n24  0.05 -0.13  0.60 -0.04 -0.07 0.391 0.61 1.1
+## n25  0.65 -0.12 -0.07 -0.01  0.08 0.456 0.54 1.1
+## n26 -0.15  0.66  0.03 -0.10  0.15 0.475 0.53 1.3
+## n27  0.01 -0.30  0.22 -0.08  0.46 0.413 0.59 2.3
+## n28 -0.08 -0.13  0.18  0.19  0.03 0.097 0.90 3.2
+## n29 -0.17 -0.17  0.26  0.12 -0.01 0.140 0.86 3.0
+## n30  0.69 -0.02 -0.01 -0.17  0.00 0.527 0.47 1.1
+## n31  0.02  0.37  0.15  0.10  0.04 0.163 0.84 1.5
+## n32  0.02 -0.14 -0.02  0.22  0.28 0.156 0.84 2.4
+## n33  0.09  0.06  0.34  0.22  0.24 0.238 0.76 2.9
+## n34 -0.08 -0.15  0.36  0.00  0.02 0.170 0.83 1.5
+## n35  0.61  0.11 -0.13  0.09  0.22 0.414 0.59 1.5
+## n36 -0.04  0.36 -0.16 -0.05  0.20 0.190 0.81 2.1
+## n37 -0.02 -0.59  0.21  0.02  0.30 0.546 0.45 1.8
+## n38 -0.01  0.10 -0.18  0.08 -0.04 0.057 0.94 2.1
+## n39 -0.06  0.09  0.70 -0.22 -0.07 0.530 0.47 1.3
+## n40  0.59 -0.07  0.24  0.15  0.17 0.460 0.54 1.7
+## n41 -0.35  0.34 -0.14 -0.07  0.11 0.290 0.71 2.6
+## n42 -0.02 -0.56  0.36 -0.03  0.02 0.481 0.52 1.7
+## n43 -0.14  0.20  0.29  0.41 -0.04 0.315 0.68 2.6
+## n44 -0.09  0.06  0.43 -0.19 -0.09 0.222 0.78 1.6
+## n45  0.55  0.02 -0.02 -0.06 -0.09 0.325 0.68 1.1
+## n46  0.00  0.79  0.15  0.08 -0.04 0.640 0.36 1.1
+## n47  0.11  0.16 -0.35  0.05  0.61 0.471 0.53 1.9
+## n48 -0.01 -0.01 -0.08  0.75 -0.08 0.581 0.42 1.1
+## n49 -0.05  0.11  0.36 -0.16  0.30 0.266 0.73 2.6
+## n50  0.67  0.06 -0.01 -0.07  0.13 0.469 0.53 1.1
+## n51 -0.33  0.44 -0.12 -0.11  0.19 0.369 0.63 2.6
+## n52  0.28 -0.16  0.20 -0.06  0.34 0.285 0.72 3.2
+## n53  0.14  0.10  0.23  0.48  0.17 0.336 0.66 2.0
+## n54 -0.21 -0.02  0.03 -0.19  0.13 0.090 0.91 2.7
+## n55  0.50  0.13  0.07 -0.14 -0.43 0.509 0.49 2.3
+## n56 -0.34  0.00  0.10  0.05 -0.09 0.132 0.87 1.4
+## n57  0.25 -0.26  0.07  0.15  0.13 0.182 0.82 3.3
+## n58 -0.06  0.01 -0.16  0.71  0.12 0.561 0.44 1.2
+## n59  0.10  0.12  0.64 -0.06  0.02 0.424 0.58 1.1
+## n60  0.46  0.23 -0.15  0.15  0.01 0.287 0.71 2.0
+## 
+##                        ML2  ML1  ML3  ML4  ML5
+## SS loadings           5.21 4.92 4.29 3.13 2.34
+## Proportion Var        0.09 0.08 0.07 0.05 0.04
+## Cumulative Var        0.09 0.17 0.24 0.29 0.33
+## Proportion Explained  0.26 0.25 0.22 0.16 0.12
+## Cumulative Proportion 0.26 0.51 0.73 0.88 1.00
+## 
+##  With factor correlations of 
+##       ML2   ML1   ML3   ML4   ML5
+## ML2  1.00 -0.07  0.03 -0.09 -0.06
+## ML1 -0.07  1.00 -0.09  0.03 -0.08
+## ML3  0.03 -0.09  1.00 -0.01  0.10
+## ML4 -0.09  0.03 -0.01  1.00  0.04
+## ML5 -0.06 -0.08  0.10  0.04  1.00
+## 
+## Mean item complexity =  1.9
+## Test of the hypothesis that 5 factors are sufficient.
+## 
+## df null model =  1770  with the objective function =  39.76 with Chi Square =  3147.79
+## df of  the model are 1480  and the objective function was  24.03 
+## 
+## The root mean square of the residuals (RMSR) is  0.07 
+## The df corrected root mean square of the residuals is  0.08 
+## 
+## The harmonic n.obs is  101 with the empirical chi square  1754.81  with prob &lt;  0.00000087 
+## The total n.obs was  101  with Likelihood Chi Square =  1822.59  with prob &lt;  0.0000000021 
+## 
+## Tucker Lewis Index of factoring reliability =  0.671
+## RMSEA index =  0.047  and the 90 % confidence intervals are  0.04 0.055
+## BIC =  -5007.79
+## Fit based upon off diagonal values = 0.83
+## Measures of factor score adequacy             
+##                                                    ML2  ML1  ML3  ML4  ML5
+## Correlation of (regression) scores with factors   0.95 0.95 0.93 0.92 0.89
+## Multiple R square of scores with factors          0.90 0.90 0.87 0.85 0.79
+## Minimum correlation of possible factor scores     0.80 0.80 0.74 0.71 0.58</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="beispiel-zur-anwendung-der-efa.html#cb15-1" tabindex="-1"></a>fa_NEO <span class="ot">=</span> <span class="fu">fa</span>(NEO, <span class="at">nfactors =</span> <span class="dv">5</span>, <span class="at">rotate =</span> <span class="st">&quot;oblimin&quot;</span>, <span class="at">fm =</span> <span class="st">&quot;ml&quot;</span>)</span>
+<span id="cb15-2"><a href="beispiel-zur-anwendung-der-efa.html#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="beispiel-zur-anwendung-der-efa.html#cb15-3" tabindex="-1"></a><span class="fu">print</span>(fa_NEO<span class="sc">$</span>loadings, <span class="at">cut =</span> <span class="fl">0.4</span>) <span class="co"># Faktorladungen</span></span></code></pre></div>
+<pre><code>## 
+## Loadings:
+##     ML2    ML1    ML3    ML4    ML5   
+## n1                                    
+## n2                                    
+## n3                                    
+## n4                                    
+## n5   0.575                            
+## n6          0.540                     
+## n7                                    
+## n8                        0.680       
+## n9                                    
+## n10  0.639                            
+## n11         0.502                     
+## n12                                   
+## n13                0.471              
+## n14                0.530              
+## n15  0.523                            
+## n16         0.736                     
+## n17                                   
+## n18                                   
+## n19                                   
+## n20  0.619                            
+## n21         0.660                     
+## n22                                   
+## n23                0.496              
+## n24                0.597              
+## n25  0.654                            
+## n26         0.656                     
+## n27                              0.461
+## n28                                   
+## n29                                   
+## n30  0.691                            
+## n31                                   
+## n32                                   
+## n33                                   
+## n34                                   
+## n35  0.609                            
+## n36                                   
+## n37        -0.588                     
+## n38                                   
+## n39                0.698              
+## n40  0.589                            
+## n41                                   
+## n42        -0.556                     
+## n43                       0.414       
+## n44                0.425              
+## n45  0.550                            
+## n46         0.790                     
+## n47                              0.605
+## n48                       0.754       
+## n49                                   
+## n50  0.674                            
+## n51         0.435                     
+## n52                                   
+## n53                       0.479       
+## n54                                   
+## n55  0.498                      -0.428
+## n56                                   
+## n57                                   
+## n58                       0.709       
+## n59                0.636              
+## n60  0.462                            
+## 
+##                  ML2   ML1   ML3   ML4   ML5
+## SS loadings    5.170 4.847 4.216 3.110 2.270
+## Proportion Var 0.086 0.081 0.070 0.052 0.038
+## Cumulative Var 0.086 0.167 0.237 0.289 0.327</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="beispiel-zur-anwendung-der-efa.html#cb17-1" tabindex="-1"></a><span class="fu">fa.diagram</span>(fa_NEO) <span class="co"># Faktorstruktur</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/Faktorenanalyse-1.png" width="672" /></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="beispiel-zur-anwendung-der-efa.html#cb18-1" tabindex="-1"></a><span class="fu">summary</span>(fa_NEO)</span></code></pre></div>
+<pre><code>## 
+## Factor analysis with Call: fa(r = NEO, nfactors = 5, rotate = &quot;oblimin&quot;, fm = &quot;ml&quot;)
+## 
+## Test of the hypothesis that 5 factors are sufficient.
+## The degrees of freedom for the model is 1480  and the objective function was  24.03 
+## The number of observations was  101  with Chi Square =  1822.59  with prob &lt;  0.0000000021 
+## 
+## The root mean square of the residuals (RMSA) is  0.07 
+## The df corrected root mean square of the residuals is  0.08 
+## 
+## Tucker Lewis Index of factoring reliability =  0.671
+## RMSEA index =  0.047  and the 10 % confidence intervals are  0.04 0.055
+## BIC =  -5007.79
+##  With factor correlations of 
+##       ML2   ML1   ML3   ML4   ML5
+## ML2  1.00 -0.07  0.03 -0.09 -0.06
+## ML1 -0.07  1.00 -0.09  0.03 -0.08
+## ML3  0.03 -0.09  1.00 -0.01  0.10
+## ML4 -0.09  0.03 -0.01  1.00  0.04
+## ML5 -0.06 -0.08  0.10  0.04  1.00</code></pre>
+<div id="faktorenstruktur-und-varianz" class="section level3 hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Faktorenstruktur und Varianz<a href="beispiel-zur-anwendung-der-efa.html#faktorenstruktur-und-varianz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Die Analyse extrahiert 5 Faktoren, die zusammen 32,7 % der Varianz in den Daten erklären. Die Varianz, die jeder Faktor erklärt, ist relativ gering (zwischen 3,8 % und 8,6 %). Dies deutet darauf hin, dass die latenten Faktoren einen moderaten Teil der Varianz der beobachteten Variablen erfassen, aber auch ein beträchtlicher Anteil der Varianz unerklärt bleibt (siehe Zeile <em>Proportion Var</em> sowie <em>Cumulative Proportion</em>).
+Die kumulative Varianz der fünf Faktoren beträgt 32,7 %. Das ist für psychologische Daten relativ typisch, da Persönlichkeitsmerkmale oft komplex und schwer vollständig durch Faktoren zu erklären sind.</p>
+</div>
+<div id="faktorladungen" class="section level3 hasAnchor" number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> Faktorladungen<a href="beispiel-zur-anwendung-der-efa.html#faktorladungen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Die Faktorladungen zeigen an, welche Variablen stark auf die Faktoren laden (in der Regel Ladungen &gt; 0.4).</p>
+<ul>
+<li><p><strong>ML1</strong>: Variablen wie n6, n11, und n16 laden hoch auf diesen Faktor (z. B. n16 mit einer Ladung von 0.736).</p></li>
+<li><p><strong>ML2</strong>: Variablen wie n5, n10, n15, und n20 laden stark auf diesen Faktor (z. B. n10 mit einer Ladung von 0.639). Diese Variablen hängen also stark mit diesem Faktor zusammen.</p></li>
+<li><p><strong>ML3</strong>: Variablen wie n13, n14, und n39 laden auf diesen Faktor.</p></li>
+<li><p><strong>ML4</strong> und <strong>ML5</strong> haben ebenfalls signifikante Ladungen, zum Beispiel lädt n48 mit einer Ladung von 0.754 auf ML4, was eine starke Korrelation mit diesem Faktor anzeigt.</p></li>
+</ul>
+<p>Die Variablen mit den höchsten Ladungen pro Faktor sollten genauer betrachtet werden, um den inhaltlichen Zusammenhang und die Bedeutung der Faktoren zu bestimmen.</p>
+</div>
+<div id="modellgüte" class="section level3 hasAnchor" number="3.6.3">
+<h3><span class="header-section-number">3.6.3</span> Modellgüte<a href="beispiel-zur-anwendung-der-efa.html#modellgüte" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>RMSEA (Root Mean Square Error of Approximation) liegt bei 0.047, was als guter Wert gilt. Ein RMSEA-Wert unter 0.05 deutet darauf hin, dass das Modell eine gute Anpassung an die Daten aufweist.
+RMSR (Root Mean Square Residual) ist 0.07, was ebenfalls im akzeptablen Bereich liegt.</p>
+</div>
+<div id="faktorenkorrelation" class="section level3 hasAnchor" number="3.6.4">
+<h3><span class="header-section-number">3.6.4</span> Faktorenkorrelation<a href="beispiel-zur-anwendung-der-efa.html#faktorenkorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Die Korrelationen zwischen den Faktoren sind relativ gering, was zeigt, dass die Faktoren weitgehend unabhängig voneinander sind. Die höchsten Korrelationen liegen bei etwa 0.10, was darauf hindeutet, dass die oblique Rotation (Oblimin) keine stark korrelierten Faktoren identifizieren konnte.</p>
+</div>
+<div id="fazit" class="section level3 hasAnchor" number="3.6.5">
+<h3><span class="header-section-number">3.6.5</span> Fazit<a href="beispiel-zur-anwendung-der-efa.html#fazit" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Die Faktorenanalyse extrahiert 5 latente Faktoren, die zusammen 32,7 % der Varianz der NEO-Daten erklären. Die Faktorladungen zeigen eine klare Zuordnung der Variablen zu den Faktoren, wobei bestimmte Variablen stark auf einen Faktor laden und somit die Bedeutung dieser Faktoren bestimmen.Das Modell zeigt eine gute Anpassung an die Daten, was durch die niedrigen RMSEA- und RMSR-Werte unterstützt wird.</p>
+<p>Die nächsten Schritte wären, die inhaltliche Bedeutung der Faktoren anhand der hochladenden Variablen zu interpretieren und zu überprüfen, wie gut diese Faktoren das theoretische Konstrukt der NEO-Daten widerspiegeln.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cross.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-EFA.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
