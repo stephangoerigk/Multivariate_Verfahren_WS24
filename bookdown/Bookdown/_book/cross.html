@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Kapitel 3 Konfirmatorische Faktorenanalyse | Multivariate Verfahren</title>
+  <title>Kapitel 1 Strukturgleichungsmodelle | Multivariate Verfahren</title>
   <meta name="description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Kapitel 3 Konfirmatorische Faktorenanalyse | Multivariate Verfahren" />
+  <meta property="og:title" content="Kapitel 1 Strukturgleichungsmodelle | Multivariate Verfahren" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Kapitel 3 Konfirmatorische Faktorenanalyse | Multivariate Verfahren" />
+  <meta name="twitter:title" content="Kapitel 1 Strukturgleichungsmodelle | Multivariate Verfahren" />
   
   <meta name="twitter:description" content="Dieses Skript führt in die Grundlagen der multivariaten Verfahren ein." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="cross.html"/>
-
+<link rel="prev" href="index.html"/>
+<link rel="next" href="cross.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -200,168 +200,142 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cross" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Kapitel 3</span> Konfirmatorische Faktorenanalyse<a href="cross.html#cross" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Die konfirmatorische Faktorenanalyse (engl. Confirmatory Factor Analysis, CFA) ist eine <strong>hypothesenprüfende</strong> statistische Methode, die verwendet wird, um zu überprüfen, ob die Daten zu einem vorab definierten Modell passen. Im Gegensatz zur explorativen Faktorenanalyse, bei der die Faktorenstruktur aus den Daten extrahiert wird, testet die CFA spezifische <strong>theoretische Modelle</strong>, die die Zuordnung von Variablen (Indikatoren) zu <strong>latenten Konstrukten</strong> vorschreiben. Die CFA ermöglicht es, die <strong>Konstruktvalidität</strong> von Messinstrumenten zu bewerten, indem sie überprüft, ob die beobachteten Daten mit der postulierten Struktur übereinstimmen.</p>
-<p><strong>Zwei “Unterfamilien” faktorenanalytischer Methoden</strong></p>
+<div id="cross" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Kapitel 1</span> Strukturgleichungsmodelle<a href="cross.html#cross" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Strukturgleichungsmodelle (engl. Structural Equation Models, SEM) dienen dazu, <strong>komplexe Beziehungen zwischen Variablen</strong> zu modellieren und zu überprüfen. Dabei werden sowohl <strong>direkte als auch indirekte Zusammenhänge zwischen manifesten (beobachtbaren) und latenten Variablen</strong> untersucht.
+SEM <strong>kombinieren die konfirmatorischer Faktorenanalyse mit der Pfadanalyse, um pfadanalytische Strukturen auf der Ebene latenter, von Messfehlern bereinigter Variablen zu untersuchen.</strong></p>
+<p>Ein Hauptziel von SEM besteht darin, <strong>theoretische Modelle zu überprüfen</strong> und zu testen, wie gut diese mit den (direkt) beobachteten Daten übereinstimmen. Diese Methode ermöglicht es, Hypothesen über die Beziehungen zwischen Variablen explizit zu formulieren und sie anhand der Daten zu validieren.</p>
+<p>In einem linearen Strukturgleichungsmodell unterscheidet man zwei Teilmodelle:</p>
 <ul>
-<li><p><strong>Konfirmatorische Faktorenanalyse (CFA):</strong> Eine <strong>hypothesenprüfende</strong> Methode, bei der ein vorab festgelegtes Modell getestet wird, das die Zuordnung von Indikatoren zu latenten Variablen definiert. Ziel der CFA ist es, die Passung des Modells zu den beobachteten Daten zu überprüfen.</p></li>
-<li><p><strong>Explorative Faktorenanalyse (EFA):</strong> Eine <strong>hypothesengenerierende</strong> Methode, die verwendet wird, wenn die Zuordnung der Indikatoren zu den latenten Variablen noch unbekannt ist. Ziel der EFA ist es, verborgene Faktorenstrukturen in den Daten zu entdecken.</p></li>
+<li><p><strong>Das Messmodell</strong>, das die Beziehungen zwischen den beobachteten Variablen (Indikatoren) und den latenten Variablen spezifiziert. Es beschreibt, wie die latenten Variablen durch ihre Indikatoren gemessen werden. Um den Messfehler von wahren interindividuellen Unterschieden zu trennen, sind mindestens zwei Indikatoren pro Konstrukt (latenter Variable) erforderlich.</p></li>
+<li><p><strong>Das Strukturmodell</strong>, das die Beziehungen zwischen latenten Variablen in Form eines Pfadmodells darstellt.</p></li>
 </ul>
-<p>Beide Methoden zielen darauf ab, wechselseitig unabhängige Faktoren zu identifizieren, die die Zusammenhänge zwischen den Variablen erklären.</p>
-<div id="grundlegendes-2" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Grundlegendes<a href="cross.html#grundlegendes-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="SEM.jpeg" width="80%" style="display: block; margin: auto;" /></p>
+<div id="grundlegendes" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Grundlegendes<a href="cross.html#grundlegendes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li><p><strong>Theoretisch fundierte Modellbildung:</strong> Bei der CFA wird das Modell basierend auf <strong>theoretischen Überlegungen</strong> und vorheriger Forschung spezifiziert. Die Zuordnung der Indikatoren zu den latenten Faktoren wird also vorab festgelegt.</p></li>
-<li><p><strong>Fit-Indizes zur Modellbewertung:</strong> Die Passung des Modells zu den beobachteten Daten wird anhand von Fit-Indizes bewertet, z.B. dem <strong>Root Mean Square Error of Approximation (RMSEA)</strong>, dem <strong>Standardized Root Mean Square Residual (SRMR)</strong> oder dem <strong>Comparative Fit Index (CFI)</strong>. Diese Indizes geben an, wie gut das Modell zu den Daten passt.</p></li>
-</ul>
-<p><strong>Implikationen der Faktorenanalyse</strong></p>
-<ul>
-<li><p><strong>Latente Variablen als Ursache für beobachtete Zusammenhänge:</strong> Die CFA geht davon aus, dass die Korrelationen zwischen den manifesten Variablen auf die zugrunde liegenden latenten Faktoren zurückzuführen sind, die durch die CFA modelliert werden.</p></li>
-<li><p><strong>Modellanpassung:</strong> Ein gut passendes CFA-Modell sollte eine hohe Übereinstimmung zwischen den vorhergesagten und den beobachteten Kovarianzen der manifesten Variablen zeigen. Ist dies nicht der Fall, müssen entweder das Modell oder die Messinstrumente überarbeitet werden.</p></li>
+<li><p><strong>Latente und manifeste Variablen</strong>: Latente Variablen sind nicht direkt messbare Konstrukte, die durch manifeste Variablen (Indikatoren) erfasst werden. SEM ermöglichten die Untersuchung kausaler Zusammenhänge zwischen diesen Variablen.</p></li>
+<li><p><strong>Modellpassung</strong>: Ein wesentliches Ziel von SEM ist es, zu prüfen, wie gut das vorgeschlagene Modell mit den beobachteten Daten übereinstimmt. Dies erfolgt anhand verschiedener Fit-Indizes, die anzeigen, wie stark die Hypothesen durch die Daten gestützt werden.</p></li>
 </ul>
 </div>
-<div id="beispiel-zur-anwendung-der-cfa" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Beispiel zur Anwendung der CFA<a href="cross.html#beispiel-zur-anwendung-der-cfa" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Um die Anwendung der CFA zu verdeutlichen, folgt ein Beispiel mit Daten zu <strong>kognitiven Fähigkeiten</strong>. In diesem Beispiel soll überprüft werden, ob die Zusammenhänge zwischen vier kognitiven Tests durch einen zugrunde liegenden <strong>g-Faktor</strong> (allgemeine Intelligenz) erklärt werden können.</p>
-<p>Die vier kognitiven Tests sind:
-- <strong>Arithmetische Kompetenz</strong> (Variablenname: MathComp)
-- <strong>Figural-induktives Denken</strong> (Variablenname: FigReas)
-- <strong>Wortbedeutung</strong> (Variablenname: WordMean)
-- <strong>Langzeitgedächtnis</strong> (Variablenname: LongMem)</p>
-<p>Die Stichprobe umfasst <em>N</em>=196 Personen (48% Frauen; 52% Männer) im Alter von 16 bis 63 Jahren (<em>M</em>=37.79; <em>SD</em>=11.89).</p>
-<div id="fragestellung" class="section level3 hasAnchor" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Fragestellung<a href="cross.html#fragestellung" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Lassen sich die Zusammenhänge zwischen den vorliegenden vier kognitiven Tests durch einen <strong>g-Faktor</strong> erklären?</p>
-</div>
-<div id="begründung-der-auswertemethode" class="section level3 hasAnchor" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> Begründung der Auswertemethode<a href="cross.html#begründung-der-auswertemethode" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Da bereits eine <strong>gerichtete Hypothese</strong> über die Faktorenstruktur vorliegt, die zudem durch die Literatur gut begründet ist, wird die konfirmatorische Faktorenanalyse (CFA) zur Überprüfung der Fragestellung herangezogen. Die CFA testet, ob die vier kognitiven Tests durch einen gemeinsamen g-Faktor erklärt werden können.</p>
-<p><strong>Der Datensatz wurde unter der Bezeichnung “GScreen” eingelesen.</strong></p>
-</div>
-<div id="setup-2" class="section level3 hasAnchor" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Setup<a href="cross.html#setup-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="cross.html#cb1-1" tabindex="-1"></a><span class="co"># install.packages(&quot;lavaan&quot;)</span></span>
-<span id="cb1-2"><a href="cross.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<div id="beispiel-zur-anwendung-eines-sem" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Beispiel zur Anwendung eines SEM<a href="cross.html#beispiel-zur-anwendung-eines-sem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um die Anwendung eines SEMs zu verdeutlichen, betrachten wir den <em>PoliticalDemocracy</em>-Datensatz aus dem <strong>lavaan</strong>-Paket (Bollen, 1989). Der Datensatz enthält Informationen zu politischen und wirtschaftlichen Indikatoren in verschiedenen Ländern. Die zentralen Variablen beziehen sich auf die Demokratie und die industrielle Entwicklung im Zeitraum von 1969 bis 1965.</p>
+<p>In diesem Beispiel untersuchen wir die Beziehungen zwischen der industriellen Entwicklung und der Demokratie. Die latenten Variablen, die in diesem Modell spezifiziert werden sollen, sind <strong>Demokratie im Jahr 1969 (dem60), Demokratie im Jahr 1965 (dem65)</strong> und <strong>Industrielle Entwicklung im Jahr 1969 (ind60).</strong> Diese werden durch manifeste Indikatoren gemessen:</p>
+<ul>
+<li><strong>dem60</strong> wird durch die Indikatoren <em>y1, y2, y3</em> und <em>y4</em> repräsentiert.</li>
+<li><strong>dem65</strong> wird durch die Indikatoren <em>y5, y6, y7</em> und <em>y8</em> repräsentiert.</li>
+<li><strong>ind60</strong> wird durch die Indikatoren <em>x1, x2</em> und <em>x3</em> repräsentiert.</li>
+</ul>
+<p>Ziel der Strukturgleichungsmodellierung ist es, theoretisch fundierte Hypothesen zu testen. Im vorliegenden Beispiel gehen wir davon aus, dass die <strong>industrielle Entwicklung im Jahr 1960 (ind60) sowohl die Demokratie im Jahr 1960 (dem60) als auch die Demokratie im Jahr 1965 (dem65) beinflusst.</strong> Zudem wird angenommen, dass <strong>die Demokratie im Jahr 1960 (dem60) einen Einfluss auf die Demokratie im Jahr 1965 (dem65) hat.</strong></p>
+<div id="setup" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Setup<a href="cross.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="cross.html#cb1-1" tabindex="-1"></a><span class="co"># install.packages(&quot;psych&quot;)</span></span>
+<span id="cb1-2"><a href="cross.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
 <span id="cb1-3"><a href="cross.html#cb1-3" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="cross.html#cb1-4" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
-<span id="cb1-5"><a href="cross.html#cb1-5" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
+<span id="cb1-4"><a href="cross.html#cb1-4" tabindex="-1"></a><span class="co"># install.packages(&quot;lavaan&quot;)</span></span>
+<span id="cb1-5"><a href="cross.html#cb1-5" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-6"><a href="cross.html#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="cross.html#cb1-7" tabindex="-1"></a><span class="co"># install.packages(&quot;semPlot&quot;)</span></span>
+<span id="cb1-8"><a href="cross.html#cb1-8" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb1-9"><a href="cross.html#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="cross.html#cb1-10" tabindex="-1"></a><span class="fu">View</span>(PoliticalDemocracy)</span></code></pre></div>
 </div>
-<div id="prüfung-der-anwendungsvoraussetzungen-2" class="section level3 hasAnchor" number="3.2.4">
-<h3><span class="header-section-number">3.2.4</span> Prüfung der Anwendungsvoraussetzungen<a href="cross.html#prüfung-der-anwendungsvoraussetzungen-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Bevor die CFA durchgeführt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:</p>
+<div id="prüfung-der-anwendungsvoraussetzungen" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Prüfung der Anwendungsvoraussetzungen<a href="cross.html#prüfung-der-anwendungsvoraussetzungen" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Bevor ein SEM berechnet bzw. aufgestellt wird, sollten die Daten auf ihre Eignung geprüft werden. Zu den wichtigsten Voraussetzungen zählen:</p>
 <ul>
-<li><p><strong>Korrelation zwischen den Variablen:</strong> Die Indikatoren sollten ausreichend miteinander korrelieren, damit sie durch einen gemeinsamen latenten Faktor erklärt werden können. Allerdings sollten die Korrelationen nicht so stark sein, dass Multikollinearität vorliegt.</p></li>
-<li><p><strong>Stichprobengröße:</strong> Für die CFA ist die Stichprobengröße entscheidend. Schönbrodt und Perugini (2013) argumentieren, dass Korrelationen bei einer Stichprobengröße von etwa 250 Personen stabil sind, was eine solide Grundlage für die Interpretation der CFA-Ergebnisse bietet.</p></li>
-<li><p><strong>Univariate Normalverteilung:</strong> Die CFA setzt voraus, dass die beobachteten Variablen normalverteilt sind, zumindest bei größeren Stichproben, um valide Ergebnisse zu gewährleisten.</p></li>
+<li><p><strong>Lineare Zusammenhänge:</strong> Eine Grundannahme linearer SEM ist es, dass die Beziehungen zwischen den latenten Variablen und den beobachteten Indikatoren linear sind. Lineare Zusammenhänge bedeuten, dass Veränderungen in einer Variablen mit proportionalen Veränderungen in einer anderen Variablen einhergehen. In einem SEM-Kontext wird davon ausgegangen, dass die latenten Variablen durch die beobachteten Variablen auf lineare Weise erklärt werden.</p></li>
+<li><p><strong>Zahl der Beobachtungen:</strong> Eine ausreichende Stichprobengröße ist eine grundlegende Voraussetzung für die Durchführung von SEM. Laut Schönbrodt und Perugini (2013) stabilisieren sich Korrelationen bei einer Stichprobengröße von etwa 250 Personen. Dies wird als eine Mindestanforderung betrachtet, um stabile und verlässliche Schätzungen der Parameter zu erhalten. Zusätzlich zu stabilen Korrelationen gilt die Faustregel, dass die Anzahl der Beobachtungen die Anzahl der Modellparameter deutlich übersteigen sollte. Eine häufig genutzte Regel ist, dass pro Variable mindestens 5 bis 10 Beobachtungen vorliegen sollten, um stabile Schätzungen zu erhalten.</p></li>
 </ul>
-<p>Darüber hinaus sollten folgende Punkte berücksichtigt werden:</p>
-<ul>
-<li><p><strong>Multikollinearität:</strong> Zu starke Korrelationen zwischen den Indikatoren (Multikollinearität) können zu Problemen führen. Die Determinante der Korrelationsmatrix bietet eine Möglichkeit, dies zu überprüfen. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin.</p></li>
-<li><p><strong>Modellidentifizierbarkeit:</strong> Ein Modell muss hinreichend identifiziert sein, d.h., es müssen genügend Datenpunkte vorhanden sein, um die Modellparameter schätzen zu können.</p></li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="cross.html#cb2-1" tabindex="-1"></a><span class="co"># Korrelation der Variablen prüfen </span></span>
-<span id="cb2-2"><a href="cross.html#cb2-2" tabindex="-1"></a>cor_matrix_CFA <span class="ot">=</span> <span class="fu">cor</span>(GScreen)</span>
-<span id="cb2-3"><a href="cross.html#cb2-3" tabindex="-1"></a><span class="fu">det</span>(cor_matrix_CFA) <span class="co"># Determinante der Korrelationsmatrix</span></span></code></pre></div>
-<pre><code>## [1] 0.7009416</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="cross.html#cb4-1" tabindex="-1"></a><span class="co"># Prüfen der Normalverteilung (z.B. mit Shapiro-Wilk-Test für jede Variable)</span></span>
-<span id="cb4-2"><a href="cross.html#cb4-2" tabindex="-1"></a><span class="fu">apply</span>(GScreen, <span class="dv">2</span>, shapiro.test)</span></code></pre></div>
-<pre><code>## $MathComp
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  newX[, i]
-## W = 0.99508, p-value = 0.7616
-## 
-## 
-## $FigReas
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  newX[, i]
-## W = 0.99144, p-value = 0.2871
-## 
-## 
-## $WordMean
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  newX[, i]
-## W = 0.95918, p-value = 0.00001613
-## 
-## 
-## $LongMem
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  newX[, i]
-## W = 0.99341, p-value = 0.5154</code></pre>
-<p>Die Ergebnisse zeigen, dass die Daten für die CFA geeignet sind. Die Korrelationen zwischen den Variablen sind ausreichend hoch, um eine gemeinsame Faktorenstruktur zu modellieren, was durch die Determinante der Korrelationsmatrix (0.70) bestätigt wird. Diese liegt weit über dem kritischen Wert nahe 0, was darauf hinweist, dass keine problematische Multikollinearität vorliegt.</p>
-<p>Die Ergebnisse des <strong>Shapiro-Wilk-Tests</strong> zur Überprüfung der Normalverteilung zeigen, dass die meisten Variablen (<strong>MathComp</strong>, <strong>FigReas</strong> und <strong>LongMem</strong>) keine signifikanten Abweichungen von der Normalverteilung aufweisen (<em>p</em>-Werte &gt; .05). Allerdings zeigt die Variable <strong>WordMean</strong> eine signifikante Abweichung von der Normalverteilung (<em>p</em> &lt; .05). Da die Stichprobengröße jedoch groß genug ist (<em>N</em>=200), kann diese Abweichung als tolerierbar angesehen werden.</p>
-<p>Insgesamt sind die Voraussetzungen für die Durchführung der CFA erfüllt.</p>
-<div id="fit-indizes" class="section level4 hasAnchor" number="3.2.4.1">
-<h4><span class="header-section-number">3.2.4.1</span> Fit-Indizes<a href="cross.html#fit-indizes" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Zu den wichtigsten Fit-Indizes gehören:</p>
-<ul>
-<li><p><strong>Chi-Quadrat-Test</strong>: Testet die Abweichung zwischen dem Modell und den Daten. Ein nicht-signifikanter p-Wert deutet darauf hin, dass das Modell gut passt.</p></li>
-<li><p><strong>RMSEA (Root Mean Square Error of Approximation)</strong>: Ein RMSEA-Wert &lt; 0.06 gilt als guter Fit.</p></li>
-<li><p><strong>CFI (Comparative Fit Index)</strong>: Werte &gt; 0.95 gelten als Hinweis auf eine gute Modellpassung.</p></li>
-<li><p><strong>SRMR (Standardized Root Mean Square Residual)</strong>: Ein Wert &lt; 0.08 wird als akzeptabel angesehen.</p></li>
-</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="cross.html#cb2-1" tabindex="-1"></a><span class="co"># Scatterplots zur Überprüfung der Linearität der Indikatoren eines Konstrukts</span></span>
+<span id="cb2-2"><a href="cross.html#cb2-2" tabindex="-1"></a><span class="fu">pairs</span>(PoliticalDemocracy[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]) <span class="co"># dem60</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/Voraussetzungen%20SEM-1.png" width="672" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="cross.html#cb3-1" tabindex="-1"></a><span class="fu">pairs</span>(PoliticalDemocracy[, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>]) <span class="co"># dem65</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/Voraussetzungen%20SEM-2.png" width="672" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="cross.html#cb4-1" tabindex="-1"></a><span class="fu">pairs</span>(PoliticalDemocracy[, <span class="dv">9</span><span class="sc">:</span><span class="dv">11</span>]) <span class="co"># ind60</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/Voraussetzungen%20SEM-3.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="cross.html#cb5-1" tabindex="-1"></a><span class="co"># Stichprobengröße</span></span>
+<span id="cb5-2"><a href="cross.html#cb5-2" tabindex="-1"></a><span class="fu">nrow</span>(PoliticalDemocracy)</span></code></pre></div>
+<pre><code>## [1] 75</code></pre>
+<p>Die Ergebnisse zeigen, dass die Annahme der Linearität zwischen den manifesten Indikatoren eines jeden Konstrukts erfüllt ist. Es sind keine U- oder umgedreht U-förmigen Zusammenhänge erkennbar, was auf lineare Beziehungen zwischen den Indikatoren hinweist. Zudem erscheint die Stichprobengröße mit 75 Beobachtungen für die Anzahl der Variablen (11 Indikatoren) ausreichend, um stabile Schätzungen im Strukturgleichungsmodell zu erhalten.</p>
 </div>
-<div id="modellschätzung" class="section level4 hasAnchor" number="3.2.4.2">
-<h4><span class="header-section-number">3.2.4.2</span> Modellschätzung<a href="cross.html#modellschätzung" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Das Modell wird in R mit der <code>lavaan</code>-Funktion <code>cfa()</code> geschätzt.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="cross.html#cb6-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">&#39;GFactor =~ MathComp + FigReas + WordMean + LongMem&#39;</span></span>
-<span id="cb6-2"><a href="cross.html#cb6-2" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="cross.html#cb6-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model, <span class="at">data =</span> GScreen)</span>
-<span id="cb6-4"><a href="cross.html#cb6-4" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="cross.html#cb6-5" tabindex="-1"></a><span class="fu">summary</span>(fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## lavaan 0.6-18 ended normally after 30 iterations
+<div id="spezifizierung-des-modells" class="section level3 hasAnchor" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Spezifizierung des Modells<a href="cross.html#spezifizierung-des-modells" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nachdem die Anwendungsvoraussetzungen geprüft wurden, spezifizieren wir nun das SEM. Wie bereits im Zuge der theoretischen Einführung beschrieben, besteht das Modell aus zwei Hauptkomponenten: dem <strong>Messmodell</strong>, welches die Beziehungen zwischen den latenten Variablen und ihren manifesten Indikatoren beschreibt, und dem <strong>Strukturmodell</strong>, welches die Beziehungen zwischen den latenten Variablen selbst definiert.</p>
+<p><font color='darkred'>Hinweis: In SEM können die Residuen (Fehlerterme) zwischen den Indikatoren miteinander korrelieren. Das bedeutet, dass es neben dem Einfluss der latenten Variablen möglicherweise noch andere gemeinsame Ursachen oder Einflüsse gibt, die zu Ähnlichkeiten in den beobachteten Variablen führen. Solche Korrelationen zwischen den Fehlertermen können spezifiziert werden, um diesen zusätzlichen Zusammenhang im Modell zu berücksichtigen.</p>
+<p>In unserem Beispiel wird angenommen, dass bestimmte Indikatoren innerhalb des Konstrukts <strong>Demokratie</strong> (sowohl für 1960 als auch 1965) ähnliche, nicht durch das Modell erklärte Einflüsse teilen, weshalb Residualkorrelationen (d.h. Beziehungen zwischen den Fehlertermen) in das Modell integriert werden sollen.</font></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="cross.html#cb7-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb7-2"><a href="cross.html#cb7-2" tabindex="-1"></a><span class="st">    # Messmodell</span></span>
+<span id="cb7-3"><a href="cross.html#cb7-3" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb7-4"><a href="cross.html#cb7-4" tabindex="-1"></a><span class="st">    ind60 =~ x1 + x2 + x3</span></span>
+<span id="cb7-5"><a href="cross.html#cb7-5" tabindex="-1"></a><span class="st">    dem60 =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb7-6"><a href="cross.html#cb7-6" tabindex="-1"></a><span class="st">    dem65 =~ y5 + y6 + y7 + y8</span></span>
+<span id="cb7-7"><a href="cross.html#cb7-7" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb7-8"><a href="cross.html#cb7-8" tabindex="-1"></a><span class="st">    # Regression</span></span>
+<span id="cb7-9"><a href="cross.html#cb7-9" tabindex="-1"></a><span class="st">    dem60 ~ ind60</span></span>
+<span id="cb7-10"><a href="cross.html#cb7-10" tabindex="-1"></a><span class="st">    dem65 ~ ind60 + dem60</span></span>
+<span id="cb7-11"><a href="cross.html#cb7-11" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb7-12"><a href="cross.html#cb7-12" tabindex="-1"></a><span class="st">    # Residualkorrelationen</span></span>
+<span id="cb7-13"><a href="cross.html#cb7-13" tabindex="-1"></a><span class="st">    y1 ~~ y5</span></span>
+<span id="cb7-14"><a href="cross.html#cb7-14" tabindex="-1"></a><span class="st">    y2 ~~ y4 + y6</span></span>
+<span id="cb7-15"><a href="cross.html#cb7-15" tabindex="-1"></a><span class="st">    y3 ~~ y7</span></span>
+<span id="cb7-16"><a href="cross.html#cb7-16" tabindex="-1"></a><span class="st">    y4 ~~ y8</span></span>
+<span id="cb7-17"><a href="cross.html#cb7-17" tabindex="-1"></a><span class="st">    y6 ~~ y8</span></span>
+<span id="cb7-18"><a href="cross.html#cb7-18" tabindex="-1"></a><span class="st">&#39;</span></span></code></pre></div>
+<p>In diesem Beispiel verwenden wir drei unterschiedliche Formeltypen: <strong>Definition latenter Variablen</strong> (mit dem Operator <code>=~</code>), <strong>Regressionsformeln</strong> (mit dem Operator <code>~</code>) und <strong>(Ko-)Varianzformeln</strong> (mit dem Operator <code>~~</code>).</p>
+</div>
+<div id="model-fitten" class="section level3 hasAnchor" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> Model-Fitten<a href="cross.html#model-fitten" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nachdem das SEM spezifiziert wurde, kann nun das Modell an die Daten angepasst werden. Das Model-Fitten beschreibt den Prozess, bei dem die Modellparameter so geschätzt werden, dass die Unterschiede zwischen den thereotisch erwarteten und den tatsächlich beobachteten Werten minimiert werden. Dabei wird in der Regel die Maximum-Likelihood-Methode (ML) verwendet, um die besten Schätzungen für die Parameter zu erhalten.</p>
+<p>Um das Modell umfassend zu analysieren, verwenden wir in der Zusammensetzung zusätzlich zu den standardisierten Koeffizienten auch die Fit-Indizes und die R-Quadrat-Werte, um die Modellpassung und Erklärungsleistung zu beurteilen.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="cross.html#cb8-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">sem</span>(model, <span class="at">data =</span> PoliticalDemocracy)</span>
+<span id="cb8-2"><a href="cross.html#cb8-2" tabindex="-1"></a><span class="fu">summary</span>(fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-18 ended normally after 68 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
-##   Number of model parameters                         8
+##   Number of model parameters                        31
 ## 
-##   Number of observations                           200
+##   Number of observations                            75
 ## 
 ## Model Test User Model:
 ##                                                       
-##   Test statistic                                 3.254
-##   Degrees of freedom                                 2
-##   P-value (Chi-square)                           0.196
+##   Test statistic                                38.125
+##   Degrees of freedom                                35
+##   P-value (Chi-square)                           0.329
 ## 
 ## Model Test Baseline Model:
 ## 
-##   Test statistic                                71.066
-##   Degrees of freedom                                 6
+##   Test statistic                               730.654
+##   Degrees of freedom                                55
 ##   P-value                                        0.000
 ## 
 ## User Model versus Baseline Model:
 ## 
-##   Comparative Fit Index (CFI)                    0.981
-##   Tucker-Lewis Index (TLI)                       0.942
+##   Comparative Fit Index (CFI)                    0.995
+##   Tucker-Lewis Index (TLI)                       0.993
 ## 
 ## Loglikelihood and Information Criteria:
 ## 
-##   Loglikelihood user model (H0)              -1165.605
-##   Loglikelihood unrestricted model (H1)      -1163.978
+##   Loglikelihood user model (H0)              -1547.791
+##   Loglikelihood unrestricted model (H1)      -1528.728
 ##                                                       
-##   Akaike (AIC)                                2347.210
-##   Bayesian (BIC)                              2373.596
-##   Sample-size adjusted Bayesian (SABIC)       2348.251
+##   Akaike (AIC)                                3157.582
+##   Bayesian (BIC)                              3229.424
+##   Sample-size adjusted Bayesian (SABIC)       3131.720
 ## 
 ## Root Mean Square Error of Approximation:
 ## 
-##   RMSEA                                          0.056
+##   RMSEA                                          0.035
 ##   90 Percent confidence interval - lower         0.000
-##   90 Percent confidence interval - upper         0.162
-##   P-value H_0: RMSEA &lt;= 0.050                    0.348
-##   P-value H_0: RMSEA &gt;= 0.080                    0.455
+##   90 Percent confidence interval - upper         0.092
+##   P-value H_0: RMSEA &lt;= 0.050                    0.611
+##   P-value H_0: RMSEA &gt;= 0.080                    0.114
 ## 
 ## Standardized Root Mean Square Residual:
 ## 
-##   SRMR                                           0.030
+##   SRMR                                           0.044
 ## 
 ## Parameter Estimates:
 ## 
@@ -371,76 +345,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Latent Variables:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   GFactor =~                                                            
-##     MathComp          1.000                               0.473    0.399
-##     FigReas           1.381    0.386    3.580    0.000    0.653    0.642
-##     WordMean          1.184    0.336    3.523    0.000    0.560    0.504
-##     LongMem           1.071    0.306    3.500    0.000    0.507    0.494
+##   ind60 =~                                                              
+##     x1                1.000                               0.670    0.920
+##     x2                2.180    0.139   15.742    0.000    1.460    0.973
+##     x3                1.819    0.152   11.967    0.000    1.218    0.872
+##   dem60 =~                                                              
+##     y1                1.000                               2.223    0.850
+##     y2                1.257    0.182    6.889    0.000    2.794    0.717
+##     y3                1.058    0.151    6.987    0.000    2.351    0.722
+##     y4                1.265    0.145    8.722    0.000    2.812    0.846
+##   dem65 =~                                                              
+##     y5                1.000                               2.103    0.808
+##     y6                1.186    0.169    7.024    0.000    2.493    0.746
+##     y7                1.280    0.160    8.002    0.000    2.691    0.824
+##     y8                1.266    0.158    8.007    0.000    2.662    0.828
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   dem60 ~                                                               
+##     ind60             1.483    0.399    3.715    0.000    0.447    0.447
+##   dem65 ~                                                               
+##     ind60             0.572    0.221    2.586    0.010    0.182    0.182
+##     dem60             0.837    0.098    8.514    0.000    0.885    0.885
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##  .y1 ~~                                                                 
+##    .y5                0.624    0.358    1.741    0.082    0.624    0.296
+##  .y2 ~~                                                                 
+##    .y4                1.313    0.702    1.871    0.061    1.313    0.273
+##    .y6                2.153    0.734    2.934    0.003    2.153    0.356
+##  .y3 ~~                                                                 
+##    .y7                0.795    0.608    1.308    0.191    0.795    0.191
+##  .y4 ~~                                                                 
+##    .y8                0.348    0.442    0.787    0.431    0.348    0.109
+##  .y6 ~~                                                                 
+##    .y8                1.356    0.568    2.386    0.017    1.356    0.338
 ## 
 ## Variances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .MathComp          1.185    0.136    8.724    0.000    1.185    0.841
-##    .FigReas           0.609    0.117    5.192    0.000    0.609    0.588
-##    .WordMean          0.924    0.122    7.597    0.000    0.924    0.746
-##    .LongMem           0.797    0.103    7.735    0.000    0.797    0.756
-##     GFactor           0.224    0.101    2.214    0.027    1.000    1.000
+##    .x1                0.082    0.019    4.184    0.000    0.082    0.154
+##    .x2                0.120    0.070    1.718    0.086    0.120    0.053
+##    .x3                0.467    0.090    5.177    0.000    0.467    0.239
+##    .y1                1.891    0.444    4.256    0.000    1.891    0.277
+##    .y2                7.373    1.374    5.366    0.000    7.373    0.486
+##    .y3                5.067    0.952    5.324    0.000    5.067    0.478
+##    .y4                3.148    0.739    4.261    0.000    3.148    0.285
+##    .y5                2.351    0.480    4.895    0.000    2.351    0.347
+##    .y6                4.954    0.914    5.419    0.000    4.954    0.443
+##    .y7                3.431    0.713    4.814    0.000    3.431    0.322
+##    .y8                3.254    0.695    4.685    0.000    3.254    0.315
+##     ind60             0.448    0.087    5.173    0.000    1.000    1.000
+##    .dem60             3.956    0.921    4.295    0.000    0.800    0.800
+##    .dem65             0.172    0.215    0.803    0.422    0.039    0.039
 ## 
 ## R-Square:
 ##                    Estimate
-##     MathComp          0.159
-##     FigReas           0.412
-##     WordMean          0.254
-##     LongMem           0.244</code></pre>
+##     x1                0.846
+##     x2                0.947
+##     x3                0.761
+##     y1                0.723
+##     y2                0.514
+##     y3                0.522
+##     y4                0.715
+##     y5                0.653
+##     y6                0.557
+##     y7                0.678
+##     y8                0.685
+##     dem60             0.200
+##     dem65             0.961</code></pre>
 </div>
-</div>
-<div id="interpretation-der-sem-ergebnisse-1" class="section level3 hasAnchor" number="3.2.5">
-<h3><span class="header-section-number">3.2.5</span> Interpretation der SEM-Ergebnisse<a href="cross.html#interpretation-der-sem-ergebnisse-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="modell-fit-1" class="section level4 hasAnchor" number="3.2.5.1">
-<h4><span class="header-section-number">3.2.5.1</span> Modell-Fit<a href="cross.html#modell-fit-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Der Chi-Quadrat-Wert ist nicht signifikant (<em>χ</em>²(2) = 3.254, <em>p</em> = .196), was darauf hinweist, dass das Modell die Daten gut repräsentiert. Ein nicht-signifikanter p-Wert bedeutet, dass das Modell die beobachteten Daten nicht signifikant von der theoretischen Struktur abweicht (Nullhypothese des Tests: Es gibt keinen Unterschied zwischen dem theoretischen Modell und den beobachteten Daten, daher ist ein n.s. Ergebnis hier erwünscht).</p>
+<div id="interpretation-der-sem-ergebnisse" class="section level3 hasAnchor" number="1.2.5">
+<h3><span class="header-section-number">1.2.5</span> Interpretation der SEM-Ergebnisse<a href="cross.html#interpretation-der-sem-ergebnisse" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="modell-fit" class="section level4 hasAnchor" number="1.2.5.1">
+<h4><span class="header-section-number">1.2.5.1</span> Modell-Fit<a href="cross.html#modell-fit" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Der Chi-Quadrat-Wert ist nicht signifikant (<em>χ</em>²(35) = 38.125, <em>p</em> = .329), was darauf hinweist, dass das Modell die Datn gut repräsentiert (Nullhypothese des Tests: Es gibt keinen Unterschied zwischen dem theoretischen Modell und den beobachteten Daten, daher ist ein n.s. Ergebnis hier erwünscht). Auch die Fit-Indizes zeigen eine gute Passung.</p>
 <p>Die Fit-Indizes bestätigen die Angemessenheit des Modells:</p>
 <ul>
-<li><p><strong>Root Mean Square Error of Approximation (RMSEA):</strong> Der RMSEA-Wert beträgt 0.056, was auf eine akzeptable Modellpassung hinweist. Werte unter 0.06 gelten als sehr gut, während Werte zwischen 0.05 und 0.08 als akzeptabel angesehen werden. Das 90%-Konfidenzintervall (0.000 bis 0.162) zeigt, dass der RMSEA im akzeptablen Bereich liegt.</p></li>
-<li><p><strong>Standardized Root Mean Square Residual (SRMR):</strong> Der SRMR-Wert beträgt 0.030, was deutlich unter der kritischen Schwelle von 0.08 liegt und auf eine sehr gute Modellpassung hinweist. Der SRMR misst die Differenz zwischen den beobachteten und modellbasierten Korrelationen und zeigt, dass das Modell die beobachteten Korrelationen gut abbildet.</p></li>
-<li><p><strong>Comparative Fit Index (CFI):</strong> Der CFI-Wert beträgt 0.981, was auf eine sehr gute Modellpassung hinweist (Werte über 0.95 gelten als exzellent).</p></li>
+<li><strong>Root Mean Suqare Error of Approximation (RMSEA):</strong> Der RMSEA misst unter Berücksichtigung der Modellkomplexität (Anzahl der Freiheitsgrade), wie gut das Modell zu den Daten passt. Er zeigt an, wie stark das Modell pro Freiheitsgrad von einer perfekten Passung abweicht. <strong>Werte unter 0.05 zeigen eine sehr gute Modellpassung an, Werte zwischen 0.05 und 0.10 gelten als akzeptabel bis mäßig.</strong></li>
+</ul>
+<p>Der RMSEA beträgt 0.035, was auf eine sehr gute Modellpassung hinweist. Auch das 90%-Konfidenzintervall zeigt, dass der RMSEA innerhalb des akzeptablen Bereichs liegt. Das Modell bildet die Daten damit unter Berücksichtigung der Freiheitsgrade sehr gut ab.</p>
+<ul>
+<li><strong>Standardized Root Mean Square Residual (SRMR):</strong> Der SRMR misst die Differenz zwischen den beobachteten Korrelationen und den durch das Modell vorhergesagten Korrelationen. Er gibt einen standardisierten wert für die Differenz zwischen den Residuen des Modells und den Daten. <strong>Werte unter 0.08 zeigen eine gute Modellpassung an, Werte über 0.10 gelten als schlecht.</strong></li>
+</ul>
+<p>Der SRMR beträgt 0.044, was deutlich unter der kritischen Schwelle von 0.08 liegt und ebenfalls auf eine gute Modellpassung hinweist. Die geringen Residuen zeigen, dass das Modell die beobachteten Korrelationen gut abbildet.</p>
+</div>
+<div id="parameter-interpretation" class="section level4 hasAnchor" number="1.2.5.2">
+<h4><span class="header-section-number">1.2.5.2</span> Parameter-Interpretation<a href="cross.html#parameter-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Die Parameter des Modells sind durchweg signifikant, was darauf hindeutet, dass die Beziehungen zwischen den Variablen gut modelliert sind:</p>
+<ul>
+<li><p><strong>Latente Variablen und ihre Indikatoren:</strong> ind60, dem60 und dem65 werden durchwegs signifikant durch die Indikatoren (x1, x2 und x3 bzw. y1, y2, y3 und y4 bzw. y5, y6, y7 und y8) gemessen.</p></li>
+<li><p><strong>Regressionsbeziehungen:</strong> dem60 wird signifikant durch ind60 beeinflusst (<span class="math inline">\(\beta\)</span> = 0.45, <em>p</em> &lt; .001). dem65 wird sowohl durch ind60 (<span class="math inline">\(\beta\)</span> = 0.18, p = .010) als auch dem60 (<span class="math inline">\(\beta\)</span> = 0.89, p &lt; .001) vorhergesagt. Die industrielle Entwicklung hängt demnach signifikant mit der Demokratie im Jahr 1960 zusammen. Die industrielle Entwicklung ist zudem, gemeinsam mit der Demokratie im Jahre 1960, ein wichtiger Prädiktor der Demokratie im Jahr 1965.</p></li>
 </ul>
 </div>
-<div id="parameter-interpretation-1" class="section level4 hasAnchor" number="3.2.5.2">
-<h4><span class="header-section-number">3.2.5.2</span> Parameter-Interpretation<a href="cross.html#parameter-interpretation-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Die Parameter des Modells sind durchweg signifikant, was darauf hindeutet, dass die Beziehungen zwischen den latenten Variablen und ihren Indikatoren gut modelliert sind:</p>
-<ul>
-<li><strong>Latente Variablen und ihre Indikatoren:</strong> Die latente Variable <strong>GFactor</strong> wird signifikant durch alle Indikatoren gemessen:
-<ul>
-<li><strong>MathComp:</strong> Die standardisierte Ladung beträgt 0.399, was bedeutet, dass etwa 40% der Varianz von <strong>MathComp</strong> durch den g-Faktor erklärt werden.</li>
-<li><strong>FigReas:</strong> Mit einer Ladung von 0.642 zeigt <strong>FigReas</strong> die höchste Korrelation mit dem g-Faktor.</li>
-<li><strong>WordMean:</strong> Die Ladung von 0.504 zeigt eine moderate Korrelation mit dem g-Faktor.</li>
-<li><strong>LongMem:</strong> <strong>LongMem</strong> hat ebenfalls eine signifikante Ladung von 0.494.</li>
-</ul></li>
-</ul>
-</div>
-<div id="regressionsbeziehungen" class="section level4 hasAnchor" number="3.2.5.3">
-<h4><span class="header-section-number">3.2.5.3</span> Regressionsbeziehungen<a href="cross.html#regressionsbeziehungen" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Alle Pfade zwischen der latenten Variable (<strong>GFactor</strong>) und den Indikatoren sind signifikant (<em>p</em> &lt; .001), was darauf hinweist, dass die kognitiven Tests gut durch den g-Faktor erklärt werden.</p>
-<ul>
-<li>Die stärkste Beziehung besteht zwischen dem g-Faktor und <strong>FigReas</strong> (<span class="math inline">\(\beta\)</span> = 0.642), was bedeutet, dass <strong>FigReas</strong> am stärksten durch den g-Faktor beeinflusst wird.</li>
-<li><strong>MathComp</strong> hat die niedrigste Faktorladung (<span class="math inline">\(\beta\)</span> = 0.399), aber auch hier wird die Beziehung durch den g-Faktor signifikant erklärt.</li>
-</ul>
-</div>
-<div id="erklärte-varianz-1" class="section level4 hasAnchor" number="3.2.5.4">
-<h4><span class="header-section-number">3.2.5.4</span> Erklärte Varianz<a href="cross.html#erklärte-varianz-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Die R-Quadrat-Werte geben Auskunft darüber, wie gut die Indikatoren durch die latente Variable (<strong>GFactor</strong>) erklärt werden:
-- <strong>MathComp</strong>: 15.9% der Varianz von <strong>MathComp</strong> wird durch den g-Faktor erklärt.
-- <strong>FigReas</strong>: 41.2% der Varianz wird durch den g-Faktor erklärt, was eine starke Erklärungsleistung zeigt.
-- <strong>WordMean</strong>: 25.4% der Varianz wird durch den g-Faktor erklärt.
-- <strong>LongMem</strong>: 24.4% der Varianz wird durch den g-Faktor erklärt.</p>
-<p>Diese Ergebnisse zeigen, dass der g-Faktor einen substanziellen Anteil der Varianz in den kognitiven Tests erklärt, insbesondere bei <strong>FigReas</strong>, was die Bedeutung dieses Tests für die Messung der allgemeinen Intelligenz unterstreicht.</p>
+<div id="erklärte-varianz" class="section level4 hasAnchor" number="1.2.5.3">
+<h4><span class="header-section-number">1.2.5.3</span> Erklärte Varianz<a href="cross.html#erklärte-varianz" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Die R-Quadrat-Werte zeigen, wie gut die Indikatoren die latenten Variablen erklären: So erklären die Indikatoren x1, x2 und x3 jeweils 84.6%, 94.7% und 76.1% der Varianz von ind60, was auf eine starke Erklärungsleistung hinweist. Für die latenten Variablen dem60 und dem65 sind die R-Quadrat-Werte ebenfalls aufschlussreich: dem60 wird zu 20% durch ind60 erklärt. dem65 wid zu 96.1% durch ind60 und dem60 erklärt, was auf eine sehr starke Erklärungsleistung des Modells hinweist.</p>
 </div>
 </div>
-<div id="grafische-darstellung-des-modells-1" class="section level3 hasAnchor" number="3.2.6">
-<h3><span class="header-section-number">3.2.6</span> Grafische Darstellung des Modells<a href="cross.html#grafische-darstellung-des-modells-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Die grafische Darstellung eines CFA-Modells ermöglicht es, die Beziehungen zwischen den latenten Variablen und ihren Indikatoren sowie die Regressionspfade visuell zu erfassen. Das <strong>semPlot</strong>-Paket kann verwendet werden, um das Modell übersichtlich darzustellen. Dabei werden die standardisierten Ladungen, die Korrelationen zwischen den Variablen sowie die Residuen abgebildet.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="cross.html#cb8-1" tabindex="-1"></a><span class="fu">semPaths</span>(fit, <span class="st">&quot;std&quot;</span>, <span class="at">layout =</span> <span class="st">&quot;tree&quot;</span>, <span class="at">residuals =</span> <span class="cn">TRUE</span>, <span class="at">whatLabels =</span> <span class="st">&quot;std&quot;</span>, <span class="at">intercepts =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/Grafische%20Darstellung%20CFA-1.png" width="672" /></p>
+<div id="grafische-darstellung-des-modells" class="section level3 hasAnchor" number="1.2.6">
+<h3><span class="header-section-number">1.2.6</span> Grafische Darstellung des Modells<a href="cross.html#grafische-darstellung-des-modells" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Die grafische Darstellung eines SEMs ermöglicht es, die Beziehungen zwischen den latenten und manifesten Variablen sowie die Regressionspfade und Residualkorrelationen visuell zu erfassen. Hier kann beispielsweise das semPlot-Paket verwendet werden.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="cross.html#cb10-1" tabindex="-1"></a><span class="fu">semPaths</span>(fit, <span class="st">&quot;std&quot;</span>, <span class="at">layout =</span> <span class="st">&quot;tree&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/Grafische%20Darstellung%20SEM-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -450,8 +457,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="cross.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -482,7 +489,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-CFA.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-SEM.Rmd",
 "text": "Edit"
 },
 "history": {

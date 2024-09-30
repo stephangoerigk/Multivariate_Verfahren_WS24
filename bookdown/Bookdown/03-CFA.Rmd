@@ -91,7 +91,7 @@ Darüber hinaus sollten folgende Punkte berücksichtigt werden:
 
 - **Multikollinearität:** Zu starke Korrelationen zwischen den Indikatoren (Multikollinearität) können zu Problemen führen. Die Determinante der Korrelationsmatrix bietet eine Möglichkeit, dies zu überprüfen. Eine Determinante nahe 0 deutet auf problematische Multikollinearität hin.
 
-- **Modellidentifizierbarkeit:** Ein Modell muss hinreichend identifiziert sein, d.h., es müssen genügend Datenpunkte vorhanden sein, um die Modellparameter schätzen zu können.
+- **Modellidentifizierbarkeit:** Ein Modell muss ausreichend identifiziert sein, das bedeutet, es müssen mehr Informationen in Form von bekannten Werten (z.B. Varianzen und Kovarianzen aus der beobachteten Datenmatrix) vorliegen als zu schätzende Parameter. Nur so können die Modellparameter sinnvoll geschätzt werden.
 
 ```{r Voraussetzungen CFA, message=FALSE, warning=FALSE}
 
