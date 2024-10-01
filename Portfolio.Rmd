@@ -28,11 +28,15 @@ output:
 
 # Aufgabe 1: Studienplanung - Poweranalyse
 
-xxxx
+Im Rahmen einer geplanten Studie soll die Wirksamkeit einer Intervention im Vergleich zur üblichen Behandlung (TAU, Treatment as Usual) untersucht werden. Die TeilnehmerInnen werden zu zwei Zeitpunkten (vor und nach der Intervention) hinsichtlich relevanter Outcome-Variablen befragt. Ziel der Untersuchung ist es, den Unterschied in den Therapieeffekten zwischen den beiden Gruppen zu bestimmen.
+
+Die Studie wird cluster-randomisiert durchgeführt, wobei 20 Kliniken an der Erhebung beteiligt sind. Jede Klinik wird entweder der Interventionsgruppe oder der Kontrollgruppe zugewiesen. Aufgrund der Gruppierung innerhalb der Kliniken ist davon auszugehen, dass die Beobachtungen innerhalb einer Klinik nicht vollständig unabhängig voneinander sind (Clustereffekt), was durch den Intra-Klassen-Korrelationskoeffizienten (*ICC* = 0.10) berücksichtigt wird.
+
+**Ihre Aufgabe besteht darin, eine Poweranalyse durchzuführen, um die erforderliche Stichprobengröße pro Klinik zu ermitteln. Dabei soll gewährleistet werden, dass bei einem angenommenen Effektunterschied von *d* = 0.50 (klinisch relevant) und einem Signifikanzniveau von 5% eine statistische Power von 80% erreicht wird.**
+
+**Diskutieren Sie darüber hinaus, inwiefern eine Variation des ICC oder des erwarteten Effektunterschieds die notwendige Stichprobengröße beeinflussen könnte.**
 
 ```{r}
-
-# Daten über Github
 
 # Codeblock Aufgabe 1
 
@@ -40,9 +44,13 @@ xxxx
 
 ---
 
-# Aufgabe 2: Wirksamkeitsforschung: Auswertung Therapiewirksamkeit
+# Aufgabe 2: Wirksamkeitsforschung: Identifikation von Subgruppen 
 
-xxxx
+In einer Studie wurde das Beck's Depressions-Inventar (BDI) verwendet, um depressive Symptome zu messen. Es soll untersucht werden, wie PatientInnen auf eine kognitive Verhaltenstherapie (KVT) ansprechen und ob sich spezifische Subgruppen von PatientInnen identifizieren lassen, die unterschiedlich auf die Therapie reagieren. Die ProbandInnen wurden zufällig entweder der KVT- oder der Kontrollgruppe zugeteilt. Um Unterschiede zwischen den Gruppen zu minimieren, wurde eine Blockrandomisierung nach Alter und Geschlecht angewendet. Erfasst wurden der Schweregrad der Depression, gemessen durch den BDI, sowie demografische und klinische Variablen wie das Alter der PatientInnen in Jahren, das Geschlecht (weiblich oder männlich), Komorbiditäten (z. B. Angststörungen, basierend auf ICD-10-Diagnosen), der Therapieerfolg, der durch die Veränderung des BDI-Scores vor und nach der Intervention erfasst wurde, sowie die Dauer der Erkrankung in Jahren.
+
+Ziel der Studie ist es, folgende Fragestellungen zu beantworten: Gibt es Subgruppen von PatientInnen, die unterschiedlich auf die KVT ansprechen? Welche demografischen und klinischen Merkmale charakterisieren die Subgruppen? Inwiefern lassen sich bestimmte Subgruppen durch eine Clusteranalyse identifizieren, die stärker von der Therapie profitieren? In der klinischen Praxis ist es entscheidend, individuelle Unterschiede in der Wirkung von Therapien zu verstehen. Ein möglicher Ansatz ist die Identifikation von Subgruppen, was unter Anwendung der Clusteranalyse möglich ist, bei welcher anhand mehrerer Variablen Gruppen von PatientInnen gebildet werden, die ähnliche Muster aufweisen.
+
+**Ihre Aufgabe besteht darin, eine Clusteranalyse durchzuführen, um Subgruppen in den vorliegenden Daten aufzudecken. Untersuchen Sie anschließend, ob sich die Therapieergebnisse, gemessen als Veränderung der BDI-Scores, zwischen den Clustern unterscheiden. Vergleichen Sie außerdem die demografischen und klinischen Merkmale der identifizierten Cluster.**
 
 ```{r}
 
@@ -54,13 +62,9 @@ xxxx
 
 ---
 
-# Aufgabe 3: Wirksamkeitsforschung: Identifikation von Subgruppen 
+# Aufgabe 3: Wirksamkeitsforschung: Auswertung Therapiewirksamkeit
 
-In einer Studie wurde das Beck's Depressions-Inventar (BDI) verwendet, um depressive Symptome zu messen. Es soll untersucht werden, wie PatientInnen auf eine kognitive Verhaltenstherapie (KVT) ansprechen und ob sich spezifische Subgruppen von PatientInnen identifizieren lassen, die unterschiedlich auf die Therapie reagieren. Die ProbandInnen wurden zufällig entweder der KVT- oder der Kontrollgruppe zugeteilt. Um Unterschiede zwischen den Gruppen zu minimieren, wurde eine Blockrandomisierung nach Alter und Geschlecht angewendet. Erfasst wurden der Schweregrad der Depression, gemessen durch den BDI, sowie demografische und klinische Variablen wie das Alter der PatientInnen in Jahren, das Geschlecht (weiblich oder männlich), Komorbiditäten (z. B. Angststörungen, basierend auf ICD-10-Diagnosen), der Therapieerfolg, der durch die Veränderung des BDI-Scores vor und nach der Intervention erfasst wurde, sowie die Dauer der Erkrankung in Jahren.
-
-Ziel der Studie ist es, folgende Fragestellungen zu beantworten: Gibt es Subgruppen von PatientInnen, die unterschiedlich auf die KVT ansprechen? Welche demografischen und klinischen Merkmale charakterisieren die Subgruppen? Inwiefern lassen sich bestimmte Subgruppen durch eine Clusteranalyse identifizieren, die stärker von der Therapie profitieren? In der klinischen Praxis ist es entscheidend, individuelle Unterschiede in der Wirkung von Therapien zu verstehen. Ein möglicher Ansatz ist die Identifikation von Subgruppen, was unter Anwendung der Clusteranalyse möglich ist, bei welcher anhand mehrerer Variablen Gruppen von PatientInnen gebildet werden, die ähnliche Muster aufweisen.
-
-**Ihre Aufgabe besteht darin, eine Clusteranalyse durchzuführen, um Subgruppen in den vorliegenden Daten aufzudecken. Untersuchen Sie anschließend, ob sich die Therapieergebnisse, gemessen als Veränderung der BDI-Scores, zwischen den Clustern unterscheiden. Vergleichen Sie außerdem die demografischen und klinischen Merkmale der identifizierten Cluster.**
+<font color='darkred'>Anmerkung: Eventuell mit Aufgabe 2 verknüpfen im Sinne von 2.1: Identifikation von Subgruppen, 2.2: Auswertung Therapiewirksamkeit (oder umgekehrt) ?</font>
 
 ```{r}
 
@@ -74,7 +78,7 @@ Ziel der Studie ist es, folgende Fragestellungen zu beantworten: Gibt es Subgrup
 
 # Aufgabe 4: Therapieprozessforschung: Mediation
 
-xxxx
+xxx
 
 ```{r}
 
