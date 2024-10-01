@@ -1,0 +1,68 @@
+--- 
+title: "Multivvariate Verfahren"
+author: "Janika Saretzki"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+# Über dieses Skript {-}
+
+Liebe Studierende,
+
+dieses Skript soll Sie in die Grundlagen der multivariaten Verfahren einführen. Im Gegensatz zu univariaten Ansätzen, die nur eine abhängige Variable betrachten, erlauben multivariate Verfahren die gleichzeitige Analyse mehrerer Variablen. Dadurch können Zusammenhänge und Wechselwirkungen zwischen Variablen besser erfasst werden, was zu umfassenderen und realistischeren Modellen führt.
+
+Multivariate Verfahren sind besonders nützlich, wenn es darum geht, die gleichzeitige Wirkung mehrerer Einflussfaktoren auf mehrere Ergebnisvariablen zu untersuchen. Sie bieten auch Fit-Maße, die die Modellgüte sowohl auf Gesamt- als auch auf Teilmodellebene bewerten. Diese liefern detaillierte Informationen darüber, wie gut das Modell zu den Daten passt und wo Optimierungsbedarf besteht.
+
+Trotz der höheren Anforderungen, insbesondere an die Stichprobengröße und die komplexere Interpretation, sind multivariate Verfahren unverzichtbar für die realitätsnahe Modellierung komplexer Phänomene. Dieses Skript wird Sie durch die wesentlichen Konzepte und Methoden führen, um Ihnen den Einstieg zu erleichtern.
+
+Wir wünschen Ihnen viel Erfolg und Spaß beim Arbeiten mit diesen Methoden!
+
+<!--chapter:end:index.Rmd-->
+
+
+# Beispiel zur Anwendung der EFA
+
+Placeholder
+
+
+## Zwei "Unterfamilien" faktorenanalytischer Methoden
+## Grundlegendes
+## Implikationen der Faktorenanalyse
+## 1. Setup
+## 2. Prüfung der Anwendungsvoraussetzungen 
+## 3. Auswahl und Begründung der Methode der Faktorenextraktion
+## 4. Faktorenanzahl bestimmen
+## 5. Auswahl und Begründung der Methode der Faktorenrotation
+## 6. Interpretation der Faktorenstruktur und der Faktorladungen
+### 6.1. Faktorenstruktur und Varianz
+### 6.2. Faktorladungen
+### 6.3. Modellgüte
+### 6.4. Faktorenkorrelation
+### 6.5. Fazit
+
+<!--chapter:end:EFA.Rmd-->
+
+
+# Beispiel zur Anwendung eines SEM
+
+Placeholder
+
+
+## Grundlegendes
+## 1. Setup
+## 2. Prüfung der Anwendungsvoraussetzungen 
+## 3. Spezifizierung des Modells
+## 4. Model-Fitten
+## 5. Interpretation der SEM-Ergebnisse
+### 5.1. Modell-Fit
+### 5.2. Parameter-Interpretation
+### 5.3. Erklärte Varianz
+## 6. Grafische Darstellung des Modells
+
+<!--chapter:end:SEM.Rmd-->
+
