@@ -2,7 +2,7 @@
 title: |
   <div style="text-align:center; font-size:15px; font-weight:bold;">
     <img src="Logo_CFSH_211228.png" style="width: 200px; margin-bottom: 10px;" /><br>
-    Multivariate Verfahren - Portfolio
+    M-P 1.2 Empirisch-wissenschaftliches Arbeiten
   </div>
 
 author: |
@@ -22,11 +22,13 @@ output:
     css: styles.css
 ---
 
+---
 
+# Teil 1: Multivariate Verfahren
 
 ---
 
-# Aufgabe 1: Studienplanung - Poweranalyse
+## Aufgabe 1: Studienplanung - Poweranalyse
 
 Im Rahmen einer geplanten Studie soll die Wirksamkeit einer Intervention im Vergleich zur üblichen Behandlung (TAU, Treatment as Usual) untersucht werden. Die TeilnehmerInnen werden zu zwei Zeitpunkten (vor und nach der Intervention) hinsichtlich relevanter Outcome-Variablen befragt. Ziel der Untersuchung ist es, den Unterschied in den Therapieeffekten zwischen den beiden Gruppen zu bestimmen.
 
@@ -44,7 +46,7 @@ Die Studie wird cluster-randomisiert durchgeführt, wobei 20 Kliniken an der Erh
 
 ---
 
-# Aufgabe 2: Wirksamkeitsforschung: Identifikation von Subgruppen 
+## Aufgabe 2: Wirksamkeitsforschung: Identifikation von Subgruppen 
 
 In einer Studie wurde das Beck's Depressions-Inventar (BDI) verwendet, um depressive Symptome zu messen. Es soll untersucht werden, wie PatientInnen auf eine kognitive Verhaltenstherapie (KVT) ansprechen und ob sich spezifische Subgruppen von PatientInnen identifizieren lassen, die unterschiedlich auf die Therapie reagieren. Die ProbandInnen wurden zufällig entweder der KVT- oder der Kontrollgruppe zugeteilt. Um Unterschiede zwischen den Gruppen zu minimieren, wurde eine Blockrandomisierung nach Alter und Geschlecht angewendet. Erfasst wurden der Schweregrad der Depression, gemessen durch den BDI, sowie demografische und klinische Variablen wie das Alter der PatientInnen in Jahren, das Geschlecht (weiblich oder männlich), Komorbiditäten (z. B. Angststörungen, basierend auf ICD-10-Diagnosen), der Therapieerfolg, der durch die Veränderung des BDI-Scores vor und nach der Intervention erfasst wurde, sowie die Dauer der Erkrankung in Jahren.
 
@@ -62,7 +64,7 @@ Ziel der Studie ist es, folgende Fragestellungen zu beantworten: Gibt es Subgrup
 
 ---
 
-# Aufgabe 3: Wirksamkeitsforschung: Auswertung Therapiewirksamkeit
+## Aufgabe 3: Wirksamkeitsforschung: Auswertung Therapiewirksamkeit
 
 <font color='darkred'>Anmerkung: Eventuell mit Aufgabe 2 verknüpfen im Sinne von 2.1: Identifikation von Subgruppen, 2.2: Auswertung Therapiewirksamkeit (oder umgekehrt) ?</font>
 
@@ -76,7 +78,7 @@ Ziel der Studie ist es, folgende Fragestellungen zu beantworten: Gibt es Subgrup
 
 ---
 
-# Aufgabe 4: Therapieprozessforschung: Mediation
+## Aufgabe 4: Therapieprozessforschung: Mediation
 
 xxx
 
@@ -90,7 +92,7 @@ xxx
 
 ---
 
-# Aufgabe 5: Therapieprozessforschung: EMA-Studie (Zeitreihenanalyse)
+## Aufgabe 5: Therapieprozessforschung: EMA-Studie (Zeitreihenanalyse)
 
 xxx
 
@@ -102,4 +104,8 @@ xxx
 
 ```
 
+---
 
+# Teil 2: Evaluation und Psychotherapieforschung in Theorie und Praxis
+
+---
